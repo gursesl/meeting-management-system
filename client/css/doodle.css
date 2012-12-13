@@ -1,0 +1,8 @@
+/* CSS declarations go here */
+input#location {
+	width: 500px;
+}
+
+.icon-calendar {
+	margin: 4px 6px 0px 0px;
+}
