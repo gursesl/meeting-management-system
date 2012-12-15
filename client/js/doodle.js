@@ -44,9 +44,8 @@
     }
   });
   
-  //Template.newappointment.events = {};
   Template.newappointment.events({
-	  'click #btnSend': function (event, template) {
+	  'click #btnAddEvent': function (event, template) {
 		  var nameEntry = template.find("#title").value;
 		  var msgEntry = template.find("#location").value;
 		  if (nameEntry.value != "" && msgEntry != "") {
@@ -79,10 +78,22 @@
     }
   }
   
+  //Appointment Detail
   Template.appointmentdetail.selected_apt = function () {
     var appointment = Appointments.findOne(Session.get("selected_apt"));
     return appointment;
   };
+  
+  Template.appointmentdetail.events({
+	  'click #btnAddTimeProposal': function (event, template) {
+		  var propDate = template.find("#proposalDate");
+		  var propTime = template.find("#proposalTime");
+		  console.log("Date: " + propDate.value);
+		  console.log("Time: " + propTime.value);
+	  }
+  });
+  
+  
   
   Template.appointment.selected = function () {
     return Session.equals("selected_apt", this._id) ? "selected" : '';

@@ -1,12 +1,7 @@
 /* CSS declarations go here */
 input#location {
-	width: 500px;
+	width: 540px;
 }
-
-.icon-calendar {
-	margin: 4px 6px 0px 0px;
-}
-
 
 .aptlist {
     cursor: pointer;
@@ -59,4 +54,8 @@ input#location {
   display: block;
   clear: both;
   margin: 5px 0px 20px;
+}
+
+#timeProposalModal #proposalDate, #timeProposalModal #proposalTime {
+	width: 60px;
 }
