@@ -60,19 +60,19 @@
     <div class="container">
     
       <div class="page-header">
-         <h1>Event Scheduling <br/>
-         <small>For mere mortals</small></h1>
+         <h1>Event Scheduling</h1>
       </div>
     
-      {{> entry }}
+      {{> newappointment }}
       {{> appointments }}
+      
     </div>
     
     
   </body>
 
 
-<template name="entry">
+<template name="newappointment">
   <form class="well form-search">
   <p><input type="text" id="title" placeholder="Event title">
   <input type="text" id="location" placeholder="Location (e.g. 1600 American Dream Way, Reston, VA 20122)">
@@ -82,39 +82,44 @@
 </template>
 
 <template name="appointments">
-
-  <div class="page-header">
-    <h1>Your Events</h1>
-  </div>
-  
-  <table class="table table-bordered table-striped table-hover">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Title</th>
-        <th>Location</th>
-        <th>Date</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-
-          
-  
-    {{#each appointments}}
-      <tr>
-        <td>1</td>
+  <span>Find your event:</span><input type="text" name="find_event" class="event_search_box"><input type="button" class="reset btn" value="Reset"><br/>
+  <span class="description">(Start typing and the table will update itself based on the search results)</span>
+  <hr>
+  <div class="row">
+    <div class="span4">
+      <h2>List of Events</h2>
+      {{#each appointments}}
         {{> appointment }}
-      </tr>  
-    {{/each}}
-  
-     </tbody>
-  </table>
+      {{/each}}
+    </div>
+    
+    <div class="span8">
+      <h2>Event Details</h2>
+      {{> appointmentdetail }}
+    </div>
 </template>
 
 <template name="appointment">
-  <td>{{title}}</td>
-  <td>{{location}}</td>
-  <td></td>
-  <td><button id="btnMsgDelete" class="close">&times;</button></td>
+  <div class="aptlist {{selected}}">
+  	<span class="title">{{title}}</span>
+  	<div class="actions"><button id="btnMsgDelete" class="close">&times;</button></div>
+  	<span class="location">{{location}}</span>
+  	
+  </div>
+</template>
+
+<template name="appointmentdetail">
+  {{#if selected_apt}}
+    <div class="appointmentdetail">
+	  <div class="title">{{selected_apt.title}}</div>
+	  <span class="location">{{selected_apt.location}}</span>
+	  <hr>
+	  <input type="button" class="btn" value="Invite Attendees" />
+	  <input type="button" class="btn" value="Edit Event Details" />
+	</div>
+  {{/if}}
+
+  {{#unless selected_apt}}
+    <div>Click an event to view details</div>
+  {{/unless}}
 </template>

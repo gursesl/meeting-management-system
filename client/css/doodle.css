@@ -6,3 +6,57 @@ input#location {
 .icon-calendar {
 	margin: 4px 6px 0px 0px;
 }
+
+
+.aptlist {
+    cursor: pointer;
+    padding: 10px;
+    height: 50px;
+}
+
+.aptlist:hover {
+    cursor: pointer;
+    background-color: #eee;
+}
+
+.aptlist .title {
+	float: left;
+	display: block;
+    font-weight: bold;
+    font-size: 1.0em;
+}
+
+.aptlist .location {
+	float: left;
+    display: block;
+    font-size: 0.8em;
+    color: #777;
+}
+
+.aptlist .actions {
+  display: block;
+    width: 20px;
+    font-size: 1.0em;
+    float: left;
+}
+
+
+.aptlist.selected {
+    background-color: #eee;
+}
+
+.aptlist.selected .location {
+    color: black;
+}
+
+.appointmentdetail .title {
+  font-size: 1.5em;
+  display: inline-block;
+}
+
+.appointmentdetail .location {
+  font-size: 1.2em;
+  display: block;
+  clear: both;
+  margin: 5px 0px 20px;
+}

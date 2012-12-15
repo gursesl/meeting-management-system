@@ -21,6 +21,22 @@
 		};
 	};
 
+  Template.appointments.events({
+    'input input.event_search_box' : function () {
+	   if (document.getElementsByName('find_event')[0].value != null | document.getElementsByName('find_event')[0].value != "") {
+	     Session.set("eventname", document.getElementsByName('find_event')[0].value);
+	   } else {
+		  Session.set("eventname", null);
+	   }
+	   console.log("Input search typed...");
+	},
+	'click input.reset': function () {
+		document.getElementsByName('find_event')[0].value="";
+		Session.set("eventname", null);
+		console.log("Reset button clicked...");
+	}
+  });
+	
   Template.appointment.events({
     'click #btnMsgDelete' : function(event, template) {
     	console.log ("Deleting appointment with ID: " + this._id);
@@ -28,8 +44,8 @@
     }
   });
   
-  //Template.entry.events = {};
-  Template.entry.events({
+  //Template.newappointment.events = {};
+  Template.newappointment.events({
 	  'click #btnSend': function (event, template) {
 		  var nameEntry = template.find("#title").value;
 		  var msgEntry = template.find("#location").value;
@@ -43,7 +59,7 @@
   });
   
   
-  Template.entry.events[okcancel_events('#location')] = make_okcancelhandler({
+  Template.newappointment.events[okcancel_events('#location')] = make_okcancelhandler({
     ok: function (text, event) {
       var nameEntry = document.getElementById('title');
       if (nameEntry.value != "") {
@@ -55,5 +71,26 @@
   });
   
   Template.appointments.appointments = function () {
-	  return Appointments.find({}, { sort: {time: -1}});
+    if (Session.get("eventname") != null && Session.get("eventname") != "") {
+	  var regex = new RegExp(Session.get("eventname"), "i");
+	    return Appointments.find({title: regex}, { sort: {time: -1}});
+    } else {
+	  return Appointments.find({}, {sort: {time: -1}});
+    }
   }
+  
+  Template.appointmentdetail.selected_apt = function () {
+    var appointment = Appointments.findOne(Session.get("selected_apt"));
+    return appointment;
+  };
+  
+  Template.appointment.selected = function () {
+    return Session.equals("selected_apt", this._id) ? "selected" : '';
+  };
+  
+  Template.appointment.events({
+    'click': function () {
+    Session.set("selected_apt", this._id);
+    }
+  });
+
