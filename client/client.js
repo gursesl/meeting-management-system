@@ -1,3 +1,18 @@
+// Doodle -- client
+
+Meteor.subscribe("directory");
+Meteor.subscribe("appointments");
+
+//If no party selected, select one.
+Meteor.startup(function () {
+  Meteor.autorun(function () {
+    if (! Session.get("selected")) {
+      var appointment = Appointments.findOne();
+      if (appointment)
+        Session.set("selected", appointment._id);
+    }
+  });
+});
 
 	var okcancel_events = function (selector) {
 		return 'keyup '+selector+', keydown '+selector+', focusout '+selector;
@@ -21,7 +36,7 @@
 		};
 	};
 
-  Template.appointments.events({
+  Template.dashboard.events({
     'input input.event_search_box' : function () {
 	   if (document.getElementsByName('find_event')[0].value != null | document.getElementsByName('find_event')[0].value != "") {
 	     Session.set("eventname", document.getElementsByName('find_event')[0].value);
@@ -40,21 +55,31 @@
   Template.appointment.events({
     'click #btnMsgDelete' : function(event, template) {
     	console.log ("Deleting appointment with ID: " + this._id);
-    	Appointments.remove(this);
+    	Appointments.remove(this._id);
+    	return false;
     }
   });
   
   Template.newappointment.events({
 	  'click #btnAddEvent': function (event, template) {
-		  var nameEntry = template.find("#title").value;
-		  var msgEntry = template.find("#location").value;
-		  if (nameEntry.value != "" && msgEntry != "") {
-			  console.log ("Title: " + nameEntry);
-			  console.log ("Location: " + msgEntry);
-			  var ts = Date.now() / 1000;
-			  Appointments.insert({title: nameEntry, location: msgEntry, time: ts});
+		  var title = template.find("#title").value;
+		  var location = template.find("#location").value;
+		  if (title.length && location.length) {
+			  Meteor.call('createAppointment', {
+				title: title,
+				location: location
+			  
+		  }, function (error, appointment) {
+			  if (! error) {
+				  Session.set("selected", appointment);
+				  //openTimeProposalsDialog();
+			  }
+		  });
+		  Session.set("showCreateDialog", false);
+		  } else {
+			  Session.set("createError", "A title and location is needed to create a new event.");
 		  }
-	  },
+	  }
   });
   
   
@@ -69,7 +94,7 @@
     }
   });
   
-  Template.appointments.appointments = function () {
+  Template.dashboard.appointments = function () {
     if (Session.get("eventname") != null && Session.get("eventname") != "") {
 	  var regex = new RegExp(Session.get("eventname"), "i");
 	    return Appointments.find({title: regex}, { sort: {time: -1}});
