@@ -1,13 +1,22 @@
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  </head>
+<head>
+  <title>Meteor Doodle: Event Schdeling Made Simple</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 
-  <body>
-  
+<body>
+  {{> page }}
+</body>
    
-  
+<template name="page">
+  {{#if showCreateDialog}}
+    {{> createDialog}}
+  {{/if}}
 
-  	
+  {{#if showTimeProposalsDialog}}
+    {{> timeProposalsDialog}}
+  {{/if}}
+  
+    	
   <div class="container">
     <div class="masthead">
       <!-- Navbar -->
@@ -44,8 +53,7 @@
   <div class="footer">
     <p>&copy; Company & Company 2013</p>
   </div>
-  </body>
-
+</template>
 
 <template name="appointments">
   {{#if currentUser}}
@@ -101,17 +109,25 @@
 </template>
 
 <template name="appointmentdetail">
-  {{#if selected_apt}}
+  {{#if selected}}
     <div class="appointmentdetail">
-	  <div class="title">{{selected_apt.title}}</div>
-	  <span class="location">{{selected_apt.location}}</span>
+	  <div class="title">{{selected.title}}</div>
+	  <span class="location">{{selected.location}}</span>
+	  {{#if selected.timeproposals }}
+	    <h3>Time Proposals</h3>
+	    {{#each selected.timeproposals}}
+	       <strong>Date: </strong><span>{{date}}</span>:<span>{{time}}</span>
+	       <strong>Votes: </strong><span>{{votes}}</span>
+	       <br/>
+	    {{/each}}
+	  {{/if}}
 	  <input type="button" class="btn" value="Attendees" />
 	  <input type="button" class="btn" value="Edit Event Details" />
-	  <button type="button" name="btnTimeSlots" class="btn" data-toggle="modal" data-target="#timeProposalModal">Time Proposals</button>
+	  <button type="button" id="btnTimeProposals" class="btn">Time Proposals</button>
 	</div>
   {{/if}}
 
-  {{#unless selected_apt}}
+  {{#unless selected}}
     <div>Click an event to view details</div>
   {{/unless}}
   
@@ -170,5 +186,32 @@
 
       <hr>
 
+  </div>
+</template>
+
+<template name="timeProposalsDialog">
+  <div class="mask"> </div>
+  <div class="modal">
+    <div class="modal-header">
+      <button type="button" class="close done">&times;</button>
+      <h3>Add Time Proposals</h3>
+    </div>
+
+    <div class="modal-body">
+      <div class=row-fluid">
+        <div class="span2">
+          <h4>Time Proposal</h4>
+          <span>New time proposal:</span><input type="text" id="proposalDate" placeholder="Proposal date">
+      		<input type="text" id="proposalTime" placeholder="Proposal time">
+      		<a id="btnAddTimeProposals" value="Add Proposal" class="btn btn-primary btn-small">
+  	    		<i class="icon-time icon-white"/>Add Proposal</a>
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="modal-footer">
+      <a href="#" class="btn btn-primary done">Done</a>
+    </div>
   </div>
 </template>

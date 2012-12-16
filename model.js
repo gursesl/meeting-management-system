@@ -26,7 +26,20 @@ Meteor.methods({
       location: options.location,
       createdDate: new Date(),
       invited: [],
-      rsvps: []
+      rsvps: [],
+      timeproposals: []
     });
+  },
+  
+  addTimeProposal: function (appointment, options) {
+	  console.log("Model: adding time proposal...");
+	  options = options || {};
+	    if (! (typeof options.pdate === "string" && options.pdate.length &&
+	    		typeof options.ptime === "string" && options.ptime.length))
+	       throw new Meteor.Error(400, "Required parameter missing.");
+	    if (! this.userId)
+	      throw new Meteor.Error(403, "You must be logged in to add time proposals.");
+	    
+	   Appointments.update( appointment, {$push : {"timeproposals" : {"date" : options.pdate, "time": options.ptime, "votes":0}}});
   }
 });

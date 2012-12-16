@@ -65,14 +65,14 @@ Meteor.startup(function () {
 		  var title = template.find("#title").value;
 		  var location = template.find("#location").value;
 		  if (title.length && location.length) {
-			  Meteor.call('createAppointment', {
+			  Meteor.call("createAppointment", {
 				title: title,
 				location: location
-			  
 		  }, function (error, appointment) {
 			  if (! error) {
+				  console.log("Created successfully..." + appointment);
 				  Session.set("selected", appointment);
-				  //openTimeProposalsDialog();
+				  openTimeProposalsDialog();
 			  }
 		  });
 		  Session.set("showCreateDialog", false);
@@ -104,8 +104,8 @@ Meteor.startup(function () {
   }
   
   //Appointment Detail
-  Template.appointmentdetail.selected_apt = function () {
-    var appointment = Appointments.findOne(Session.get("selected_apt"));
+  Template.appointmentdetail.selected = function () {
+    var appointment = Appointments.findOne(Session.get("selected"));
     return appointment;
   };
   
@@ -115,18 +115,54 @@ Meteor.startup(function () {
 		  var propTime = template.find("#proposalTime");
 		  console.log("Date: " + propDate.value);
 		  console.log("Time: " + propTime.value);
+	  },
+	  'click #btnTimeProposals': function( event, template) {
+		  console.log("sds");
+		  openTimeProposalsDialog();
 	  }
   });
   
-  
-  
   Template.appointment.selected = function () {
-    return Session.equals("selected_apt", this._id) ? "selected" : '';
+    return Session.equals("selected", this._id) ? "selected" : '';
   };
   
   Template.appointment.events({
     'click': function () {
-    Session.set("selected_apt", this._id);
+    Session.set("selected", this._id);
     }
   });
 
+///////////////////////////////////////////////////////////////////////////////
+//Time proposals dialog 
+var openTimeProposalsDialog = function () {
+  Session.set("showTimeProposalsDialog", true);
+};
+
+Template.page.showTimeProposalsDialog = function () {
+  return Session.get("showTimeProposalsDialog");
+};
+  
+Template.timeProposalsDialog.events({
+  'click #btnAddTimeProposals': function (event, template) {
+    var propDate = template.find("#proposalDate").value;
+	var propTime = template.find("#proposalTime").value;
+	console.log("Date: " + propDate);
+    if (propDate.length && propTime.length) {
+    	console.log("Adding time proposals for event " + Session.get("selected"));
+		  Meteor.call("addTimeProposal", Session.get("selected"), {
+		    pdate: propDate,
+			ptime: propTime
+	  }, function (error) {
+		  if (! error) {
+			  console.log("Time proposal added successfully...");
+			  //Session.set("selected", appointment);
+			  //openTimeProposalsDialog();
+		  }
+	  });
+    }
+  },
+  'click .done': function (event, template) {
+    Session.set("showTimeProposalsDialog", false);
+    return false;
+  }
+});
