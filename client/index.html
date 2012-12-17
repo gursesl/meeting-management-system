@@ -36,7 +36,7 @@
 	        <div class="nav-collapse">
 	          <ul class="nav">
 	            <li class="active"><a href="/">Home</a></li>
-	            <li><a href="#">Features</a></li>
+	            <li><a href="/features">Features</a></li>
 	            <li><a href="#">Why MeetMe?</a></li>
 	            <li><a href="#">Sign Up Free</a></li>
 	          </ul>
@@ -133,46 +133,46 @@
         <fieldset>
           <legend>Event Details</legend>
           
-    <div class="appointmentdetail">
-      <h3>{{selected.title}}</h3>
-      <address>
-        <strong>Location</strong><br>
-        {{selected.location}}<br>
-        <abbr title="Phone">P:</abbr> (123) 456-7890
-      </address>
-	  
-	  <!-- Time Proposals -->
-	  {{#if anyTimeProposal }}
-	    <legend>Time Proposals</legend>
-	    {{#each timeproposals}}
-	       {{> timeproposal }}
-	    {{/each}}
-	  {{/if}}
-	  
-	  {{#unless anyTimeProposal }}
-        <div class="alert alert-info">
-          <strong>Ahoy!</strong><br/> Looks like you have not added any time proposals yet. 
-          Use the "Time Proposals" button below to get started.
-        </div>
-	  {{/unless }}
-	  
-	  
-	  <!-- Attendees -->
-	  {{#if anyAttendee }}
-	    <legend>Attendees</legend>
-	    {{#each attendees}}
-	       {{> attendee }}
-	    {{/each}}
-	  {{/if}}
-	  
-	  {{#unless anyAttendee }}
-        <div class="alert alert-info">
-          <strong>Good morrow, friend!</strong><br/> Looks like you have not added any attendees yet. 
-          Use the "Attendees" button below to get started.
-        </div>
-	  {{/unless }}
-	  
-	</div>
+		    <div class="appointmentdetail">
+		      <h3 class="apttitle">{{selected.title}}</h3>
+		      <address>
+		        <strong>Location</strong><br>
+		        {{selected.location}}<br>
+		        <abbr title="Phone">P:</abbr> (123) 456-7890
+		      </address>
+			  
+			  <!-- Time Proposals -->
+			  {{#if anyTimeProposal }}
+			    <legend>Time Proposals</legend>
+			    {{#each timeproposals}}
+			       {{> timeproposal }}
+			    {{/each}}
+			  {{/if}}
+			  
+			  {{#unless anyTimeProposal }}
+		        <div class="alert alert-info">
+		          <strong>Ahoy!</strong><br/> Looks like you have not added any time proposals yet. 
+		          Use the "Time Proposals" button below to get started.
+		        </div>
+			  {{/unless }}
+			  
+			  
+			  <!-- Attendees -->
+			  {{#if anyAttendee }}
+			    <legend>Attendees</legend>
+			    {{#each attendees}}
+			       {{> attendee }}
+			    {{/each}}
+			  {{/if}}
+			  
+			  {{#unless anyAttendee }}
+		        <div class="alert alert-info">
+		          <strong>Good morrow, friend!</strong><br/> Looks like you have not added any attendees yet. 
+		          Use the "Attendees" button below to get started.
+		        </div>
+			  {{/unless }}
+			  
+			</div>
 	
 	   <div class="form-actions">
          <input type="button" class="btn" id="btnAttendees" value="Attendees" />

@@ -52,14 +52,6 @@ Meteor.startup(function () {
 	}
   });
 	
-  Template.appointment.events({
-    'click #btnMsgDelete' : function(event, template) {
-    	console.log ("Deleting appointment with ID: " + this._id);
-    	Appointments.remove(this._id);
-    	return false;
-    }
-  });
-  
   Template.newappointment.events({
 	  'click #btnAddEvent': function (event, template) {
 		  var title = template.find("#title").value;
@@ -108,7 +100,26 @@ Template.dashboard.appointments = function () {
 	  return Appointments.find({}, {sort: {time: -1}});
   }
 }
+
+///////////////////////////////////////////////////////////////////////////////
+//Template: Appointment
+Template.appointment.selected = function () {
+  Router.setEvent(Session.get("selected"));
+  return Session.equals("selected", this._id) ? "selected" : '';
+};
   
+Template.appointment.events({
+  'click': function () {
+   Session.set("selected", this._id);
+  },
+  'click #btnMsgDelete' : function(event, template) {
+  	console.log ("Deleting appointment with ID: " + this._id);
+  	Appointments.remove(this._id);
+  	return false;
+  }
+});
+
+
 ///////////////////////////////////////////////////////////////////////////////
 // Template: Appointment Detail
 Template.appointmentdetail.anyTimeProposal = function() {
@@ -144,23 +155,14 @@ Template.appointmentdetail.events({
   },
   'click #btnAttendees': function (event, template) {
     openAttendeesDialog();
+  },
+  'click .apttitle': function(event, template) {
+	  Router.setEvent(Session.get("selected"));
   }
 });
   
-  
-  
-Template.appointment.selected = function () {
-  return Session.equals("selected", this._id) ? "selected" : '';
-};
-  
-Template.appointment.events({
-  'click': function () {
-   Session.set("selected", this._id);
-  }
-});
-
 ///////////////////////////////////////////////////////////////////////////////
-//Attendees dialog   
+//Attendees dialog
 var openAttendeesDialog = function () {
   Session.set("showAttendeesDialog", true);
 };
