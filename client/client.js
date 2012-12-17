@@ -164,6 +164,7 @@ Template.appointmentdetail.events({
 ///////////////////////////////////////////////////////////////////////////////
 //Attendees dialog
 var openAttendeesDialog = function () {
+  Session.set("createError", null);	
   Session.set("showAttendeesDialog", true);
 };
 
@@ -185,6 +186,8 @@ Template.attendeesDialog.events({
 				  console.log("Attendee added successfully...");
 			  }
 	    });
+	  } else {
+		  Session.set("createError", "You need to enter attendee name and email address.");
 	  }
 	},
 	'click .done': function (event, template) {
@@ -192,10 +195,15 @@ Template.attendeesDialog.events({
 	    return false;
 	  } 
 });
-	
+
+Template.attendeesDialog.error = function() {
+  return Session.get("createError");	
+};
+
 ///////////////////////////////////////////////////////////////////////////////
 //Time proposals dialog 
 var openTimeProposalsDialog = function () {
+  Session.set("createError", null);
   Session.set("showTimeProposalsDialog", true);
 };
 
@@ -217,7 +225,9 @@ Template.timeProposalsDialog.events({
 			  console.log("Time proposal added successfully...");
 		  }
 	  });
-    }
+    } else {
+		  Session.set("createError", "You need to enter a proposed date and time.");
+	  }
   },
   'click .done': function (event, template) {
     Session.set("showTimeProposalsDialog", false);
@@ -225,3 +235,7 @@ Template.timeProposalsDialog.events({
     return false;
   }
 });
+
+Template.timeProposalsDialog.error = function() {
+  return Session.get("createError");	
+};

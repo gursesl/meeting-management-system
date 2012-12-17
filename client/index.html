@@ -276,11 +276,29 @@
     </div>
 
     <div class="modal-body">
-      <h4>Time Proposal</h4>
-      <span>New time proposal:</span><input type="text" id="proposalDate" placeholder="Proposal date">
-      <input type="text" id="proposalTime" placeholder="Proposal time">
-      <a id="btnAddTimeProposals" value="Add Proposal" class="btn btn-primary">
-  	  <i class="icon-time icon-white"/>Add Proposal</a>
+      <form class="form-horizontal well">
+        <fieldset>
+          {{#if error}}
+            <div class="alert alert-error">{{error}}</div>
+          {{/if}}
+          <legend>Add Time Propsal</legend>
+          
+          <label class="control-label" for="input01">Proposal date</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" id="proposalDate" placeholder="e.g. 12/24/12">
+          </div>
+          
+          <label class="control-label" for="input01">Proposal time</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" id="proposalTime" placeholder="e.g. 10:30am">
+          </div>
+  	      
+  	      <div class="form-actions">
+            <a  value="Add Proposal" class="btn btn-primary" id="btnAddTimeProposals">
+  	    	<i class="icon-time icon-white"/>Add Proposal</a>
+          </div>
+            </fieldset>
+          </form>
     </div>
 
     <div class="modal-footer">
@@ -296,26 +314,29 @@
       <button type="button" class="close done">&times;</button>
       <h3>Attendees</h3>
     </div>
-
+    
     <div class="modal-body">
       <form class="form-horizontal well">
         <fieldset>
+          {{#if error}}
+            <div class="alert alert-error">{{error}}</div>
+          {{/if}}
           <legend>Add Attendee</legend>
           <div class="control-group">
           <label class="control-label" for="input01">Full name</label>
           <div class="controls">
             <input type="text" class="input-xlarge" id="attendeeName" placeholder="e.g. Monica Jonhson">
           </div>
-                  <label class="control-label" for="input01">Email</label>
-                  <div class="controls">
-                    <input type="text" class="input-xlarge" id="attendeeEmail" placeholder="e.g. monica@email.com">
-                  </div>
-                </div>
+          
+          <label class="control-label" for="input01">Email</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" id="attendeeEmail" placeholder="e.g. monica@email.com">
+          </div>
                 
-                <div class="form-actions">
-                  <a  value="Add Proposal" class="btn btn-primary" id="btnAddAttendee">
-  	    		  <i class="icon-user icon-white"/>Add Attendee</a>
-                </div>
+          <div class="form-actions">
+            <a  value="Add Attendee" class="btn btn-primary" id="btnAddAttendee">
+  	    	<i class="icon-user icon-white"/>Add Attendee</a>
+          </div>
             </fieldset>
           </form>
     </div>
