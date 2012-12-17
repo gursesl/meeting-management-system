@@ -10,6 +10,9 @@ Meteor.publish("appointments", function () {
 });
 
 Meteor.publish("timeproposals", function () {
-  //return TimeProposals.find({owner: this.userId});
-	return TimeProposals.find({});
+	return TimeProposals.find({owner: this.userId});
+});
+
+Meteor.publish("attendees", function () {
+	return Attendees.find({owner: this.userId});
 });

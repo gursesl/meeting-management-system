@@ -1,5 +1,6 @@
 Appointments = new Meteor.Collection("appointments");
 TimeProposals = new Meteor.Collection("timeproposals");
+Attendees = new Meteor.Collection("attendees");
 
 Appointments.allow({
   insert: function (userId, appointment) {
@@ -33,7 +34,6 @@ Meteor.methods({
   },
   
   addTimeProposal: function (appointment, options) {
-	  console.log("Model: adding time proposal for appointment " + appointment + " and user " + this.userId);
 	  options = options || {};
 	    if (! (typeof options.pdate === "string" && options.pdate.length &&
 	    		typeof options.ptime === "string" && options.ptime.length))
@@ -49,5 +49,22 @@ Meteor.methods({
 	    	"votes": 0
 	    });
 	   //Appointments.update( appointment, {$push : {"timeproposals" : {"date" : options.pdate, "time": options.ptime, "votes":0}}});
+  },
+  
+  addAttendee: function(appointment, options) {
+	  options = options || {};
+	  if (! (typeof options.name === "string" && options.name.length &&
+	    		typeof options.email === "string" && options.email.length))
+	       throw new Meteor.Error(400, "Required parameter missing.");
+	    if (! this.userId)
+	      throw new Meteor.Error(403, "You must be logged in to add time proposals.");
+	  
+	  Attendees.insert({
+	    "appointmentId": appointment, 
+	    "owner": this.userId, 
+	    "name": options.name, 
+	    "email": options.email,
+	    "invited": false
+	  });
   }
 });

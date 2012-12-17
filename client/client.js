@@ -1,11 +1,9 @@
-// Doodle -- client
-
-
 ///////////////////////////////////////////////////////////////////////////////
 //Data subscriptions 
 Meteor.subscribe("directory");
 Meteor.subscribe("appointments");
 Meteor.subscribe("timeproposals");
+Meteor.subscribe("attendees");
 
 //If no party selected, select one.
 Meteor.startup(function () {
@@ -102,14 +100,14 @@ Template.dashboard.anyAppointments = function() {
   return Appointments.find({"owner": this.userId}).count() > 0;
 };
 	
-  Template.dashboard.appointments = function () {
-    if (Session.get("eventname") != null && Session.get("eventname") != "") {
-	  var regex = new RegExp(Session.get("eventname"), "i");
-	    return Appointments.find({title: regex}, { sort: {time: -1}});
-    } else {
+Template.dashboard.appointments = function () {
+  if (Session.get("eventname") != null && Session.get("eventname") != "") {
+    var regex = new RegExp(Session.get("eventname"), "i");
+      return Appointments.find({title: regex}, { sort: {time: -1}});
+  } else {
 	  return Appointments.find({}, {sort: {time: -1}});
-    }
   }
+}
   
 ///////////////////////////////////////////////////////////////////////////////
 // Template: Appointment Detail
@@ -119,6 +117,14 @@ Template.appointmentdetail.anyTimeProposal = function() {
 
 Template.appointmentdetail.timeproposals = function() {
 	return TimeProposals.find({"appointmentId": Session.get("selected")});
+};
+
+Template.appointmentdetail.anyAttendee = function() {
+	return Attendees.find({"appointmentId": Session.get("selected")}).count() > 0;
+};
+
+Template.appointmentdetail.attendees = function() {
+	return Attendees.find({"appointmentId": Session.get("selected")});
 };
 
 Template.appointmentdetail.selected = function () {
@@ -135,6 +141,9 @@ Template.appointmentdetail.events({
   },
   'click #btnTimeProposals': function( event, template) {
     openTimeProposalsDialog();
+  },
+  'click #btnAttendees': function (event, template) {
+    openAttendeesDialog();
   }
 });
   
@@ -144,12 +153,44 @@ Template.appointment.selected = function () {
   return Session.equals("selected", this._id) ? "selected" : '';
 };
   
-  Template.appointment.events({
-    'click': function () {
-    Session.set("selected", this._id);
-    }
-  });
+Template.appointment.events({
+  'click': function () {
+   Session.set("selected", this._id);
+  }
+});
 
+///////////////////////////////////////////////////////////////////////////////
+//Attendees dialog   
+var openAttendeesDialog = function () {
+  Session.set("showAttendeesDialog", true);
+};
+
+Template.page.showAttendeesDialog = function () {
+  return Session.get("showAttendeesDialog");
+};
+
+Template.attendeesDialog.events({
+	'click #btnAddAttendee': function(event, template) {
+		console.log("Adding attendee ...");
+		var name=template.find("#attendeeName").value;
+		var email=template.find("#attendeeEmail").value;
+	    if (name.length && email.length) {
+	      Meteor.call("addAttendee", Session.get("selected"), {
+	    	  name: name,
+	    	  email: email
+	    }, function (error) {
+	    	if (! error) {
+				  console.log("Attendee added successfully...");
+			  }
+	    });
+	  }
+	},
+	'click .done': function (event, template) {
+	    Session.set("showAttendeesDialog", false);
+	    return false;
+	  } 
+});
+	
 ///////////////////////////////////////////////////////////////////////////////
 //Time proposals dialog 
 var openTimeProposalsDialog = function () {
@@ -164,7 +205,6 @@ Template.timeProposalsDialog.events({
   'click #btnAddTimeProposals': function (event, template) {
     var propDate = template.find("#proposalDate").value;
 	var propTime = template.find("#proposalTime").value;
-	console.log("Date: " + propDate);
     if (propDate.length && propTime.length) {
     	console.log("Adding time proposals for event " + Session.get("selected"));
 		  Meteor.call("addTimeProposal", Session.get("selected"), {
@@ -173,14 +213,13 @@ Template.timeProposalsDialog.events({
 	  }, function (error) {
 		  if (! error) {
 			  console.log("Time proposal added successfully...");
-			  //Session.set("selected", appointment);
-			  //openTimeProposalsDialog();
 		  }
 	  });
     }
   },
   'click .done': function (event, template) {
     Session.set("showTimeProposalsDialog", false);
+    //Session.set("showAttendeesDialog", true);
     return false;
   }
 });
