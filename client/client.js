@@ -95,7 +95,13 @@ Meteor.startup(function () {
       }
     }
   });
-  
+
+///////////////////////////////////////////////////////////////////////////////
+//Template: Dashboard
+Template.dashboard.anyAppointments = function() {
+  return Appointments.find({"owner": this.userId}).count() > 0;
+};
+	
   Template.dashboard.appointments = function () {
     if (Session.get("eventname") != null && Session.get("eventname") != "") {
 	  var regex = new RegExp(Session.get("eventname"), "i");
@@ -106,7 +112,7 @@ Meteor.startup(function () {
   }
   
 ///////////////////////////////////////////////////////////////////////////////
-// Appointment Detail
+// Template: Appointment Detail
 Template.appointmentdetail.anyTimeProposal = function() {
 	return TimeProposals.find({"appointmentId": Session.get("selected")}).count() > 0;
 };

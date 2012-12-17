@@ -73,12 +73,21 @@
 </template>
 
 <template name="dashboard">
-  <div class="page-header">
-    <h1>Your Dashboard</h1>
-  </div>
+  
+  {{#unless anyAppointments }}
+    <div class="row">
+      <div class="span12">
+        <div class="alert alert-info">
+          <strong>Hola!</strong><br/> Looks like you have not created any events yet. 
+          Use the "Add Event" bar below to get started.
+        </div>
+      </div>
+    </div>
+  {{/unless }}
   
   {{> newappointment }}
   
+  {{#if anyAppointments }}
   <div class="row">
     <div class="span4">
       <h2>List of Events</h2>
@@ -92,6 +101,9 @@
       {{> appointmentdetail }}
     </div>
   </div>
+  {{/if }}
+  
+  
 </template>
 
 <template name="newappointment">
