@@ -8,3 +8,8 @@ Meteor.publish("appointments", function () {
   return Appointments.find(
     {$or: [{"public": true}, {invited: this.userId}, {owner: this.userId}]}, {sort: {createdDate: -1, title: 1}});
 });
+
+Meteor.publish("timeproposals", function () {
+  //return TimeProposals.find({owner: this.userId});
+	return TimeProposals.find({});
+});
