@@ -11,6 +11,12 @@ Appointments.allow({
   }
 });
 
+TimeProposals.allow({
+	'update': function(userId, doc) {
+		return true;
+	}
+});
+
 Meteor.methods({
   createAppointment: function (options) {
     options = options || {};

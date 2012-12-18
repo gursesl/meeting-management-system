@@ -4,10 +4,10 @@
 </head>
 
 <body>
-  {{> page }}
+  {{renderPage}}
 </body>
    
-<template name="page">
+<template name="homepage">
   {{#if showCreateDialog}}
     {{> createDialog}}
   {{/if}}
@@ -21,6 +21,16 @@
   {{/if}}
   
     	
+  {{> header }}
+  
+  <div class="container">    
+     {{> dashboard }}
+  </div>
+    
+  {{> footer }}
+</template>
+
+<template name="header">
   <div class="container">
     <div class="masthead">
       <!-- Navbar -->
@@ -57,23 +67,13 @@
 	    </div><!-- /navbar-inner -->
 	  </div><!-- /navbar -->
       </div>
-      
-      {{> appointments }}
-  </div>
-    
-  <div class="footer">
-    <p>&copy; Company & Company 2013</p>
   </div>
 </template>
 
-<template name="appointments">
-  {{#if currentUser}}
-    {{> dashboard }}
-  {{/if}}
-  
-  {{#unless currentUser}}
-    {{> landingSlider }}
-  {{/unless}}
+<template name="footer">
+ <div class="footer">
+    <p>&copy; Company & Company 2013</p>
+  </div>
 </template>
 
 <template name="dashboard">
@@ -106,7 +106,6 @@
   </div>
   {{/if }}
   
-  
 </template>
 
 <template name="newappointment">
@@ -128,11 +127,10 @@
 
 <template name="appointmentdetail">
   {{#if selected}}
-  
     <form class="form-horizontal well">
         <fieldset>
           <legend>Event Details</legend>
-          
+          	<h5>{{selected._id}}</h5>
 		    <div class="appointmentdetail">
 		      <h3 class="apttitle">{{selected.title}}</h3>
 		      <address>
@@ -149,9 +147,11 @@
 			    {{/each}}
 			  {{/if}}
 			  
+			  <hr>
+			  
 			  {{#unless anyTimeProposal }}
 		        <div class="alert alert-info">
-		          <strong>Ahoy!</strong><br/> Looks like you have not added any time proposals yet. 
+		          <strong>Time Proposals</strong><br/> You have not added any time proposals yet. 
 		          Use the "Time Proposals" button below to get started.
 		        </div>
 			  {{/unless }}
@@ -165,9 +165,10 @@
 			    {{/each}}
 			  {{/if}}
 			  
+			  <hr>
 			  {{#unless anyAttendee }}
 		        <div class="alert alert-info">
-		          <strong>Good morrow, friend!</strong><br/> Looks like you have not added any attendees yet. 
+		          <strong>Attendees</strong><br/> You have not added any attendees yet. 
 		          Use the "Attendees" button below to get started.
 		        </div>
 			  {{/unless }}
@@ -175,9 +176,9 @@
 			</div>
 	
 	   <div class="form-actions">
+         <button type="button" id="btnTimeProposals" class="btn">Time Proposals</button>
          <input type="button" class="btn" id="btnAttendees" value="Attendees" />
 	     <input type="button" class="btn" value="Edit Event Details" />
-	     <button type="button" id="btnTimeProposals" class="btn">Time Proposals</button>
        </div>
 	</fieldset>
 	</form>
@@ -186,28 +187,6 @@
   {{#unless selected}}
     <div>Click an event to view details</div>
   {{/unless}}
-  
-  
-  <!-- Time Proposals Modal -->
-  <div id="timeProposalModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-      <h3 id="myModalLabel">Manage Time Proposals</h3>
-    </div>
-  
-    <div class="modal-body">
-      <span>New time proposal:</span><input type="text" id="proposalDate" placeholder="Proposal date">
-      <input type="text" id="proposalTime" placeholder="Proposal time">
-      <a id="btnAddTimeProposal" value="Add Proposal" class="btn btn-primary btn-small">
-  	    <i class="icon-time icon-white"/>Add Proposal</a>
-    </div>
-    
-    <div class="modal-footer">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-      <button class="btn btn-primary">Save changes</button>
-    </div>
-</div>
-  
 </template>
 
 <template name="attendee">
@@ -227,6 +206,8 @@
 
 
 <template name="landingSlider">
+  {{> header }}
+  <div class="container">
   <div>
     <!-- Jumbotron -->
       <div class="jumbotron">
@@ -265,6 +246,9 @@
       <hr>
 
   </div>
+  </div>
+  
+  {{> footer }}
 </template>
 
 <template name="timeProposalsDialog">
@@ -346,3 +330,4 @@
     </div>
   </div>
 </template>
+

@@ -1,0 +1,52 @@
+<template name="invitepage">
+  <div class="container">
+  <div class="row">
+  <div class="span12">
+  <form class="form-horizontal well">
+        <fieldset>
+          <legend>Event Details</legend>
+          
+		    <div class="appointmentdetail">
+		      <h3 class="apttitle">{{selected.title}}</h3>
+		      <address>
+		        <strong>Location</strong><br>
+		        {{selected.location}}<br>
+		        <abbr title="Phone">P:</abbr> (123) 456-7890
+		      </address>
+			  
+			  <!-- Time Proposals -->
+			  {{#if anyTimeProposal }}
+			    <legend>Time Proposals</legend>
+			    {{#each timeproposals}}
+			       {{> invitetimeproposal }}
+			    {{/each}}
+			  {{/if}}
+			  
+			  <hr>
+			  
+			  {{#unless anyTimeProposal }}
+		        <div class="alert alert-block">
+		          <strong>Time Proposals</strong><br/> No time proposals found for this event. 
+		        </div>
+			  {{/unless }}
+			  
+			</div>
+	
+	   <div class="form-actions">
+         <button type="button" id="btnTimeProposals" class="btn">Time Proposals</button>
+         <input type="button" class="btn" id="btnAttendees" value="Attendees" />
+	     <input type="button" class="btn" value="Edit Event Details" />
+       </div>
+	</fieldset>
+	</form>
+	</div>
+	</div>
+	</div>
+</template>
+
+<template name="invitetimeproposal">
+  <strong>Date: </strong><span>{{date}}</span>:<span>{{time}}</span>
+  <strong>Votes: </strong><span>{{votes}}</span>
+  <a href="#" id="btnVoteTimeProposal">Vote!</a>
+  <br/>
+</template>
