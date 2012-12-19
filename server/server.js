@@ -1,5 +1,7 @@
-// Doodle -- server
+(function () {
 
+console.log("Starting Meteor server...");
+	
 Meteor.publish("directory", function () {
   return Meteor.users.find({}, {fields: {emails: 1, profile: 1}});
 });
@@ -15,3 +17,9 @@ Meteor.publish("timeproposals", function () {
 Meteor.publish("attendees", function () {
 	return Attendees.find({owner: this.userId});
 });
+
+//TimeProposals._ensureIndex({"_id" : 1, "rsvps.email" : 1}, {"unique" : true, "dropDups" : true});
+
+console.log("Started Meteor server!");
+
+}) ();

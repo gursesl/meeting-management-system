@@ -2,6 +2,16 @@ Appointments = new Meteor.Collection("appointments");
 TimeProposals = new Meteor.Collection("timeproposals");
 Attendees = new Meteor.Collection("attendees");
 
+if (Meteor.is_client) {
+	console.log("Inside client model...");
+}
+
+if (Meteor.is_server) {
+	console.log("Inside server model...");
+	TimeProposals._ensureIndex({"date" : 1, "time" : 1}, {"unique" : true, "sparse" : true});
+}
+
+
 Appointments.allow({
   insert: function (userId, appointment) {
     return false; // no cowboy inserts -- use createAppointment method
@@ -55,7 +65,8 @@ Meteor.methods({
 	    	"owner": this.userId, 
 	    	"date": options.pdate, 
 	    	"time": options.ptime, 
-	    	"votes": 0
+	    	"votes": 0,
+	    	"rsvps": []
 	    });
 	   //Appointments.update( appointment, {$push : {"timeproposals" : {"date" : options.pdate, "time": options.ptime, "votes":0}}});
   },

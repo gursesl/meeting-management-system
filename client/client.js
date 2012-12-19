@@ -261,16 +261,41 @@ Template.invitepage.timeproposals = Template.appointmentdetail.timeproposals;
 Template.invitetimeproposal.events({
 	'click #btnVoteTimeProposal': function(event, template) {
 		console.log("Proposal id voted: " + this._id);
-		TimeProposals.update(this._id, {$inc: {votes: 1}});
+		TimeProposals.update({"_id" : this._id}, {$inc: {votes: 1}});
+	},
+	'click .rateit' : function (event, template) {
+		var rateid = '#' + this._id;
+		var rating = $(rateid).rateit('value')
+		console.log( "Voted rating: " + rating);
+		
+		var userRatedAlready = TimeProposals.findOne({"_id" : this._id, "rsvps.email" : Session.get("inviteemail")});
+		console.log("Session email: " + Session.get("inviteemail") + " ---- userRatedAlready: " + userRatedAlready);
+		if (userRatedAlready) {
+		  console.log("User rating found");
+		  TimeProposals.update({"_id" : this._id, "rsvps.email" : Session.get("inviteemail")}, {$set : {"rsvps.$.rating" : rating}});
+		} else {
+			console.log("User rating not found");
+			TimeProposals.update({"_id" : this._id}, {$push : {"rsvps" : {"email" : Session.get("inviteemail"), "rating" : rating}}});
+		}
 	}
 });
 
 Template.invitetimeproposal.rendered = function () {
-	  // at .created() time, it's too early to run rateit(), so run it at rendered()
-  //$(this.findAll('.rateit')).rateit();
-  //this.findAll(".rateit").rateit();
-  console.log(this.find(".rateit"));
-  console.log("invitetimeproposal rendered!");
+  // at .created() time, it's too early to run rateit(), so run it at rendered()
+  $(this.findAll('.rateit')).rateit();
+}
+
+Template.invitetimeproposal.avgrating = function () {
+	var avgrating = TimeProposals.findOne(this._id);
+	
+	var count = 0;
+	var sum = 0;
+	avgrating.rsvps.forEach(function (entry) {
+	  sum += entry.rating;
+	  count += 1;
+	});
+	
+	return new Number(sum/count).toPrecision(3);
 }
 
 
