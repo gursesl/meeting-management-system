@@ -6,13 +6,22 @@
   },
   "dependencies": {
     "basePackages": {
-      "router": {}
+      "router": {},
+      "jquery-rateit": {
+        "git": "https://github.com/dandv/meteor-jquery-rateit.git",
+        "branch": "master"
+      }
     },
     "packages": {
       "router": {
         "git": "https://github.com/tmeasday/meteor-router.git",
         "tag": "v0.3.4",
         "commit": "8f0d5303de5b93771e91f21f818be27358c2fb30"
+      },
+      "jquery-rateit": {
+        "git": "https://github.com/dandv/meteor-jquery-rateit.git",
+        "branch": "master",
+        "commit": "7d85ce02006987ace52b4ea89da2ac2a7ea6c98d"
       },
       "page-js": {
         "git": "https://github.com/tmeasday/meteor-page-js.git",

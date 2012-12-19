@@ -5,12 +5,11 @@ Meteor.publish("directory", function () {
 });
 
 Meteor.publish("appointments", function () {
-  return Appointments.find({
-	  $or: [{"public": true}, {invited: this.userId}, {owner: this.userId}]}, {sort: {createdDate: -1, title: 1}});
+  return Appointments.find({}, {sort: {createdDate: -1, title: 1}});
 });
 
 Meteor.publish("timeproposals", function () {
-	return TimeProposals.find({owner: this.userId});
+	return TimeProposals.find({}, {sort : {"votes": 1}});
 });
 
 Meteor.publish("attendees", function () {

@@ -1,5 +1,8 @@
 {
   "packages": {
-    "router": {}
+    "router": {},
+    "jquery-rateit": {
+      "git": "https://github.com/dandv/meteor-jquery-rateit.git"
+    }
   }
 }

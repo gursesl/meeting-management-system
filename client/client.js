@@ -1,22 +1,31 @@
+"use strict";
+
+///////////////////////////////////////////////////////////////////////////////
+//Data subscriptions 
+Meteor.subscribe("directory");
+Meteor.subscribe("appointments");
+Meteor.subscribe("timeproposals");
+Meteor.subscribe("attendees");
+
 ///////////////////////////////////////////////////////////////////////////////
 //Router 
 
 Meteor.Router.add({
-    '/': 'homepage',
-    '/welcome'		: 'welcome',
-    '/features'		: 'features',
-    '/posts/:id': function(id) {
-      Session.set('postId', id);
-      return 'post';
-  },
-    '/invite/:id/:email'	: function (id) {
-    	var appointment = Appointments.findOne(this.params["id"]);
-    	if (appointment) {
-    		Session.set("selected", appointment._id);
-    		Session.set("appointment", appointment);
+    '/'						: 'homepage',
+    '/welcome'				: 'welcome',
+    '/features'				: 'features',
+    '/posts/:id'			: function(id) {
+							      Session.set('postId', id);
+							      return 'post';
+							  },
+    '/invite/:id/:email'	: function (id, email) {
+    	var appt = Appointments.findOne(id);
+    	if (appt) {
+    		Session.set("selected", appt._id);
+    		Session.set("appointment", appt);
     	}
     	
-    	Session.set("inviteemail", this.params["email"]);
+    	Session.set("inviteemail", email);
     	return "invitepage";
   }
 });
@@ -34,21 +43,21 @@ Meteor.Router.filters({
 Meteor.Router.filter('requireLogin', {only: 'homepage'});
   
 ///////////////////////////////////////////////////////////////////////////////
-//Data subscriptions 
-Meteor.subscribe("directory");
-Meteor.subscribe("appointments");
-Meteor.subscribe("timeproposals");
-Meteor.subscribe("attendees");
-
-///////////////////////////////////////////////////////////////////////////////
 //Startup 
 Meteor.startup(function () {
   Meteor.autorun(function () {
+	if (Meteor.user()) {
     if (! Session.get("selected")) {
-      var appointment = Appointments.findOne();
-      if (appointment)
+      var appointment = Appointments.findOne({"owner": Meteor.userId()}, {sort: {time: -1}});
+      console.log(appointment);
+      if (appointment) {
+        console.log("Startup: found appointment id " + appointment._id);
         Session.set("selected", appointment._id);
-    }
+      } else {
+  		  Meteor.Router.to("/");  
+  	  }
+	}
+	}
   });
 });
 
@@ -58,27 +67,27 @@ var okcancel_events = function (selector) {
   return 'keyup '+selector+', keydown '+selector+', focusout '+selector;
 }
 	
-	var make_okcancelhandler = function (options) {
-		var ok = options.ok || function () {};
-		var cancel = options.cancel || function () {};
-		
-		return function (evt) {
-			if (evt.type === "keydown" && evt.which === 27) {
-				// escape = cancel
-				cancel.call(this.evt);
-			} else if (evt.type === "keyup" && evt.which === 13) {
-				var value = String(evt.target.value || "");
-				if (value)
-					ok.call(this, value, evt);
-				else
-					cancel.call(this, evt);
-			}
-		};
+var make_okcancelhandler = function (options) {
+	var ok = options.ok || function () {};
+	var cancel = options.cancel || function () {};
+	
+	return function (evt) {
+		if (evt.type === "keydown" && evt.which === 27) {
+			// escape = cancel
+			cancel.call(this.evt);
+		} else if (evt.type === "keyup" && evt.which === 13) {
+			var value = String(evt.target.value || "");
+			if (value)
+				ok.call(this, value, evt);
+			else
+				cancel.call(this, evt);
+		}
 	};
+};
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Homepage 
-
 Template.homepage.events({
     'input input.event_search_box' : function () {
 	   if (document.getElementsByName('find_event')[0].value != null | document.getElementsByName('find_event')[0].value != "") {
@@ -130,15 +139,19 @@ Template.newappointment.events({
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Dashboard
 Template.dashboard.anyAppointments = function() {
-  return Appointments.find({"owner": this.userId}).count() > 0;
+  if (Meteor.user()) {
+    return Appointments.find({"owner": Meteor.userId()}).count() > 0;
+  } else {
+	return null;
+  }
 };
 	
 Template.dashboard.appointments = function () {
   if (Session.get("eventname") != null && Session.get("eventname") != "") {
     var regex = new RegExp(Session.get("eventname"), "i");
-      return Appointments.find({title: regex}, { sort: {time: -1}});
+      return Appointments.find({"owner": this.userId, title: regex}, { sort: {time: -1}});
   } else {
-	  return Appointments.find({}, {sort: {time: -1}});
+	  return Appointments.find({"owner": this.userId}, {sort: {time: -1}});
   }
 }
 
@@ -242,6 +255,7 @@ Template.invitepage.selected = function () {
 Template.invitepage.anyTimeProposal = Template.appointmentdetail.anyTimeProposal;
 Template.invitepage.timeproposals = Template.appointmentdetail.timeproposals;
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Invite time proposal
 Template.invitetimeproposal.events({
@@ -250,6 +264,15 @@ Template.invitetimeproposal.events({
 		TimeProposals.update(this._id, {$inc: {votes: 1}});
 	}
 });
+
+Template.invitetimeproposal.rendered = function () {
+	  // at .created() time, it's too early to run rateit(), so run it at rendered()
+  //$(this.findAll('.rateit')).rateit();
+  //this.findAll(".rateit").rateit();
+  console.log(this.find(".rateit"));
+  console.log("invitetimeproposal rendered!");
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Attendees dialog

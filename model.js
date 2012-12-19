@@ -8,6 +8,9 @@ Appointments.allow({
   },
   remove: function (userId, appointment) {
 	return ! appointment.owner != userId;
+  },
+  update: function (userId, appointment) {
+    return ! appointment.owner != userId;
   }
 });
 
@@ -33,7 +36,7 @@ Meteor.methods({
       title: options.title,
       location: options.location,
       createdDate: new Date(),
-      invited: [],
+      attendees: [],
       rsvps: [],
       timeproposals: []
     });
