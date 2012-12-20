@@ -5,7 +5,7 @@
          {{#if selected }}
            <div class="span3">
 	           <div class="page-header">
-	             <h1>Event Details</h1>
+	             	<h1>Event Details</h1>
 	           </div>
 	          
 			    <div class="appointmentdetail">
@@ -20,19 +20,19 @@
 			
               <div class="span9">
 	
-				{{#if showVotedThankYou}}
-				    {{> thankyou}}
+				{{#if showVotedThankYou }}
+				    {{> thankyou }}
 				{{/if}}
 	
 				{{#unless showVotedThankYou}}
 			  <!-- Time Proposals -->
 			  {{#if anyTimeProposal }}
-                <div class="page-header">
-                  <h1>Time Proposals</h1>
-                </div>
+				<div class="page-header">
+                  	<h1>Time Proposals</h1>
+				</div>
                 
 			    <div class="row">
-			      {{#each timeproposals}}
+			      {{#each timeproposals }}
 			        {{> invitetimeproposal }}
 			      {{/each}}
 			    </div>

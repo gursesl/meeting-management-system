@@ -8,20 +8,23 @@
 </body>
    
 <template name="homepage">
-  {{#if showCreateDialog}}
-    {{> createDialog}}
-  {{/if}}
+  	{{#if showCreateDialog }}
+    	{{> createDialog }}
+	{{/if}}
 
-  {{#if showTimeProposalsDialog}}
-    {{> timeProposalsDialog}}
-  {{/if}}
+  	{{#if showUpdateAppointmentDialog }}
+    	{{> updateAppointmentDialog }}
+	{{/if}}
+
+  	{{#if showTimeProposalsDialog }}
+    	{{> timeProposalsDialog }}
+	{{/if}}
   
-  {{#if showAttendeesDialog}}
-    {{> attendeesDialog}}
-  {{/if}}
+  	{{#if showAttendeesDialog }}
+    	{{> attendeesDialog }}
+  	{{/if}}
   
-    	
-  {{> header }}
+	{{> header }}
   
   <div class="container">    
      {{> dashboard }}
@@ -178,7 +181,7 @@
 	   <div class="form-actions">
          <button type="button" id="btnTimeProposals" class="btn">Time Proposals</button>
          <input type="button" class="btn" id="btnAttendees" value="Attendees" />
-	     <input type="button" class="btn" value="Edit Event Details" />
+	     <input type="button" class="btn" id="btnUpdateEvent" value="Update Event" />
        </div>
 	</fieldset>
 	</form>
@@ -251,6 +254,60 @@
   {{> footer }}
 </template>
 
+<template name="updateAppointmentDialog">
+  <div class="mask"> </div>
+  <div class="modal">
+    <div class="modal-header">
+      <button type="button" class="close done">&times;</button>
+      <h3>Update Event Details</h3>
+    </div>
+
+    <div class="modal-body">
+      <form class="form-horizontal well">
+        <fieldset>
+          {{#if error}}
+            <div class="alert alert-error">{{error}}</div>
+          {{/if}}
+          <legend>General Information</legend>
+          
+          	<label class="control-label" for="input01">Event title</label>
+
+          	<div class="controls">
+            	<input type="text" class="input-xlarge" id="txtAppointmentTitle" value="{{selected.title}}">
+          	</div>
+          
+          	<label class="control-label" for="input01">Location</label>
+			<div class="controls">
+            	<input type="text" class="input-xlarge" id="txtAppointmentLocation" value="{{selected.location}}">
+          	</div>
+
+			<label class="control-label" for="input01">Description</label>
+          	<div class="controls">
+            	<input type="text" class="input-xlarge" id="txtAppointmentDescription" value="{{selected.description}}">
+			</div>
+			
+			<label class="control-label" for="input01">Time proposal type</label>
+          	<div class="controls">
+				<select id="selTimeProposalType">
+					<option value="1" selected>Yes/No</option>
+					<option value="1">Star rating</option>
+				</select>
+			</div>
+  	      
+  	      	<div class="form-actions">
+            	<a  value="Add Proposal" class="btn btn-primary" id="btnUpdateAppointment">
+  	    			<i class="icon-white icon-calendar"/>Update</a>
+          	</div>
+		</fieldset>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <a href="#" class="btn btn-primary done">Next</a>
+    </div>
+  </div>
+</template>
+
 <template name="timeProposalsDialog">
   <div class="mask"> </div>
   <div class="modal">
@@ -265,7 +322,7 @@
           {{#if error}}
             <div class="alert alert-error">{{error}}</div>
           {{/if}}
-          <legend>Add Time Propsal</legend>
+          <legend>Add Time Proposal</legend>
           
           <label class="control-label" for="input01">Proposal date</label>
           <div class="controls">

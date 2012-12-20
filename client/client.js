@@ -49,9 +49,7 @@ Meteor.startup(function () {
 	if (Meteor.user()) {
     if (! Session.get("selected")) {
       var appointment = Appointments.findOne({"owner": Meteor.userId()}, {sort: {time: -1}});
-      console.log(appointment);
       if (appointment) {
-        console.log("Startup: found appointment id " + appointment._id);
         Session.set("selected", appointment._id);
       } else {
   		  Meteor.Router.to("/");  
@@ -114,7 +112,8 @@ Template.newappointment.events({
 			  if (! error) {
 				  console.log("Created successfully..." + appointment);
 				  Session.set("selected", appointment);
-				  openTimeProposalsDialog();
+				  //openTimeProposalsDialog();
+				  openUpdateAppointmentDialog();
 			  }
 		  });
 		  Session.set("showCreateDialog", false);
@@ -198,11 +197,14 @@ Template.appointmentdetail.selected = function () {
 };
   
 Template.appointmentdetail.events({
-  'click #btnTimeProposals': function( event, template) {
+  'click #btnTimeProposals' : function( event, template) {
     openTimeProposalsDialog();
   },
-  'click #btnAttendees': function (event, template) {
+  'click #btnAttendees' : function (event, template) {
     openAttendeesDialog();
+  },
+  'click #btnUpdateEvent' : function (event, template) {
+    openUpdateAppointmentDialog();  
   },
   'click .apttitle': function(event, template) {
 	  //Router.setEvent(Session.get("selected"));
@@ -223,9 +225,20 @@ var openTimeProposalsDialog = function () {
   Session.set("showTimeProposalsDialog", true);
 };
 
+///////////////////////////////////////////////////////////////////////////////
+//Update event dialog
+var openUpdateAppointmentDialog = function () {
+    Session.set("createError", null);
+    Session.set("showUpdateAppointmentDialog", true);
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
-//Homepage template
+//Template: Homepage
+Template.homepage.showUpdateAppointmentDialog = function () {
+  return Session.get("showUpdateAppointmentDialog");
+};
+
 Template.homepage.showTimeProposalsDialog = function () {
   return Session.get("showTimeProposalsDialog");
 };
@@ -233,6 +246,23 @@ Template.homepage.showTimeProposalsDialog = function () {
 Template.homepage.showAttendeesDialog = function () {
   return Session.get("showAttendeesDialog");
 };
+
+///////////////////////////////////////////////////////////////////////////////
+//Template: Update event page
+Template.updateAppointmentDialog.selected = function () {
+  return Appointments.findOne(Session.get("selected"));
+};
+
+Template.updateAppointmentDialog.events({
+	'click #btnVoteTimeProposals' : function (event, template) {
+		if (! Session.get("voted"))
+		  alert ("You have not casted a vote yet. Are you sure you want to navigate out?");
+		else {
+			Session.set("votedthankyou", true);
+		}
+	}
+});
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Invite page
