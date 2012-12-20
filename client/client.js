@@ -259,10 +259,6 @@ Template.invitepage.timeproposals = Template.appointmentdetail.timeproposals;
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Invite time proposal
 Template.invitetimeproposal.events({
-	'click #btnVoteTimeProposal': function(event, template) {
-		console.log("Proposal id voted: " + this._id);
-		TimeProposals.update({"_id" : this._id}, {$inc: {votes: 1}});
-	},
 	'click .rateit' : function (event, template) {
 		var rateid = '#' + this._id;
 		var rating = $(rateid).rateit('value')
@@ -287,7 +283,6 @@ Template.invitetimeproposal.rendered = function () {
 
 Template.invitetimeproposal.avgrating = function () {
 	var avgrating = TimeProposals.findOne(this._id);
-	
 	var count = 0;
 	var sum = 0;
 	avgrating.rsvps.forEach(function (entry) {
@@ -296,6 +291,16 @@ Template.invitetimeproposal.avgrating = function () {
 	});
 	
 	return new Number(sum/count).toPrecision(3);
+}
+
+Template.invitetimeproposal.votes = function () {
+	var rt = TimeProposals.findOne(this._id);
+	var count = 0;
+	rt.rsvps.forEach(function (entry) {
+	  count += 1;
+	});
+	
+	return count;
 }
 
 

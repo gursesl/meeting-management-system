@@ -1,10 +1,12 @@
 <template name="invitepage">
   <div class="container">
-  <div class="row">
-  <div class="span12">
-  <form class="form-horizontal well">
-        <fieldset>
-          <legend>Event Details</legend>
+    {{> header }}
+    <div class="row">
+      <div class="span12">
+         {{#if selected }}
+           <div class="page-header">
+             <h1>Event Details</h1>
+           </div>
           
 		    <div class="appointmentdetail">
 		      <h3 class="apttitle">{{selected.title}}</h3>
@@ -16,39 +18,65 @@
 			  
 			  <!-- Time Proposals -->
 			  {{#if anyTimeProposal }}
-			    <legend>Time Proposals</legend>
-			    {{#each timeproposals}}
-			       {{> invitetimeproposal }}
-			    {{/each}}
+                <div class="page-header">
+                  <h1>Time Proposals</h1>
+                </div>
+                
+                <div class="row">
+			      <div class="span12">
+			        <div class="alert alert-info">
+			          <strong>Voting for events</strong><br/> The time proposals created by the event
+			          	organizer are below. Vote for your choice of date and time by pressing on the
+			          	star ratings. You can vote for multiple time proposals. 
+			        </div>
+			      </div>
+			    </div>
+                
+			    <div class="row">
+			      {{#each timeproposals}}
+			        {{> invitetimeproposal }}
+			      {{/each}}
+			    </div>  
 			  {{/if}}
-			  
-			  <hr>
 			  
 			  {{#unless anyTimeProposal }}
 		        <div class="alert alert-block">
 		          <strong>Time Proposals</strong><br/> No time proposals found for this event. 
 		        </div>
 			  {{/unless }}
-			  
+				  
 			</div>
 	
-	   <div class="form-actions">
-         <button type="button" id="btnTimeProposals" class="btn">Time Proposals</button>
-         <input type="button" class="btn" id="btnAttendees" value="Attendees" />
-	     <input type="button" class="btn" value="Edit Event Details" />
-       </div>
-	</fieldset>
-	</form>
+			<div class="span12">
+				<hr>
+			  <center>
+			  	<a class="btn-large btn-success" href="#" id="btnVoteTimeProposals" >
+			  		<i class="icon-ok icon-white"></i> I'm finished</a>
+			  </center>
+			</div>
+         
+	{{/if }}
+	
+	{{#unless selected }}
+        <div class="alert alert-error">
+          <strong>Something went wrong!</strong><br/> We apologize for the inconvenience, but the event you're looking for cannot be found or is no longer available. Please contact the person who sent the event invitation and request a new link. 
+        </div>
+	{{/unless }}
 	</div>
 	</div>
-	</div>
+	{{> footer }}
+  </div>
 </template>
 
 <template name="invitetimeproposal">
-  <strong>Id: </strong><span>{{_id}}</span>
-  <strong>Date: </strong><span>{{date}}</span>:<span>{{time}}</span>
-  <strong>Votes: </strong><span>{{votes}}</span>
-  <a href="#" id="btnVoteTimeProposal">Vote!</a>
-     <div class="rateit" data-rateit-value="{{avgrating}}" id="{{_id}}"></div>(avg: {{avgrating}})
-  <br/>
+  <div class="span3">
+    <div class="well">
+    	<h4>Time Proposal</h4>
+		<strong>Date: </strong><span>{{date}}</span><br/>
+		<strong>Time: </strong><span>{{time}}</span><br/>
+		<h5>Votes</h5>
+		<div class="rateit" data-rateit-value="{{avgrating}}" id="{{_id}}"></div><br/>
+		({{votes}} votes, avg rating: {{avgrating}})
+    </div>
+  </div>
 </template>
