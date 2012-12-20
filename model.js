@@ -11,7 +11,6 @@ if (Meteor.is_server) {
 	TimeProposals._ensureIndex({"date" : 1, "time" : 1}, {"unique" : true, "sparse" : true});
 }
 
-
 Appointments.allow({
   insert: function (userId, appointment) {
     return false; // no cowboy inserts -- use createAppointment method

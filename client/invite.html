@@ -2,58 +2,64 @@
   <div class="container">
     {{> header }}
     <div class="row">
-      <div class="span12">
          {{#if selected }}
-           <div class="page-header">
-             <h1>Event Details</h1>
-           </div>
-          
-		    <div class="appointmentdetail">
-		      <h3 class="apttitle">{{selected.title}}</h3>
-		      <address>
-		        <strong>Location</strong><br>
-		        {{selected.location}}<br>
-		        <abbr title="Phone">P:</abbr> (123) 456-7890
-		      </address>
-			  
+           <div class="span3">
+	           <div class="page-header">
+	             <h1>Event Details</h1>
+	           </div>
+	          
+			    <div class="appointmentdetail">
+			      <h3 class="apttitle">{{selected.title}}</h3>
+			      <address>
+			        <strong>Location</strong><br>
+			        {{selected.location}}<br>
+			        <abbr title="Phone">P:</abbr> (123) 456-7890
+			      </address>
+               </div>
+             </div>
+			
+              <div class="span9">
+	
+				{{#if showVotedThankYou}}
+				    {{> thankyou}}
+				{{/if}}
+	
+				{{#unless showVotedThankYou}}
 			  <!-- Time Proposals -->
 			  {{#if anyTimeProposal }}
                 <div class="page-header">
                   <h1>Time Proposals</h1>
                 </div>
                 
-                <div class="row">
-			      <div class="span12">
-			        <div class="alert alert-info">
-			          <strong>Voting for events</strong><br/> The time proposals created by the event
-			          	organizer are below. Vote for your choice of date and time by pressing on the
-			          	star ratings. You can vote for multiple time proposals. 
-			        </div>
-			      </div>
-			    </div>
-                
 			    <div class="row">
 			      {{#each timeproposals}}
 			        {{> invitetimeproposal }}
 			      {{/each}}
-			    </div>  
+			    </div>
+
+                  <div class="alert alert-info">
+			          <strong>Voting for events</strong><br/> The time proposals created by the event
+			          	organizer are above. Vote for your choice of date and time by pressing the
+			          	star ratings widget. Your vote will be registered as soon as you click the stars and you can change it anytime by clicking the stars one more time. You can vote for multiple time proposals. 
+			        </div>  
 			  {{/if}}
 			  
-			  {{#unless anyTimeProposal }}
-		        <div class="alert alert-block">
-		          <strong>Time Proposals</strong><br/> No time proposals found for this event. 
-		        </div>
-			  {{/unless }}
-				  
-			</div>
+			  	  {{#unless anyTimeProposal }}
+			        <div class="alert alert-block">
+			          <strong>Time Proposals</strong><br/> No time proposals found for this event. 
+			        </div>
+				  {{/unless }}
+				
+					<hr>
+				  <center>
+				  	<a class="btn-large btn-success" href="#" id="btnVoteTimeProposals" >
+				  		<i class="icon-ok icon-white"></i> I'm finished</a>
+				  </center>
+				
+				
+				{{/unless }}
+				</div><!-- /span9 -->
 	
-			<div class="span12">
-				<hr>
-			  <center>
-			  	<a class="btn-large btn-success" href="#" id="btnVoteTimeProposals" >
-			  		<i class="icon-ok icon-white"></i> I'm finished</a>
-			  </center>
-			</div>
          
 	{{/if }}
 	
@@ -69,14 +75,31 @@
 </template>
 
 <template name="invitetimeproposal">
-  <div class="span3">
+  <div class="span2">
     <div class="well">
-    	<h4>Time Proposal</h4>
-		<strong>Date: </strong><span>{{date}}</span><br/>
-		<strong>Time: </strong><span>{{time}}</span><br/>
-		<h5>Votes</h5>
+		Date: <strong>{{date}}</strong><br/>
+		Time: <strong>{{time}}</strong><br/>
+		Votes:
 		<div class="rateit" data-rateit-value="{{avgrating}}" id="{{_id}}"></div><br/>
-		({{votes}} votes, avg rating: {{avgrating}})
+		<small>({{votes}} votes, avg rating: {{avgrating}})</small>
     </div>
   </div>
+</template>
+
+<template name="thankyou">
+	<div class="page-header">
+		<h1>You're done!</h1>
+		<div class="alert alert-success">
+			<strong>Thank you for casting your vote!</strong><br/> The event organizer will surely appreciate your time. You can use the form below to forward this event to invite others to vote.
+        </div>
+
+		<h2>Invite more people</h2>
+		<form class="well form-search">
+	  		<p><input type="text" id="name" placeholder="e.g. Monica Jonhson">
+			<input type="text" id="email" placeholder="e.g. monica@email.com">
+			<a id="btnAddAttendee" value="Send Invitaion" class="btn btn-primary">
+				<i class="icon-envelope icon-white"/>Send Invitation</a>
+		</form>	
+	  
+    </div>
 </template>

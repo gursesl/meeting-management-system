@@ -229,7 +229,7 @@ var openTimeProposalsDialog = function () {
 Template.homepage.showTimeProposalsDialog = function () {
   return Session.get("showTimeProposalsDialog");
 };
-	  
+
 Template.homepage.showAttendeesDialog = function () {
   return Session.get("showAttendeesDialog");
 };
@@ -255,22 +255,34 @@ Template.invitepage.selected = function () {
 Template.invitepage.anyTimeProposal = Template.appointmentdetail.anyTimeProposal;
 Template.invitepage.timeproposals = Template.appointmentdetail.timeproposals;
 
+Template.invitepage.showVotedThankYou = function() {
+    return Session.get("votedthankyou");
+}
+
+Template.invitepage.events({
+	'click #btnVoteTimeProposals' : function (event, template) {
+		if (! Session.get("voted"))
+		  alert ("You have not casted a vote yet. Are you sure you want to navigate out?");
+		else {
+			Session.set("votedthankyou", true);
+		}
+	}
+});
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Invite time proposal
 Template.invitetimeproposal.events({
 	'click .rateit' : function (event, template) {
+		Session.set("voted", true);
 		var rateid = '#' + this._id;
 		var rating = $(rateid).rateit('value')
-		console.log( "Voted rating: " + rating);
 		
 		var userRatedAlready = TimeProposals.findOne({"_id" : this._id, "rsvps.email" : Session.get("inviteemail")});
 		console.log("Session email: " + Session.get("inviteemail") + " ---- userRatedAlready: " + userRatedAlready);
 		if (userRatedAlready) {
-		  console.log("User rating found");
 		  TimeProposals.update({"_id" : this._id, "rsvps.email" : Session.get("inviteemail")}, {$set : {"rsvps.$.rating" : rating}});
 		} else {
-			console.log("User rating not found");
 			TimeProposals.update({"_id" : this._id}, {$push : {"rsvps" : {"email" : Session.get("inviteemail"), "rating" : rating}}});
 		}
 	}
