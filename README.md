@@ -11,4 +11,5 @@ System Setup
 * `cd meetme`
 * `mrt add`
 * `mrt run`
-* Launch a browser and navigate to http://localhost:3000
+* Launch a browser and navigate to [http://localhost:3000](http://localhost:3000)
+
