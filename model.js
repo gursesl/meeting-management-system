@@ -16,7 +16,7 @@ Appointments.allow({
     return false; // no cowboy inserts -- use createAppointment method
   },
   remove: function (userId, appointment) {
-	return ! appointment.owner != userId;
+	  return ! appointment.owner != userId;
   },
   update: function (userId, appointment) {
     return ! appointment.owner != userId;
@@ -44,11 +44,26 @@ Meteor.methods({
       owner: this.userId,
       title: options.title,
       location: options.location,
+      description: null,
+      proposalType: 1,
       createdDate: new Date(),
       attendees: [],
       rsvps: [],
       timeproposals: []
     });
+  },
+  
+  updateAppointment: function (options) {
+    options = options || {};
+    if (! (typeof options.title === "string" && options.title.length &&
+    		typeof options.location === "string" && options.location.length))
+    throw new Meteor.Error(400, "Required parameter missing.");
+    if (options.title.length > 200)
+      throw new Meteor.Error(413, "Event title too long.");
+    if (! this.userId)
+      throw new Meteor.Error(403, "You must be logged in to create events.");
+    
+      Appointments.update({"_id" : options.id}, {$set : {"title" : options.title, "location" : options.location, "description" : options.description, "proposalType" : options.proposalType}});
   },
   
   addTimeProposal: function (appointment, options) {

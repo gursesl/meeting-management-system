@@ -85,7 +85,7 @@
     <div class="row">
       <div class="span12">
         <div class="alert alert-info">
-          <strong>Hola!</strong><br/> Looks like you have not created any events yet. 
+          <strong>Add Events</strong><br/> Looks like you have not created any events yet. 
           Use the "Add Event" bar below to get started.
         </div>
       </div>
@@ -136,6 +136,7 @@
           	<h5>{{selected._id}}</h5>
 		    <div class="appointmentdetail">
 		      <h3 class="apttitle">{{selected.title}}</h3>
+				<p>{{selected.description}}</p>
 		      <address>
 		        <strong>Location</strong><br>
 		        {{selected.location}}<br>
@@ -149,8 +150,6 @@
 			       {{> timeproposal }}
 			    {{/each}}
 			  {{/if}}
-			  
-			  <hr>
 			  
 			  {{#unless anyTimeProposal }}
 		        <div class="alert alert-info">
@@ -181,7 +180,7 @@
 	   <div class="form-actions">
          <button type="button" id="btnTimeProposals" class="btn">Time Proposals</button>
          <input type="button" class="btn" id="btnAttendees" value="Attendees" />
-	     <input type="button" class="btn" id="btnUpdateEvent" value="Update Event" />
+	     <input type="button" class="btn" id="btnUpdateEvent" value="Edit Event" />
        </div>
 	</fieldset>
 	</form>
@@ -259,7 +258,7 @@
   <div class="modal">
     <div class="modal-header">
       <button type="button" class="close done">&times;</button>
-      <h3>Update Event Details</h3>
+      <h3>Edit Event</h3>
     </div>
 
     <div class="modal-body">
@@ -270,30 +269,29 @@
           {{/if}}
           <legend>General Information</legend>
           
-          	<label class="control-label" for="input01">Event title</label>
-
+          	<label class="control-label" for="title">Event title</label>
           	<div class="controls">
-            	<input type="text" class="input-xlarge" id="txtAppointmentTitle" value="{{selected.title}}">
+            	<input type="text" class="input-xlarge" id="txttitle" value="{{selected.title}}" required>
           	</div>
           
-          	<label class="control-label" for="input01">Location</label>
+          	<label class="control-label" for="location">Location</label>
 			<div class="controls">
-            	<input type="text" class="input-xlarge" id="txtAppointmentLocation" value="{{selected.location}}">
+            	<input type="text" class="input-xlarge" id="txtlocation" value="{{selected.location}}" required>
           	</div>
 
 			<label class="control-label" for="input01">Description</label>
           	<div class="controls">
-            	<input type="text" class="input-xlarge" id="txtAppointmentDescription" value="{{selected.description}}">
+				<textarea rows="5" id="txtdescription" class="input-xlarge">{{selected.description}}</textarea>
 			</div>
 			
 			<label class="control-label" for="input01">Time proposal type</label>
           	<div class="controls">
-				<select id="selTimeProposalType">
-					<option value="1" selected>Yes/No</option>
-					<option value="1">Star rating</option>
+				<select id="proposalType" class="input-medium">
+					<option value="1">Yes/No</option>
+					<option value="2" selected>Star rating</option>
 				</select>
 			</div>
-  	      
+
   	      	<div class="form-actions">
             	<a  value="Add Proposal" class="btn btn-primary" id="btnUpdateAppointment">
   	    			<i class="icon-white icon-calendar"/>Update</a>
@@ -303,7 +301,7 @@
     </div>
 
     <div class="modal-footer">
-      <a href="#" class="btn btn-primary done">Next</a>
+      <a href="#" class="btn btn-primary done">Done</a>
     </div>
   </div>
 </template>
@@ -326,12 +324,12 @@
           
           <label class="control-label" for="input01">Proposal date</label>
           <div class="controls">
-            <input type="text" class="input-xlarge" id="proposalDate" placeholder="e.g. 12/24/12">
+            <input type="text" class="input-medium" id="proposalDate" placeholder="e.g. 2/24/13" type="date">
           </div>
           
           <label class="control-label" for="input01">Proposal time</label>
           <div class="controls">
-            <input type="text" class="input-xlarge" id="proposalTime" placeholder="e.g. 10:30am">
+            <input type="text" class="input-medium" id="proposalTime" placeholder="e.g. 10:30am">
           </div>
   	      
   	      <div class="form-actions">
@@ -371,7 +369,7 @@
           
           <label class="control-label" for="input01">Email</label>
           <div class="controls">
-            <input type="text" class="input-xlarge" id="attendeeEmail" placeholder="e.g. monica@email.com">
+            <input type="text" class="input-xlarge" id="attendeeEmail" placeholder="e.g. monica@email.com" type="email">
           </div>
                 
           <div class="form-actions">

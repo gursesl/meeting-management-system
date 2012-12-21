@@ -260,7 +260,32 @@ Template.updateAppointmentDialog.events({
 		else {
 			Session.set("votedthankyou", true);
 		}
-	}
+	},
+	'click .done': function (event, template) {
+	    Session.set("showUpdateAppointmentDialog", false);
+	    return false;
+	  },
+    'click #btnUpdateAppointment' : function (event, template) {
+      console.log("updating event");
+      
+       var title = template.find("#txttitle").value;
+       var location = template.find("#txtlocation").value;
+       var description = template.find("#txtdescription").value;
+       var proposalType = template.find("#proposalType").value;
+  		  if (title.length && location.length) {
+  			  Meteor.call("updateAppointment", {
+  			    id: Session.get("selected"),
+  				  title: title,
+  				  location: location,
+  				  description: description,
+  				  proposalType: proposalType
+  		  }, function (error, appointment) {
+  			  if (! error) {
+  				  console.log("Updated successfully..." + appointment);
+  			  }
+  		  });
+      }
+    }
 });
 
 
@@ -376,7 +401,8 @@ Template.attendeesDialog.error = function() {
   return Session.get("createError");	
 };
 
-
+///////////////////////////////////////////////////////////////////////////////
+//Template: Time proposals dialog
 Template.timeProposalsDialog.events({
   'click #btnAddTimeProposals': function (event, template) {
     var propDate = template.find("#proposalDate").value;
@@ -405,3 +431,10 @@ Template.timeProposalsDialog.events({
 Template.timeProposalsDialog.error = function() {
   return Session.get("createError");	
 };
+
+Template.timeProposalsDialog.rendered = function () {
+  $('.timepicker-default').timepicker({
+    "showInputs" : true,
+    "defaultTime" : 'current'
+  });
+}
