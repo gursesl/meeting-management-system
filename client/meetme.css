@@ -5,8 +5,9 @@ input#location {
 
 .aptlist {
     cursor: pointer;
-    padding: 10px;
-    height: 50px;
+    padding: 16px;
+    margin: 10px 0px;
+    height: 60px;
 }
 
 .aptlist:hover {
@@ -14,27 +15,29 @@ input#location {
     background-color: #eee;
 }
 
+.eventlist {
+
+}
+
 .aptlist .title {
-	float: left;
-	display: block;
+	  float: left;
     font-weight: bold;
     font-size: 1.0em;
 }
 
 .aptlist .location {
-	float: left;
+	  float: left;
     display: block;
     font-size: 0.8em;
     color: #777;
 }
 
 .aptlist .actions {
-  display: block;
+    display: block;
     width: 20px;
     font-size: 1.0em;
     float: left;
 }
-
 
 .aptlist.selected {
     background-color: #eee;

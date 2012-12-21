@@ -163,12 +163,21 @@ Template.appointment.selected = function () {
   
 Template.appointment.events({
   'click': function () {
-   Session.set("selected", this._id);
+    Session.set("selected", this._id);
   },
-  'click #btnMsgDelete' : function(event, template) {
-  	Appointments.remove(this._id);
-  	Session.set("selected", null);
-  	return false;
+  'click #linkTimeProposals' : function( event, template) {
+    openTimeProposalsDialog();
+  },
+  'click #linkAttendees' : function (event, template) {
+    openAttendeesDialog();
+  },
+  'click #linkUpdateEvent' : function (event, template) {
+    openUpdateAppointmentDialog();  
+  },
+  'click #linkDeleteEvent' : function (event, template) {
+    	Appointments.remove(Session.get("selected"));
+    	Session.set("selected", null);
+    	return false;
   }
 });
 
@@ -196,7 +205,7 @@ Template.appointmentdetail.selected = function () {
 };
   
 Template.appointmentdetail.events({
-  'click #btnTimeProposals' : function( event, template) {
+  'click .btnTimeProposals' : function( event, template) {
     openTimeProposalsDialog();
   },
   'click #btnAttendees' : function (event, template) {
