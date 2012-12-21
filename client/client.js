@@ -166,7 +166,6 @@ Template.appointment.events({
    Session.set("selected", this._id);
   },
   'click #btnMsgDelete' : function(event, template) {
-  	console.log ("Deleting appointment with ID: " + this._id);
   	Appointments.remove(this._id);
   	Session.set("selected", null);
   	return false;
@@ -206,8 +205,10 @@ Template.appointmentdetail.events({
   'click #btnUpdateEvent' : function (event, template) {
     openUpdateAppointmentDialog();  
   },
-  'click .apttitle': function(event, template) {
-	  //Router.setEvent(Session.get("selected"));
+  'click #btnDeleteEvent' : function (event, template) {
+    	Appointments.remove(Session.get("selected"));
+    	Session.set("selected", null);
+    	return false;
   }
 });
   
@@ -284,6 +285,9 @@ Template.updateAppointmentDialog.events({
   				  console.log("Updated successfully..." + appointment);
   			  }
   		  });
+  		  Session.set("showUpdateAppointmentDialog", false);
+      } else {
+        Session.set("updateError", "A title and location is needed to update an event.");
       }
     }
 });
@@ -406,12 +410,12 @@ Template.attendeesDialog.error = function() {
 Template.timeProposalsDialog.events({
   'click #btnAddTimeProposals': function (event, template) {
     var propDate = template.find("#proposalDate").value;
-	var propTime = template.find("#proposalTime").value;
+	  var propTime = template.find("#proposalTime").value;
     if (propDate.length && propTime.length) {
     	console.log("Adding time proposals for event " + Session.get("selected"));
 		  Meteor.call("addTimeProposal", Session.get("selected"), {
 		    pdate: propDate,
-			ptime: propTime
+			  ptime: propTime
 	  }, function (error) {
 		  if (! error) {
 			  console.log("Time proposal added successfully...");
@@ -423,7 +427,6 @@ Template.timeProposalsDialog.events({
   },
   'click .done': function (event, template) {
     Session.set("showTimeProposalsDialog", false);
-    //Session.set("showAttendeesDialog", true);
     return false;
   }
 });
@@ -432,9 +435,10 @@ Template.timeProposalsDialog.error = function() {
   return Session.get("createError");	
 };
 
-Template.timeProposalsDialog.rendered = function () {
-  $('.timepicker-default').timepicker({
-    "showInputs" : true,
-    "defaultTime" : 'current'
-  });
+Template.timeProposalsDialog.rendered=function() {
+    $('#proposalDate').datepicker({
+      format: 'mm/dd/yyyy',
+      todayBtn: true,
+      autoclose: true
+    });
 }

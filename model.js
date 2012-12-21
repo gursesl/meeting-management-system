@@ -44,7 +44,7 @@ Meteor.methods({
       owner: this.userId,
       title: options.title,
       location: options.location,
-      description: null,
+      description: '',
       proposalType: 1,
       createdDate: new Date(),
       attendees: [],
