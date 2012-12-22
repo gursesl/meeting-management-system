@@ -203,15 +203,19 @@ Template.appointmentdetail.attendees = function() {
 Template.appointmentdetail.selected = function () {
   return Appointments.findOne(Session.get("selected"));
 };
+
+Template.appointmentdetail.path = function () {
+  return Meteor.absoluteUrl("invite/" + Session.get("selected") + "/anon");
+};
   
 Template.appointmentdetail.events({
   'click .btnTimeProposals' : function( event, template) {
     openTimeProposalsDialog();
   },
-  'click #btnAttendees' : function (event, template) {
+  'click .btnAttendees' : function (event, template) {
     openAttendeesDialog();
   },
-  'click #btnUpdateEvent' : function (event, template) {
+  'click .btnUpdateEvent' : function (event, template) {
     openUpdateAppointmentDialog();  
   },
   'click #btnDeleteEvent' : function (event, template) {
@@ -220,6 +224,75 @@ Template.appointmentdetail.events({
     	return false;
   }
 });
+
+///////////////////////////////////////////////////////////////////////////////
+//Template: Time proposal
+Template.timeproposal.events({
+  'click #linkDeleteTimeProposal' : function (event, template) {
+		TimeProposals.remove(this._id);
+  },
+  'click #linkEditTimeProposal' : function (event, template) {
+    Session.set("edittimeproposal", true);
+    Session.set("selectedtimeproposal", this._id);
+  },
+  'click #linkSaveProposal' : function (event, template) {
+    var date = template.find("#txtNewPropsalDate").value;
+    var time = template.find("#txtNewPropsalTime").value;
+    if (date.length && time.length) {
+			  Meteor.call("updateTimeProposal", {
+			    id: this._id,
+				  date: date,
+				  time: time
+		  }, function (error, appointment) {
+			  if (! error) {
+				  console.log("Updated time proposal successfully..." + appointment);
+			  }
+		  });
+		  Session.set("edittimeproposal", false);
+      Session.set("selectedtimeproposal", null);
+    } else {
+      Session.set("updateError", "A date and time is needed to update an time proposal.");
+    }
+  },
+  'click #linkCancelSaveProposal' : function (event, template) {
+    Session.set("edittimeproposal", false);
+    Session.set("selectedtimeproposal", null);
+  }
+});
+
+Template.timeproposal.edittimepropsal = function() {
+  return Session.get("edittimeproposal") && (Session.get("selectedtimeproposal") == this._id);
+}
+
+Template.timeproposal.rendered = function () {
+  // at .created() time, it's too early to run rateit(), so run it at rendered()
+  $(this.findAll('.rateit')).rateit({
+    readonly: true
+  });
+}
+
+Template.timeproposal.avgrating = function () {
+	var avgrating = TimeProposals.findOne(this._id);
+	var count = 0;
+	var sum = 0;
+	avgrating.rsvps.forEach(function (entry) {
+	  sum += entry.rating;
+	  count += 1;
+	});
+	
+	return new Number(sum/count).toPrecision(3);
+}
+
+Template.timeproposal.votes = function () {
+	var rt = TimeProposals.findOne(this._id);
+	var count = 0;
+	rt.rsvps.forEach(function (entry) {
+	  count += 1;
+	});
+	
+	return count;
+}
+
   
 ///////////////////////////////////////////////////////////////////////////////
 //Attendees dialog
@@ -276,8 +349,6 @@ Template.updateAppointmentDialog.events({
 	    return false;
 	  },
     'click #btnUpdateAppointment' : function (event, template) {
-      console.log("updating event");
-      
        var title = template.find("#txttitle").value;
        var location = template.find("#txtlocation").value;
        var description = template.find("#txtdescription").value;

@@ -24,8 +24,11 @@ Appointments.allow({
 });
 
 TimeProposals.allow({
-	'update': function(userId, doc) {
+	update: function(userId, doc) {
 		return true;
+	},
+	remove: function () {
+	  return true;
 	}
 });
 
@@ -83,6 +86,17 @@ Meteor.methods({
 	    	"rsvps": []
 	    });
 	   //Appointments.update( appointment, {$push : {"timeproposals" : {"date" : options.pdate, "time": options.ptime, "votes":0}}});
+  },
+  
+  updateTimeProposal: function (options) {
+	  options = options || {};
+    if (! (typeof options.date === "string" && options.date.length &&
+	    typeof options.time === "string" && options.time.length))
+	       throw new Meteor.Error(400, "Required parameter missing.");
+    if (! this.userId)
+      throw new Meteor.Error(403, "You must be logged in to add time proposals.");
+	   
+	    TimeProposals.update({"_id" : options.id}, {$set : {"date" : options.date, "time" : options.time}});
   },
   
   addAttendee: function(appointment, options) {
