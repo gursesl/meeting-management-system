@@ -138,7 +138,7 @@
   {{#if selected}}
     <form class="form-horizontal well">
         <fieldset>
-          <h3 class="apttitle">{{selected.title}} <small>| <a href="#" class="btnUpdateEvent" value="Edit">Edit</a> | <a class="btnDeleteEvent">Delete Event</a></small></h3>
+          <h3 class="apttitle">{{selected.title}} <small>| <a href="#" class="btnUpdateEvent" value="Edit">Edit</a> | <a href="#" class="btnDeleteEvent">Delete Event</a></small></h3>
 
 		    <div class="appointmentdetail">
 				<p>{{selected.description}}</p>
@@ -152,7 +152,7 @@
 			  
 			  <!-- Time Proposals -->
 			  {{#if anyTimeProposal }}
-			    <legend>Time Proposals <small>| <a class="btnTimeProposals">Add Time Proposal</a></small></legend>
+			    <legend>Time Proposals <small>| <a href="#" class="btnTimeProposals">Add Time Proposal</a></small></legend>
 				<div class="row">
 			    {{#each timeproposals}}
 			       {{> timeproposal }}
@@ -170,7 +170,7 @@
 			  
 			  <!-- Attendees -->
 			  {{#if anyAttendee }}
-			    <legend>Attendees  <small>| <a href="#" class="btnAttendees" value="Attendees">Add Attendee</a></small> </legend>
+			    <legend>Attendees  <small>| <a href="#" class="btnAttendees" value="Attendees">Add Attendee</a> | <a href="#" class="linkSendInvites" value="Send Invites">Send Invites</a></small> </legend>
 				<div class="row">
 			    {{#each attendees}}
 			       {{> attendee }}
@@ -207,9 +207,19 @@
 <template name="attendee">
 	<div class="span3">
 		<div class="well">
-  		<strong>{{name}}</strong> <<a href="#">{{email}}</a>><br/>
-			Invited: <strong>{{invited}}</strong> Voted: <strong>{{invited}}</strong><br/>
+		{{#unless editattendee}}
+  			<strong>{{name}}</strong><br/>
+			<small><a href="#">{{email}}</a></small><br/>
+			Invited: <strong>{{invited}}</strong> Voted: <strong>{{voted}}</strong><br/>
 			<small><a href="#" class="linkDeleteAttendee">Delete</a> | <a href="#" class="linkEditAttendee">Edit</a> | <a href="#" class="linkSendInvitation">Send Invitation</a></small>
+
+		{{/unless }}
+		
+		{{#if editattendee}}
+			<input type="text" class="input-large" id="txtNewAttendeeName" value="{{name}}"><br/>
+			<input type="text" class="input-large" id="txtNewAttendeeEmail" value="{{email}}"><br/>
+			<small><a href="#" class="linkCancelSave">Cancel</a> | <a href="#" class="linkSave">Save</a></small>
+		{{/if }}
 		</div>
 	</div>
 </template>
@@ -217,29 +227,24 @@
 <!-- Template: Time Proposal Box -->
 <template name="timeproposal">
 	<div class="span2">
-		
+		<div class="well">
 		{{#unless edittimepropsal}}
-	    <div class="well">
 			<div class="timepropitem">Date: <strong>{{date}}</strong></div>
 			<div class="timepropitem">Time: <strong>{{time}}</strong></div>
 			Votes:
 			<div class="rateit" data-rateit-value="{{avgrating}}" id="{{_id}}"></div><br/>
 			<small>({{votes}} votes, avg rating: {{avgrating}})</small><br/>
 			<small><a href="#" id="linkDeleteTimeProposal">Delete</a> | <a href="#" id="linkEditTimeProposal">Edit</a>
-		</div>
 		{{/unless}}
 		
 		{{#if edittimepropsal}}
-			<div class="well">
-				<input type="text" class="input-small" id="txtNewPropsalDate" value="{{date}}"><br/>
-				<input type="text" class="input-small" id="txtNewPropsalTime" value="{{time}}"><br/>
-				Votes:
-				<div class="rateit" data-rateit-value="{{avgrating}}" id="{{_id}}"></div><br/>
-				<small>({{votes}} votes, avg rating: {{avgrating}})</small><br/>
-				<small><a href="#" id="linkCancelSaveProposal">Cancel</a> | <a href="#" id="linkSaveProposal">Save</a></small>
-			</div>
+			<input type="text" class="input-small" id="txtNewPropsalDate" value="{{date}}"><br/>
+			<input type="text" class="input-small" id="txtNewPropsalTime" value="{{time}}"><br/>
+			Votes: <div class="rateit" data-rateit-value="{{avgrating}}" id="{{_id}}"></div><br/>
+			<small>({{votes}} votes, avg rating: {{avgrating}})</small><br/>
+			<small><a href="#" class="linkCancelSave">Cancel</a> | <a href="#" class="linkSave">Save</a></small>
 		{{/if}}
-		
+		</div>
 	</div>
 </template>
 
@@ -367,8 +372,7 @@
           </div>
   	      
   	      <div class="form-actions">
-            <a  value="Add Proposal" class="btn btn-primary" id="btnAddTimeProposals">
-  	    	<i class="icon-time icon-white"/>Add Proposal</a>
+            <a  value="Add Proposal" class="btn btn-primary" id="btnAddTimeProposals">Add Proposal</a>
           </div>
             </fieldset>
           </form>
@@ -407,8 +411,7 @@
           </div>
                 
           <div class="form-actions">
-            <a  value="Add Attendee" class="btn btn-primary" id="btnAddAttendee">
-  	    	<i class="icon-user icon-white"/>Add Attendee</a>
+            <a  value="Add Attendee" class="btn btn-primary" id="btnAddAttendee">Add Attendee</a>
           </div>
             </fieldset>
           </form>

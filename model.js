@@ -121,7 +121,19 @@ Meteor.methods({
 	    "owner": this.userId, 
 	    "name": options.name, 
 	    "email": options.email,
-	    "invited": false
+	    "invited": false,
+	    "voted" : false
 	  });
-  }
+  },
+  
+  updateAttendee: function (options) {
+ 	  options = options || {};
+     if (! (typeof options.name === "string" && options.name.length &&
+ 	    typeof options.email === "string" && options.email.length))
+ 	       throw new Meteor.Error(400, "Required parameter missing.");
+     if (! this.userId)
+       throw new Meteor.Error(403, "You must be logged in to add time proposals.");
+
+ 	    Attendees.update({"_id" : options.id}, {$set : {"name" : options.name, "email" : options.email}});
+   },
 });

@@ -158,17 +158,49 @@ Template.dashboard.appointments = function () {
 //Template: Attendee
   
 Template.attendee.events({
-  'click .linkDeleteAttendee' : function( event, template) {
-    //Delete attendee
-    Attendees.remove(this._id);
-  },
-  'click .linkEditAttendee' : function (event, template) {
-    //Update attendee
-  },
-  'click .linkSendInvitation' : function (event, template) {
-    //Send invitation
-  }
+    'click .linkDeleteAttendee' : function( event, template) {
+      Attendees.remove(this._id);
+    },
+    'click .linkEditAttendee' : function (event, template) {
+      Session.set("editattendee", true);
+      Session.set("selectedattendee", this._id);
+    },
+    'click .linkSendInvitation' : function (event, template) {
+      console.log("Emailing invitation to " + this.name + " <" + this.email + ">");
+    },
+    'click .linkSave' : function (event, template) {
+      saveAttendee(event, template);
+    },
+    'click .linkCancelSave' : function (event, template) {
+      Session.set("editattendee", false);
+      Session.set("selectedattendee", null);
+    }
 });
+
+Template.attendee.editattendee = function () {
+  return Session.get("editattendee") && (Session.get("selectedattendee") == this._id);
+}
+
+var saveAttendee = function (event, template) {
+  var name = template.find("#txtNewAttendeeName").value;
+  var email = template.find("#txtNewAttendeeEmail").value;
+  if (name.length && email.length) {
+		  Meteor.call("updateAttendee", {
+		    id: template.data._id,
+			  name: name,
+			  email: email
+	  }, function (error, attendee) {
+		  if (! error) {
+			  console.log("Attendee saved" + attendee);
+		  }
+	  });
+	  Session.set("editattendee", false);
+    Session.set("selectedattendee", null);
+  } else {
+    Session.set("updateError", "A name and email is required to update an attendee.");
+  }
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Appointment
@@ -238,6 +270,9 @@ Template.appointmentdetail.events({
     	Appointments.remove(Session.get("selected"));
     	Session.set("selected", null);
     	return false;
+  },
+  'click .linkSendInvites' : function (event, template) {
+    console.log("Emailing invitations to all attendees...");
   }
 });
 
@@ -251,10 +286,10 @@ Template.timeproposal.events({
     Session.set("edittimeproposal", true);
     Session.set("selectedtimeproposal", this._id);
   },
-  'click #linkSaveProposal' : function (event, template) {
+  'click .linkSave' : function (event, template) {
     saveTimeProposal(event, template);
   },
-  'click #linkCancelSaveProposal' : function (event, template) {
+  'click .linkCancelSave' : function (event, template) {
     Session.set("edittimeproposal", false);
     Session.set("selectedtimeproposal", null);
   },
