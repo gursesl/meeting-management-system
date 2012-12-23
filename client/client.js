@@ -155,6 +155,22 @@ Template.dashboard.appointments = function () {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+//Template: Attendee
+  
+Template.attendee.events({
+  'click .linkDeleteAttendee' : function( event, template) {
+    //Delete attendee
+    Attendees.remove(this._id);
+  },
+  'click .linkEditAttendee' : function (event, template) {
+    //Update attendee
+  },
+  'click .linkSendInvitation' : function (event, template) {
+    //Send invitation
+  }
+});
+
+///////////////////////////////////////////////////////////////////////////////
 //Template: Appointment
 Template.appointment.selected = function () {
   //Router.setEvent(Session.get("selected"));
@@ -218,7 +234,7 @@ Template.appointmentdetail.events({
   'click .btnUpdateEvent' : function (event, template) {
     openUpdateAppointmentDialog();  
   },
-  'click #btnDeleteEvent' : function (event, template) {
+  'click .btnDeleteEvent' : function (event, template) {
     	Appointments.remove(Session.get("selected"));
     	Session.set("selected", null);
     	return false;
@@ -236,27 +252,15 @@ Template.timeproposal.events({
     Session.set("selectedtimeproposal", this._id);
   },
   'click #linkSaveProposal' : function (event, template) {
-    var date = template.find("#txtNewPropsalDate").value;
-    var time = template.find("#txtNewPropsalTime").value;
-    if (date.length && time.length) {
-			  Meteor.call("updateTimeProposal", {
-			    id: this._id,
-				  date: date,
-				  time: time
-		  }, function (error, appointment) {
-			  if (! error) {
-				  console.log("Updated time proposal successfully..." + appointment);
-			  }
-		  });
-		  Session.set("edittimeproposal", false);
-      Session.set("selectedtimeproposal", null);
-    } else {
-      Session.set("updateError", "A date and time is needed to update an time proposal.");
-    }
+    saveTimeProposal(event, template);
   },
   'click #linkCancelSaveProposal' : function (event, template) {
     Session.set("edittimeproposal", false);
     Session.set("selectedtimeproposal", null);
+  },
+  'click .timepropitem' : function (event, template) {
+    Session.set("edittimeproposal", true);
+    Session.set("selectedtimeproposal", this._id);
   }
 });
 
@@ -268,6 +272,12 @@ Template.timeproposal.rendered = function () {
   // at .created() time, it's too early to run rateit(), so run it at rendered()
   $(this.findAll('.rateit')).rateit({
     readonly: true
+  });
+  
+  $('#txtNewPropsalDate').datepicker({
+    format: 'mm/dd/yyyy',
+    todayBtn: true,
+    autoclose: true
   });
 }
 
@@ -291,6 +301,26 @@ Template.timeproposal.votes = function () {
 	});
 	
 	return count;
+}
+
+var saveTimeProposal = function (event, template) {
+  var date = template.find("#txtNewPropsalDate").value;
+  var time = template.find("#txtNewPropsalTime").value;
+  if (date.length && time.length) {
+		  Meteor.call("updateTimeProposal", {
+		    id: template.data._id,
+			  date: date,
+			  time: time
+	  }, function (error, appointment) {
+		  if (! error) {
+			  console.log("Updated time proposal successfully..." + appointment);
+		  }
+	  });
+	  Session.set("edittimeproposal", false);
+    Session.set("selectedtimeproposal", null);
+  } else {
+    Session.set("updateError", "A date and time is needed to update an time proposal.");
+  }
 }
 
   

@@ -15,10 +15,9 @@ accounts-password
 coffeescript
 backbone
 router
-jquery-rateit
-bootstrap-updated
-jquery-ui
 bootstrap-with-font-awesome
+cookie
 bootstrap-datepicker
 foundation-icons-general
-cookie
+page-js
+jquery-rateit

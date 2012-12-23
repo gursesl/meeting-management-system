@@ -122,8 +122,7 @@
   <form class="well form-search">
   <p><input type="text" id="title" placeholder="Event title">
   <input type="text" id="location" placeholder="Location (e.g. 1600 American Dream Way, Reston, VA 20122)">
-  <a id="btnAddEvent" value="Add Event" class="btn btn-primary">
-  	<i class="icon-calendar icon-white"/>Add Event</a>
+  <a id="btnAddEvent" value="Add Event" class="btn btn-primary">Add Event</a>
   </form>	
 </template>
 
@@ -139,7 +138,7 @@
   {{#if selected}}
     <form class="form-horizontal well">
         <fieldset>
-          <h3 class="apttitle">{{selected.title}} <small><a href="#" class="btnUpdateEvent" value="Edit">Edit</a> | <a href="#" class="btnAttendees" value="Attendees">Attendees</a></small></h3>
+          <h3 class="apttitle">{{selected.title}} <small>| <a href="#" class="btnUpdateEvent" value="Edit">Edit</a> | <a class="btnDeleteEvent">Delete Event</a></small></h3>
 
 		    <div class="appointmentdetail">
 				<p>{{selected.description}}</p>
@@ -153,7 +152,7 @@
 			  
 			  <!-- Time Proposals -->
 			  {{#if anyTimeProposal }}
-			    <legend>Time Proposals</legend>
+			    <legend>Time Proposals <small>| <a class="btnTimeProposals">Add Time Proposal</a></small></legend>
 				<div class="row">
 			    {{#each timeproposals}}
 			       {{> timeproposal }}
@@ -171,10 +170,12 @@
 			  
 			  <!-- Attendees -->
 			  {{#if anyAttendee }}
-			    <legend>Attendees</legend>
+			    <legend>Attendees  <small>| <a href="#" class="btnAttendees" value="Attendees">Add Attendee</a></small> </legend>
+				<div class="row">
 			    {{#each attendees}}
 			       {{> attendee }}
 			    {{/each}}
+				</div>
 			  {{/if}}
 			  
 			  <hr>
@@ -188,11 +189,10 @@
 			</div>
 	
 		<div class="form-actions">
-         	<button type="button" class="btn btnTimeProposals">Time Proposals</button>
-         	<input type="button" class="btn" class="btnAttendees" value="Attendees" />
-	     	<input type="button" class="btn" class="btnUpdateEvent" value="Edit Event" />
-			<a  value="Delete Event" class="btn btn-primary" id="btnDeleteEvent">
-    			<i class="icon-white icon-trash"/>Delete Event</a>
+         	<a class="btn btnTimeProposals">Time Proposals</a>
+         	<a class="btn btnAttendees" value="Attendees">Add Attendee</a>
+	     	<a class="btn btnUpdateEvent" value="Edit Event">Edit</a>
+			<a class="btn btnDeleteEvent">Delete Event</a>
        	</div>
 	</fieldset>
 	</form>
@@ -203,12 +203,15 @@
   {{/unless}}
 </template>
 
+<!-- Template: Attendee -->
 <template name="attendee">
-  <strong>Name: </strong><span>{{name}}</span>
-  <strong>Email: </strong><span>{{email}}</span>
-  <strong>Invitation sent: </strong><span>{{invited}}</span>
-  <button id="btnAttendeeDelete" class="close">&times;</button>
-  <br/>
+	<div class="span3">
+		<div class="well">
+  		<strong>{{name}}</strong> <<a href="#">{{email}}</a>><br/>
+			Invited: <strong>{{invited}}</strong> Voted: <strong>{{invited}}</strong><br/>
+			<small><a href="#" class="linkDeleteAttendee">Delete</a> | <a href="#" class="linkEditAttendee">Edit</a> | <a href="#" class="linkSendInvitation">Send Invitation</a></small>
+		</div>
+	</div>
 </template>
 
 <!-- Template: Time Proposal Box -->
@@ -233,7 +236,7 @@
 				Votes:
 				<div class="rateit" data-rateit-value="{{avgrating}}" id="{{_id}}"></div><br/>
 				<small>({{votes}} votes, avg rating: {{avgrating}})</small><br/>
-				<small><a href="#" id="linkCancelSaveProposal">Cancel</a> | <a href="#" id="linkSaveProposal">Save</a>
+				<small><a href="#" id="linkCancelSaveProposal">Cancel</a> | <a href="#" id="linkSaveProposal">Save</a></small>
 			</div>
 		{{/if}}
 		

@@ -32,6 +32,15 @@ TimeProposals.allow({
 	}
 });
 
+Attendees.allow({
+	update: function() {
+		return true;
+	},
+	remove: function () {
+	  return true;
+	}
+});
+
 Meteor.methods({
   createAppointment: function (options) {
     options = options || {};
