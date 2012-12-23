@@ -273,6 +273,7 @@ Template.appointmentdetail.events({
   },
   'click .linkSendInvites' : function (event, template) {
     console.log("Emailing invitations to all attendees...");
+    alert("Invited everybody on the list!");
   }
 });
 
