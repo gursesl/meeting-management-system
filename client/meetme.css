@@ -12,11 +12,19 @@ input#location {
     padding: 16px;
     margin: 10px 0px;
     height: 60px;
+    border-radius: 4px 4px 4px 4px;
+    border: solid 1px #ccc;
 }
 
 .aptlist:hover {
     cursor: pointer;
     background-color: #eee;
+    box-shadow: 0 3px 6px 1px rgba(0, 0, 0, 0.3);
+}
+
+.aptlist.selected {
+    background-color: #eee;
+    box-shadow: 0 3px 6px 1px rgba(0, 0, 0, 0.3);
 }
 
 .aptlist .title {
@@ -39,8 +47,8 @@ input#location {
     float: left;
 }
 
-.aptlist.selected {
-    background-color: #eee;
+.right-fix {
+  padding-right: 60px;
 }
 
 .aptlist.selected .location {

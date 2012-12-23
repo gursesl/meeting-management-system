@@ -11,7 +11,7 @@ Meteor.subscribe("attendees");
 //Router 
 
 Meteor.Router.add({
-    '/'						: 'homepage',
+    '/'						    : 'homepage',
     '/welcome'				: 'welcome',
     '/features'				: 'features',
     '/posts/:id'			: function(id) {
@@ -46,15 +46,15 @@ Meteor.Router.filter('requireLogin', {only: 'homepage'});
 //Startup 
 Meteor.startup(function () {
   Meteor.autorun(function () {
-	if (Meteor.user()) {
-    if (! Session.get("selected")) {
-      var appointment = Appointments.findOne({"owner": Meteor.userId()}, {sort: {time: -1}});
-      if (appointment) {
-        Session.set("selected", appointment._id);
-      } else {
-  		  Meteor.Router.to("/");  
-  	  }
-	}
+	  if (Meteor.user()) {
+      if (! Session.get("selected")) {
+        var appointment = Appointments.findOne({"owner": Meteor.userId()}, {sort: {time: -1}});
+        if (appointment) {
+          Session.set("selected", appointment._id);
+        } else {
+  		    Meteor.Router.to("/");  
+  	    }
+	    }
 	}
   });
 });
