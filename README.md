@@ -14,3 +14,12 @@ System Setup
 * `mrt run`
 * Launch a browser and navigate to [http://localhost:3000](http://localhost:3000)
 
+Production Setup
+----------------------------------------
+* Create Heroku app `heroku create maria-app --stack cedar --buildpack https://github.com/oortcloud/heroku-buildpack-meteorite.git`
+* Add required env variable `heroku config:add ROOT_URL=maria-app.herokuapp.com`
+* Create remote git repo for Heroku `git remote add heroku git@heroku.com:maria-app.git`
+* Verify git remotes `git remote -v`
+* Commit changes `git commit * -m "comment"`
+* Push to default git repo `git push origin`
+* Deploy to Heroku `git push heroku master`
