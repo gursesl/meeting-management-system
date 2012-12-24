@@ -36,29 +36,43 @@ Meteor.Router.add({
 							      return 'post';
 							  },
     '/invite/:id/:email'	: function (id, email) {
+      console.log("landed in invite");
+      console.log("event id: " + id);
+      console.log("invitee email: " + email);
+      
     	var appt = Appointments.findOne(id);
+    	
+    	console.log(appt);
+    	
     	if (appt) {
     		Session.set("selected", appt._id);
     		Session.set("appointment", appt);
     	}
     	
     	Session.set("inviteemail", email);
-    	return "invitepage";
+    	return 'invitepage';
   }
 });
 
 Meteor.Router.filters({
   requireLogin: function(page) {
+    console.log("Applying filter to ...");
     if (Meteor.user()) {
+      console.log("found an active session. sending user home!!");
       return "homepage";
     } else {
       return 'landingSlider';
     }
+  },
+  
+  handleInvite: function(page) {
+    return 'invitepage';
   }
 });
 
-Meteor.Router.filter('requireLogin', {only: 'homepage'});
-  
+//Meteor.Router.filter('requireLogin', {only: 'homepage'});
+Meteor.Router.filter('handleInvite', {only: 'invite'});
+
 ///////////////////////////////////////////////////////////////////////////////
 //Startup 
 Meteor.startup(function () {
@@ -344,6 +358,9 @@ Template.appointmentdetail.events({
       type: "succeess",
       duration: 4
     });
+  },
+  'click #linkEvent' : function() {
+    Session.set("votedthankyou", null);
   }
 });
 
@@ -583,7 +600,7 @@ Template.invitepage.showVotedThankYou = function() {
 }
 
 Template.invitepage.events({
-	'click #btnVoteTimeProposals' : function (event, template) {
+	'click #btnFinished' : function (event, template) {
 		if (! Session.get("voted"))
 		  alert ("You have not casted a vote yet. Are you sure you want to navigate out?");
 		else {
