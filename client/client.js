@@ -8,6 +8,13 @@ Meteor.subscribe("timeproposals");
 Meteor.subscribe("attendees");
 
 ///////////////////////////////////////////////////////////////////////////////
+//Messages
+var messages = {
+  "deleteevent" : {"success" : "Event deleted successfully.", "error" : "There was an error while deleting the event."}
+  }
+
+
+///////////////////////////////////////////////////////////////////////////////
 //Router 
 
 Meteor.Router.add({
@@ -97,6 +104,14 @@ Template.homepage.events({
 	'click input.reset': function () {
 		document.getElementsByName('find_event')[0].value="";
 		Session.set("eventname", null);
+	},
+	'click #notif' : function () {
+	  showNotification({
+        message: messages.error,
+        autoClose: true,
+        type: "error",
+        duration: 10000
+    });
 	}
 });
 	
@@ -225,6 +240,12 @@ Template.appointment.events({
   'click #linkDeleteEvent' : function (event, template) {
     	Appointments.remove(Session.get("selected"));
     	Session.set("selected", null);
+    	showNotification({
+          message: messages.deleteevent.success,
+          autoClose: true,
+          type: "error",
+          duration: 2
+      });
     	return false;
   }
 });
@@ -269,6 +290,12 @@ Template.appointmentdetail.events({
   'click .btnDeleteEvent' : function (event, template) {
     	Appointments.remove(Session.get("selected"));
     	Session.set("selected", null);
+    	showNotification({
+          message: messages.deleteevent.success,
+          autoClose: true,
+          type: "error",
+          duration: 2
+      });
     	return false;
   },
   'click .linkSendOneInvite' : function (event, template) {
