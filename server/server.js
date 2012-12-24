@@ -20,6 +20,11 @@ Meteor.publish("attendees", function () {
 
 //TimeProposals._ensureIndex({"_id" : 1, "rsvps.email" : 1}, {"unique" : true, "dropDups" : true});
 
+Meteor.startup(function () {
+  process.env.MAIL_URL = 'smtp://info%4064clicks.com:passw0rd@smtp.gmail.com:465';
+});
+
 console.log("Started Meteor server!");
 
 }) ();
+

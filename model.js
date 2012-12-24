@@ -78,6 +78,32 @@ Meteor.methods({
       Appointments.update({"_id" : options.id}, {$set : {"title" : options.title, "location" : options.location, "description" : options.description, "proposalType" : options.proposalType}});
   },
   
+  sendOneInvite: function (options) {
+    var appointment = Appointments.findOne(options.appointmentid);
+    if (! appointment || appointment.owner !== this.userId)
+      throw new Meteor.Error(404, "No such event.");
+      /*
+    if (userId !== appointment.owner && ! _.contains(party.invited, userId)) {
+      Parties.update(partyId, { $addToSet: { invited: userId } });
+      */
+
+      var from = contactEmail(Meteor.users.findOne(this.userId));
+      var to = options.toemail;
+      if (Meteor.isServer && to) {
+        // This code only runs on the server. If you didn't want clients
+        // to be able to see it, you could move it to a separate file.
+        Email.send({
+          from: "noreply@maria-app.com",
+          to: to,
+          replyTo: from || undefined,
+          subject: "Event: " + appointment.title,
+          text:
+"Hey, I just invited you to '" + appointment.title + "' on Maria." +
+"\n\nCome check it out: " + Meteor.absoluteUrl() + "invite/" + appointment._id + "/" + to
+        });
+    }
+  },
+  
   addTimeProposal: function (appointment, options) {
 	  options = options || {};
 	    if (! (typeof options.pdate === "string" && options.pdate.length &&
@@ -137,3 +163,20 @@ Meteor.methods({
  	    Attendees.update({"_id" : options.id}, {$set : {"name" : options.name, "email" : options.email}});
    },
 });
+
+///////////////////////////////////////////////////////////////////////////////
+// Users
+
+var displayName = function (user) {
+  if (user.profile && user.profile.name)
+    return user.profile.name;
+  return user.emails[0].address;
+};
+
+var contactEmail = function (user) {
+  if (user.emails && user.emails.length)
+    return user.emails[0].address;
+  if (user.services && user.services.facebook && user.services.facebook.email)
+    return user.services.facebook.email;
+  return null;
+};

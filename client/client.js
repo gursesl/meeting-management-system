@@ -271,11 +271,32 @@ Template.appointmentdetail.events({
     	Session.set("selected", null);
     	return false;
   },
+  'click .linkSendOneInvite' : function (event, template) {
+    sendOneInvite(event, template, this);
+    
+  },
   'click .linkSendInvites' : function (event, template) {
     console.log("Emailing invitations to all attendees...");
     alert("Invited everybody on the list!");
   }
 });
+
+var sendOneInvite = function (event, template, invitee) {
+  var to = invitee.email;
+  var aptid = invitee.appointmentId;
+  if (to.length && aptid.length) {
+		  Meteor.call("sendOneInvite", {
+		    toemail: to,
+			  appointmentid: aptid
+	  }, function (error, appointment) {
+		  if (! error) {
+			  console.log("Sent invite successfully..." + appointment);
+		  }
+	  });
+  } else {
+    Session.set("sendInviteError", "Error sending the event invite.");
+  }
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Time proposal
