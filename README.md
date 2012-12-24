@@ -9,6 +9,7 @@ System Setup
 	* If the setup fails run `sudo chown -R YOURUSER  /usr/local/lib/node_modules`
 	* Rerun `npm install -g meteorite`
 * Clone git repo `git clone https://github.com/gursesl/64clicks.git meetme`
+* Optional: Set your default remote origin `git config remote.origin.url git@github.com:YOURUSERNAME/64clicks.git`
 * `cd meetme`
 * `mrt add`
 * `mrt run`
