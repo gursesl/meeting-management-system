@@ -6,9 +6,11 @@ if (Meteor.is_client) {
 	console.log("Inside client model...");
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// Mongodb Indexes
 if (Meteor.is_server) {
-	console.log("Inside server model...");
-	TimeProposals._ensureIndex({"date" : 1, "time" : 1}, {"unique" : true, "sparse" : true});
+	TimeProposals._ensureIndex({"date" : 1, "time" : 1, "appointmentId" : 1}, {"unique" : true, "sparse" : true});
+	Attendees._ensureIndex({"name" : 1, "email" : 1, "appointmentId" : 1}, {"unique" : true, "sparse" : true});
 }
 
 Appointments.allow({
@@ -115,7 +117,7 @@ Meteor.methods({
 	    TimeProposals.insert({
 	    	"appointmentId": appointment, 
 	    	"owner": this.userId, 
-	    	"date": options.pdate, 
+	    	"date": options.pdate,
 	    	"time": options.ptime, 
 	    	"votes": 0,
 	    	"rsvps": []
