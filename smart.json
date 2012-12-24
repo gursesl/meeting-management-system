@@ -4,9 +4,6 @@
     "jquery-rateit": {
       "git": "https://github.com/dandv/meteor-jquery-rateit.git"
     },
-    "bootstrap-updated": {},
-    "jquery-ui": {},
-    "bootstrap-with-font-awesome": {},
     "bootstrap-datepicker": {},
     "foundation-icons-general": {},
     "cookie": {}

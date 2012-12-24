@@ -11,9 +11,6 @@
         "git": "https://github.com/dandv/meteor-jquery-rateit.git",
         "branch": "master"
       },
-      "bootstrap-updated": {},
-      "jquery-ui": {},
-      "bootstrap-with-font-awesome": {},
       "bootstrap-datepicker": {},
       "foundation-icons-general": {},
       "cookie": {}
@@ -28,21 +25,6 @@
         "git": "https://github.com/dandv/meteor-jquery-rateit.git",
         "branch": "master",
         "commit": "7d85ce02006987ace52b4ea89da2ac2a7ea6c98d"
-      },
-      "bootstrap-updated": {
-        "git": "https://github.com/Charuru/bootstrap-updated.git",
-        "tag": "v1.0.1",
-        "commit": "bdd5fcc8e134e62bcbb9d11aad8270534ffb6493"
-      },
-      "jquery-ui": {
-        "git": "https://github.com/TimHeckel/meteor-jquery-ui.git",
-        "tag": "v1.8.16",
-        "commit": "abda12134b8f3c5db31d6a4864bead6aa3640358"
-      },
-      "bootstrap-with-font-awesome": {
-        "git": "https://github.com/alexnotov/meteor-bootstrap-and-font-awesome",
-        "tag": "v0.0.1",
-        "commit": "b5b377b754f3bd8d8f4d04756b98b34accf5ce62"
       },
       "bootstrap-datepicker": {
         "git": "https://github.com/acidsound/bootstrap-datepicker.git",
