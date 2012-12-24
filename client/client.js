@@ -14,6 +14,7 @@ var messages = {
   "eventsave" : {"success" : "Event saved successfully.", "error" : "There was an error saving the event."},
   "eventdelete" : {"success" : "Event deleted successfully.", "error" : "There was an error deleting the event."},
   "inviteone" : {"success" : "Invite sent successfully.", "error" : "There was an error sending the invite."},
+  "inviteall" : {"success" : "Invite sent successfully to all attendees.", "error" : "There was an error sending the invite."},
   "timeproposalcreate" : {"success" : "Time proposal created successfully.", "error" : "There was an error creating the time proposal."},
   "timeproposalsave" : {"success" : "Time proposal saved successfully.", "error" : "There was an error saving the time proposal."},
   "timeproposaldelete" : {"success" : "Time proposal deleted successfully.", "error" : "There was an error deleting the time proposal."},
@@ -322,29 +323,45 @@ Template.appointmentdetail.events({
     	return false;
   },
   'click .linkSendOneInvite' : function (event, template) {
-    sendOneInvite(event, template, this);
+    sendOneInvite(this);
+    
+    showNotification({
+        message: messages.inviteone.success,
+        autoClose: true,
+        type: "success",
+        duration: 4
+    });
   },
   'click .linkSendInvites' : function (event, template) {
-    console.log("Emailing invitations to all attendees...");
-    alert("Invited everybody on the list!");
+    var attendees = Attendees.find({"appointmentId": Session.get("selected")});
+    attendees.forEach (function (attendee) {
+      sendOneInvite(attendee);
+    });
+    
+    showNotification({
+      message: messages.inviteall.success,
+      autoClose: true,
+      type: "succeess",
+      duration: 4
+    });
   }
 });
 
-var sendOneInvite = function (event, template, invitee) {
-  var to = invitee.email;
-  var aptid = invitee.appointmentId;
-  if (to.length && aptid.length) {
+var sendOneInvite = function (invitee) {
+  if (invitee.email.length && invitee.name.length && invitee.appointmentId.length) {
 		  Meteor.call("sendOneInvite", {
-		    toemail: to,
-			  appointmentid: aptid
+		    toemail: invitee.email,
+		    toname: invitee.name,
+			  appointmentid: invitee.appointmentId
 	  }, function (error, appointment) {
 		  if (! error) {
+		      /*
 			  	showNotification({
               message: messages.inviteone.success,
               autoClose: true,
               type: "success",
               duration: 2
-          });
+          }); */
 		  }
 	  });
   } else {

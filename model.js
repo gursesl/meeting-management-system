@@ -88,8 +88,10 @@ Meteor.methods({
     if (userId !== appointment.owner && ! _.contains(party.invited, userId)) {
       Parties.update(partyId, { $addToSet: { invited: userId } });
       */
-
-      var from = contactEmail(Meteor.users.findOne(this.userId));
+      
+      var user = Meteor.users.findOne(this.userId);
+      var from = contactEmail(user);
+      var fromName = displayName(user);
       var to = options.toemail;
       if (Meteor.isServer && to) {
         // This code only runs on the server. If you didn't want clients
@@ -100,8 +102,8 @@ Meteor.methods({
           replyTo: from || undefined,
           subject: "Event: " + appointment.title,
           text:
-"Hey, I just invited you to '" + appointment.title + "' on Maria." +
-"\n\nCome check it out: " + Meteor.absoluteUrl() + "invite/" + appointment._id + "/" + to
+"Dear " + options.toname + ",\n\n This is Maria, the world's quickest online meeting organizer.\n\n On behalf of " + fromName + ", I\'d like to invite you to the event '" + appointment.title + "'." +
+"\n\nThe event organizer has created a quick poll with several time proposals. Please visit this link to RSVP and cast your vote for the best time for the event.\n\n " + Meteor.absoluteUrl() + "invite/" + appointment._id + "/" + to + "\n\nThank you for your time,\n--Maria"
         });
     }
   },
