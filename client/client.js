@@ -10,8 +10,17 @@ Meteor.subscribe("attendees");
 ///////////////////////////////////////////////////////////////////////////////
 //Messages
 var messages = {
-  "deleteevent" : {"success" : "Event deleted successfully.", "error" : "There was an error while deleting the event."}
-  }
+  "eventcreate" : {"success" : "Event created successfully.", "error" : "There was an error creating the event."},
+  "eventsave" : {"success" : "Event saved successfully.", "error" : "There was an error saving the event."},
+  "eventdelete" : {"success" : "Event deleted successfully.", "error" : "There was an error deleting the event."},
+  "inviteone" : {"success" : "Invite sent successfully.", "error" : "There was an error sending the invite."},
+  "timeproposalcreate" : {"success" : "Time proposal created successfully.", "error" : "There was an error creating the time proposal."},
+  "timeproposalsave" : {"success" : "Time proposal saved successfully.", "error" : "There was an error saving the time proposal."},
+  "timeproposaldelete" : {"success" : "Time proposal deleted successfully.", "error" : "There was an error deleting the time proposal."},
+  "attendeecreate" : {"success" : "Attendee added successfully.", "error" : "There was an error adding the attendee."},
+  "attendeesave" : {"success" : "Attendee saved successfully.", "error" : "There was an error saving the attendee."},
+  "attendeedelete" : {"success" : "Attendee deleted successfully.", "error" : "There was an error deleting the attendee."}
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -105,14 +114,6 @@ Template.homepage.events({
 		document.getElementsByName('find_event')[0].value="";
 		Session.set("eventname", null);
 	},
-	'click #notif' : function () {
-	  showNotification({
-        message: messages.error,
-        autoClose: true,
-        type: "error",
-        duration: 10000
-    });
-	}
 });
 	
 Template.newappointment.events({
@@ -125,15 +126,24 @@ Template.newappointment.events({
 				location: location
 		  }, function (error, appointment) {
 			  if (! error) {
-				  console.log("Created successfully..." + appointment);
+				  showNotification({
+              message: messages.eventcreate.success,
+              autoClose: true,
+              type: "success",
+              duration: 2
+          });
 				  Session.set("selected", appointment);
-				  //openTimeProposalsDialog();
 				  openUpdateAppointmentDialog();
 			  }
 		  });
 		  Session.set("showCreateDialog", false);
 		  } else {
-			  Session.set("createError", "A title and location is needed to create a new event.");
+			  showNotification({
+            message: messages.eventcreate.error,
+            autoClose: true,
+            type: "error",
+            duration: 4
+        });
 		  }
 	  }
   });
@@ -175,13 +185,16 @@ Template.dashboard.appointments = function () {
 Template.attendee.events({
     'click .linkDeleteAttendee' : function( event, template) {
       Attendees.remove(this._id);
+      showNotification({
+          message: messages.attendeedelete.success,
+          autoClose: true,
+          type: "success",
+          duration: 2
+      });
     },
     'click .linkEditAttendee' : function (event, template) {
       Session.set("editattendee", true);
       Session.set("selectedattendee", this._id);
-    },
-    'click .linkSendInvitation' : function (event, template) {
-      console.log("Emailing invitation to " + this.name + " <" + this.email + ">");
     },
     'click .linkSave' : function (event, template) {
       saveAttendee(event, template);
@@ -206,13 +219,23 @@ var saveAttendee = function (event, template) {
 			  email: email
 	  }, function (error, attendee) {
 		  if (! error) {
-			  console.log("Attendee saved" + attendee);
+			  showNotification({
+            message: messages.attendeesave.success,
+            autoClose: true,
+            type: "success",
+            duration: 2
+        });
 		  }
 	  });
 	  Session.set("editattendee", false);
     Session.set("selectedattendee", null);
   } else {
-    Session.set("updateError", "A name and email is required to update an attendee.");
+    showNotification({
+        message: messages.attendeesave.error,
+        autoClose: true,
+        type: "error",
+        duration: 4
+    });
   }
 }
 
@@ -241,9 +264,9 @@ Template.appointment.events({
     	Appointments.remove(Session.get("selected"));
     	Session.set("selected", null);
     	showNotification({
-          message: messages.deleteevent.success,
+          message: messages.eventdelete.success,
           autoClose: true,
-          type: "error",
+          type: "success",
           duration: 2
       });
     	return false;
@@ -291,16 +314,15 @@ Template.appointmentdetail.events({
     	Appointments.remove(Session.get("selected"));
     	Session.set("selected", null);
     	showNotification({
-          message: messages.deleteevent.success,
+          message: messages.eventdelete.success,
           autoClose: true,
-          type: "error",
+          type: "succeess",
           duration: 2
       });
     	return false;
   },
   'click .linkSendOneInvite' : function (event, template) {
     sendOneInvite(event, template, this);
-    
   },
   'click .linkSendInvites' : function (event, template) {
     console.log("Emailing invitations to all attendees...");
@@ -317,11 +339,21 @@ var sendOneInvite = function (event, template, invitee) {
 			  appointmentid: aptid
 	  }, function (error, appointment) {
 		  if (! error) {
-			  console.log("Sent invite successfully..." + appointment);
+			  	showNotification({
+              message: messages.inviteone.success,
+              autoClose: true,
+              type: "success",
+              duration: 2
+          });
 		  }
 	  });
   } else {
-    Session.set("sendInviteError", "Error sending the event invite.");
+    showNotification({
+        message: messages.inviteone.error,
+        autoClose: true,
+        type: "error",
+        duration: 4
+    });
   }
 }
 
@@ -330,6 +362,12 @@ var sendOneInvite = function (event, template, invitee) {
 Template.timeproposal.events({
   'click #linkDeleteTimeProposal' : function (event, template) {
 		TimeProposals.remove(this._id);
+		showNotification({
+        message: messages.timeproposaldelete.success,
+        autoClose: true,
+        type: "success",
+        duration: 2
+    });
   },
   'click #linkEditTimeProposal' : function (event, template) {
     Session.set("edittimeproposal", true);
@@ -397,13 +435,23 @@ var saveTimeProposal = function (event, template) {
 			  time: time
 	  }, function (error, appointment) {
 		  if (! error) {
-			  console.log("Updated time proposal successfully..." + appointment);
+			  showNotification({
+            message: messages.timeproposalsave.success,
+            autoClose: true,
+            type: "success",
+            duration: 2
+        });
 		  }
 	  });
 	  Session.set("edittimeproposal", false);
     Session.set("selectedtimeproposal", null);
   } else {
-    Session.set("updateError", "A date and time is needed to update an time proposal.");
+    showNotification({
+        message: messages.timeproposalsave.error,
+        autoClose: true,
+        type: "error",
+        duration: 4
+    });
   }
 }
 
@@ -476,7 +524,12 @@ Template.updateAppointmentDialog.events({
   				  proposalType: proposalType
   		  }, function (error, appointment) {
   			  if (! error) {
-  				  console.log("Updated successfully..." + appointment);
+  				  showNotification({
+                message: messages.eventsave.success,
+                autoClose: true,
+                type: "success",
+                duration: 2
+            });
   			  }
   		  });
   		  Session.set("showUpdateAppointmentDialog", false);
@@ -582,11 +635,21 @@ Template.attendeesDialog.events({
 	    	  email: email
 	    }, function (error) {
 	    	if (! error) {
-				  console.log("Attendee added successfully...");
+				  showNotification({
+              message: messages.attendeecreate.success,
+              autoClose: true,
+              type: "success",
+              duration: 2
+          });
 			  }
 	    });
 	  } else {
-		  Session.set("createError", "You need to enter attendee name and email address.");
+		  showNotification({
+          message: messages.attendeecreate.error,
+          autoClose: true,
+          type: "error",
+          duration: 4
+      });
 	  }
 	},
 	'click .done': function (event, template) {
@@ -612,11 +675,21 @@ Template.timeProposalsDialog.events({
 			  ptime: propTime
 	  }, function (error) {
 		  if (! error) {
-			  console.log("Time proposal added successfully...");
+			  showNotification({
+            message: messages.timeproposalcreate.success,
+            autoClose: true,
+            type: "success",
+            duration: 2
+        });
 		  }
 	  });
     } else {
-		  Session.set("createError", "You need to enter a proposed date and time.");
+		   showNotification({
+            message: messages.timeproposalcreate.error,
+            autoClose: true,
+            type: "error",
+            duration: 4
+        });
 	  }
   },
   'click .done': function (event, template) {
