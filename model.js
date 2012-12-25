@@ -5,8 +5,12 @@ Attendees = new Meteor.Collection("attendees");
 ///////////////////////////////////////////////////////////////////////////////
 // Mongodb Indexes
 if (Meteor.is_server) {
+  
+  //Date and time should be unique for a given event
 	TimeProposals._ensureIndex({"date" : 1, "time" : 1, "appointmentId" : 1}, {"unique" : true, "sparse" : true});
-	Attendees._ensureIndex({"name" : 1, "email" : 1, "appointmentId" : 1}, {"unique" : true, "sparse" : true});
+	
+	//For a given event, allow oly unique email addresses
+	Attendees._ensureIndex({"email" : 1, "appointmentId" : 1}, {"unique" : true, "sparse" : true});
 }
 
 Appointments.allow({
@@ -96,8 +100,9 @@ Meteor.methods({
           from: "noreply@maria-app.com",
           to: to,
           replyTo: from || undefined,
-          subject: "Event: " + appointment.title,
-          text: "Dear " + options.toname + ",\n\n This is Maria, your friendly meeting assistant.\n\n On behalf of " + fromName + ", I\'d like to invite you to the event '" + appointment.title + "'." + "\n\nThe event organizer has created a quick poll with several time proposals. Please visit this link to RSVP and cast your vote for the best time for the event.\n\n " + Meteor.absoluteUrl("invite/" + appointment._id + "/" + to, {"rootUrl" : "http://maria-app.herokuapp.com"}) + "\n\nThank you for your time,\n--Maria\n\nwww.maria-app.herokuapp.com"
+          subject: "[Maria] Vote for Event: " + appointment.title,
+          html: "Dear <strong>" + options.toname + "</strong>,<br><br> This is Maria, the world's quickest online meeting organizer.<br><br> On behalf of " + fromName + ", I\'d like to invite you to the event <strong>" + appointment.title + "</strong>.<br><br>The event organizer has created a quick poll with several time proposals. Please visit this link to RSVP and cast your vote for the best time for the event.<br><br> " + Meteor.absoluteUrl("invite/" + appointment._id + "/" + to) + "<br><br>Thank you for your time,<br>--Maria<br><br>" + Meteor.absoluteUrl()
+          //, text: "Dear " + options.toname + ",\n\n This is Maria, your friendly meeting assistant.\n\n On behalf of " + fromName + ", I\'d like to invite you to the event '" + appointment.title + "'." + "\n\nThe event organizer has created a quick poll with several time proposals. Please visit this link to RSVP and cast your vote for the best time for the event.\n\n " + Meteor.absoluteUrl("invite/" + appointment._id + "/" + to, {"rootUrl" : "http://maria-app.herokuapp.com"}) + "\n\nThank you for your time,\n--Maria\n\nwww.maria-app.herokuapp.com"
         });
     }
   },
@@ -138,7 +143,7 @@ Meteor.methods({
 	    		typeof options.email === "string" && options.email.length))
 	       throw new Meteor.Error(400, "Required parameter missing.");
 	    if (! this.userId)
-	      throw new Meteor.Error(403, "You must be logged in to add time proposals.");
+	      throw new Meteor.Error(403, "You must be logged in to attendees.");
 	  
 	  Attendees.insert({
 	    "appointmentId": appointment, 
@@ -146,7 +151,9 @@ Meteor.methods({
 	    "name": options.name, 
 	    "email": options.email,
 	    "invited": false,
-	    "voted" : false
+	    "voted" : false,
+	    "emailread" : false,
+	    "linkclicked" : false
 	  });
   },
   
@@ -160,6 +167,20 @@ Meteor.methods({
 
  	    Attendees.update({"_id" : options.id}, {$set : {"name" : options.name, "email" : options.email}});
    },
+   
+   updateAttendeeEmailReceipt: function (options) {
+     options = options || {};
+      if (! (typeof options.appointmentId === "string" && options.appointmentId.length &&
+  	    typeof options.email === "string" && options.email.length))
+  	       throw new Meteor.Error(400, "Required parameter missing.");
+        
+        var found = Attendees.findOne({"email" : options.email, "appointmentId" : options.appointmentId});
+        if (! found) {
+          throw new Meteor.Error(400, "Event cannot be found or the user has not been invited.");
+        } else {
+  	      Attendees.update({"email" : options.email, "appointmentId" : options.appointmentId}, {$set : {"emailread" : true}});
+	      }
+   }
 });
 
 ///////////////////////////////////////////////////////////////////////////////

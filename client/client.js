@@ -44,6 +44,9 @@ Meteor.Router.add({
     	
     	Session.set("inviteemail", email);
     	return 'invitepage';
+  },
+  '/tracking/:eventid/:email'  : function(eventid, email) {
+    trackEmailReceipt(eventid, email);
   }
 });
 
@@ -97,9 +100,23 @@ var make_okcancelhandler = function (options) {
 			else
 				cancel.call(this, evt);
 		}
-	};
-};
+	}
+}
 
+///////////////////////////////////////////////////////////////////////////////
+//Tracking
+var trackEmailReceipt = function (appointmentid, email) {
+  console.log("now tracking event " + appointmentid + " and email " + email);
+  if (appointmentid.length && email.length) {
+    Meteor.call("updateAttendeeEmailReceipt", {
+      appointmentId: appointmentid,
+      email: email
+      }, function (error) {
+		    if (! error)
+			    console.log("tracking updated successfully!!!!!!");
+    });
+  }
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Homepage 
@@ -299,6 +316,10 @@ Template.appointmentdetail.selected = function () {
 
 Template.appointmentdetail.path = function () {
   return Meteor.absoluteUrl("invite/" + Session.get("selected") + "/anon");
+};
+
+Template.appointmentdetail.tracking = function () {
+  return Meteor.absoluteUrl("tracking/" + Session.get("selected") + "/anon");
 };
   
 Template.appointmentdetail.events({
