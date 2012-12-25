@@ -67,6 +67,20 @@ Meteor.Router.filters({
 
 Meteor.Router.filter('requireLogin', {only: 'homepage'});
 
+Meteor.startup(function () {
+  console.log("Inside Meteor.startup");
+  Meteor.autorun(function () {
+
+	  if (Meteor.user()) {
+      if (! Session.get("selected")) {
+        var appointment = Appointments.findOne({"owner": Meteor.userId()}, {sort: {time: -1}});
+        if (appointment) {
+          Session.set("selected", appointment._id);
+  	    }
+	    }
+	}
+  });
+});
 
 ///////////////////////////////////////////////////////////////////////////////
 //Helper functions
@@ -159,7 +173,7 @@ Template.dashboard.anyAppointments = function() {
   if (Meteor.user()) {
     return Appointments.find({"owner": Meteor.userId()}).count() > 0;
   } else {
-	return null;
+	  return null;
   }
 };
 	
@@ -168,7 +182,10 @@ Template.dashboard.appointments = function () {
     var regex = new RegExp(Session.get("eventname"), "i");
       return Appointments.find({"owner": this.userId, title: regex}, { sort: {time: -1}});
   } else {
-	  return Appointments.find({"owner": this.userId}, {sort: {time: -1}});
+    console.log(Meteor.user()._id);
+    //
+	  return Appointments.find({"owner": Meteor.user()._id}, {sort: {time: -1}});
+	  
   }
 }
 

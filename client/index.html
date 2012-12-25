@@ -83,7 +83,6 @@
 </template>
 
 <template name="dashboard">
-  
   {{#unless anyAppointments }}
     <div class="row">
       <div class="span12">
@@ -101,14 +100,13 @@
   <div class="row">
     <div class="span4 eventlist">
       <h2>List of Events</h2>
-		<form class="navbar-search pull-left" action="">
-           <input type="text" class="search-query event_search_box input-xlarge" placeholder="Search your events..." name="find_event" >
-           <!-- <input type="button" class="reset btn" value="x"> -->
-        </form>
-		<br/><br/>
-		{{#each appointments}}
-        	{{> appointment }}
-		{{/each}}
+		  <form class="navbar-search pull-left" action="">
+        <input type="text" class="search-query event_search_box input-xlarge" placeholder="Search your events..." name="find_event" >
+      </form>
+		  <br/><br/>
+		  {{#each appointments}}
+		    {{> appointment }}
+		  {{/each}}
     </div>
     
     <div class="span8">
@@ -129,8 +127,8 @@
 
 <template name="appointment">
 	<div class="aptlist {{selected}}">
-  		<div class="title">{{title}}</div><br/>
-  		<div class="location">{{location}}</div><br/>
+  	<div class="title">{{title}}</div><br/>
+  	<div class="location">{{location}}</div><br/>
 		<small><a href="#" id="linkTimeProposals">Time Proposals</a> | <a href="#" id="linkAttendees">Attendees</a> | <a href="#" id="linkUpdateEvent">Edit</a> | <a href="#" id="linkDeleteEvent">Delete</a>
   </div>
 </template>
