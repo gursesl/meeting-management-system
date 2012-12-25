@@ -23,7 +23,6 @@ var messages = {
   "attendeedelete" : {"success" : "Attendee deleted successfully.", "error" : "There was an error deleting the attendee."}
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////
 //Router 
 
@@ -36,10 +35,11 @@ Meteor.Router.add({
 							      return 'post';
 							  },
     '/invite/:id/:email'	: function (id, email) {
+      console.log("now time: " + new Date().getSeconds() + ":" + new Date().getTime());
       console.log("landed in invite");
       console.log("event id: " + id);
       console.log("invitee email: " + email);
-      
+    	
     	var appt = Appointments.findOne(id);
     	
     	console.log(appt);
@@ -56,39 +56,17 @@ Meteor.Router.add({
 
 Meteor.Router.filters({
   requireLogin: function(page) {
-    console.log("Applying filter to ...");
+    console.log("Login filter");
     if (Meteor.user()) {
-      console.log("found an active session. sending user home!!");
-      return "homepage";
+        return "homepage";
     } else {
       return 'landingSlider';
     }
-  },
-  
-  handleInvite: function(page) {
-    return 'invitepage';
   }
 });
 
-//Meteor.Router.filter('requireLogin', {only: 'homepage'});
-Meteor.Router.filter('handleInvite', {only: 'invite'});
+Meteor.Router.filter('requireLogin', {only: 'homepage'});
 
-///////////////////////////////////////////////////////////////////////////////
-//Startup 
-Meteor.startup(function () {
-  Meteor.autorun(function () {
-	  if (Meteor.user()) {
-      if (! Session.get("selected")) {
-        var appointment = Appointments.findOne({"owner": Meteor.userId()}, {sort: {time: -1}});
-        if (appointment) {
-          Session.set("selected", appointment._id);
-        } else {
-  		    Meteor.Router.to("/");  
-  	    }
-	    }
-	}
-  });
-});
 
 ///////////////////////////////////////////////////////////////////////////////
 //Helper functions
@@ -358,9 +336,6 @@ Template.appointmentdetail.events({
       type: "succeess",
       duration: 4
     });
-  },
-  'click #linkEvent' : function() {
-    Session.set("votedthankyou", null);
   }
 });
 
@@ -608,6 +583,10 @@ Template.invitepage.events({
 		}
 	}
 });
+
+Template.invitepage.rendered = function () {
+  console.log("Invite page rendered");
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////
