@@ -45,6 +45,7 @@ Attendees.allow({
 
 Meteor.methods({
   createAppointment: function (options) {
+    if (Meteor.is_server) {
     options = options || {};
     if (! (typeof options.title === "string" && options.title.length &&
     		typeof options.location === "string" && options.location.length))
@@ -65,9 +66,11 @@ Meteor.methods({
       rsvps: [],
       timeproposals: []
     });
+  }
   },
   
   updateAppointment: function (options) {
+    if (Meteor.is_server) {
     options = options || {};
     if (! (typeof options.title === "string" && options.title.length &&
     		typeof options.location === "string" && options.location.length))
@@ -78,16 +81,14 @@ Meteor.methods({
       throw new Meteor.Error(403, "You must be logged in to create events.");
     
       Appointments.update({"_id" : options.id}, {$set : {"title" : options.title, "location" : options.location, "description" : options.description, "proposalType" : options.proposalType}});
+    }
   },
   
   sendOneInvite: function (options) {
-    var appointment = Appointments.findOne(options.appointmentid);
-    if (! appointment || appointment.owner !== this.userId)
-      throw new Meteor.Error(404, "No such event.");
-      /*
-    if (userId !== appointment.owner && ! _.contains(party.invited, userId)) {
-      Parties.update(partyId, { $addToSet: { invited: userId } });
-      */
+    if (Meteor.is_server) {
+      var appointment = Appointments.findOne(options.appointmentid);
+      if (! appointment || appointment.owner !== this.userId)
+        throw new Meteor.Error(404, "No such event.");
       
       var user = Meteor.users.findOne(this.userId);
       var from = contactEmail(user);
@@ -104,11 +105,13 @@ Meteor.methods({
           html: "Dear <strong>" + options.toname + "</strong>,<br><br> This is Maria, the world's quickest online meeting organizer.<br><br> On behalf of " + fromName + ", I\'d like to invite you to the event <strong>" + appointment.title + "</strong>.<br><br>The event organizer has created a quick poll with several time proposals. Please visit this link to RSVP and cast your vote for the best time for the event.<br><br> " + Meteor.absoluteUrl("invite/" + appointment._id + "/" + to) + "<br><br>Thank you for your time,<br>--Maria<br><br>" + Meteor.absoluteUrl()
           //, text: "Dear " + options.toname + ",\n\n This is Maria, your friendly meeting assistant.\n\n On behalf of " + fromName + ", I\'d like to invite you to the event '" + appointment.title + "'." + "\n\nThe event organizer has created a quick poll with several time proposals. Please visit this link to RSVP and cast your vote for the best time for the event.\n\n " + Meteor.absoluteUrl("invite/" + appointment._id + "/" + to, {"rootUrl" : "http://maria-app.herokuapp.com"}) + "\n\nThank you for your time,\n--Maria\n\nwww.maria-app.herokuapp.com"
         });
+      }
     }
   },
   
   addTimeProposal: function (appointment, options) {
-	  options = options || {};
+    if (Meteor.is_server) {
+	    options = options || {};
 	    if (! (typeof options.pdate === "string" && options.pdate.length &&
 	    		typeof options.ptime === "string" && options.ptime.length))
 	       throw new Meteor.Error(400, "Required parameter missing.");
@@ -123,10 +126,11 @@ Meteor.methods({
 	    	"votes": 0,
 	    	"rsvps": []
 	    });
-	   //Appointments.update( appointment, {$push : {"timeproposals" : {"date" : options.pdate, "time": options.ptime, "votes":0}}});
+    }
   },
   
   updateTimeProposal: function (options) {
+    if (Meteor.is_server) {
 	  options = options || {};
     if (! (typeof options.date === "string" && options.date.length &&
 	    typeof options.time === "string" && options.time.length))
@@ -135,51 +139,61 @@ Meteor.methods({
       throw new Meteor.Error(403, "You must be logged in to add time proposals.");
 	   
 	    TimeProposals.update({"_id" : options.id}, {$set : {"date" : options.date, "time" : options.time}});
+    }
   },
   
   addAttendee: function(appointment, options) {
-	  options = options || {};
-	  if (! (typeof options.name === "string" && options.name.length &&
-	    		typeof options.email === "string" && options.email.length))
-	       throw new Meteor.Error(400, "Required parameter missing.");
+    if (Meteor.is_server) {
+	    options = options || {};
+	    if (! (typeof options.name === "string" && options.name.length &&
+	      typeof options.email === "string" && options.email.length))
+	        throw new Meteor.Error(400, "Required parameter missing.");
 	    if (! this.userId)
-	      throw new Meteor.Error(403, "You must be logged in to attendees.");
+	        throw new Meteor.Error(403, "You must be logged in to attendees.");
 	  
-	  Attendees.insert({
-	    "appointmentId": appointment, 
-	    "owner": this.userId, 
-	    "name": options.name, 
-	    "email": options.email,
-	    "invited": false,
-	    "voted" : false,
-	    "emailread" : false,
-	    "linkclicked" : false
-	  });
+	    Attendees.insert({
+	      "appointmentId": appointment, 
+	      "owner": this.userId, 
+	      "name": options.name, 
+	      "email": options.email,
+	      "invited": false,
+	      "voted" : false,
+	      "emailread" : false,
+	      "linkclicked" : false
+	    });
+    }
   },
   
   updateAttendee: function (options) {
- 	  options = options || {};
-     if (! (typeof options.name === "string" && options.name.length &&
- 	    typeof options.email === "string" && options.email.length))
+    if (Meteor.is_server) {
+ 	    options = options || {};
+      if (! (typeof options.name === "string" && options.name.length &&
+ 	      typeof options.email === "string" && options.email.length))
  	       throw new Meteor.Error(400, "Required parameter missing.");
-     if (! this.userId)
-       throw new Meteor.Error(403, "You must be logged in to add time proposals.");
+      if (! this.userId)
+        throw new Meteor.Error(403, "You must be logged in to add time proposals.");
 
  	    Attendees.update({"_id" : options.id}, {$set : {"name" : options.name, "email" : options.email}});
-   },
+    }
+  },
    
-   updateAttendeeEmailReceipt: function (options) {
-     options = options || {};
+  updateAttendeeEmailReceipt: function (options) {
+    if (Meteor.is_server) {
+      console.log("inside tracking model");
+      options = options || {};
       if (! (typeof options.appointmentId === "string" && options.appointmentId.length &&
   	    typeof options.email === "string" && options.email.length))
   	       throw new Meteor.Error(400, "Required parameter missing.");
         
         var found = Attendees.findOne({"email" : options.email, "appointmentId" : options.appointmentId});
         if (! found) {
+          console.log("ATTENDEE RECORD NOT FOUND. ABORTING.");
           throw new Meteor.Error(400, "Event cannot be found or the user has not been invited.");
         } else {
   	      Attendees.update({"email" : options.email, "appointmentId" : options.appointmentId}, {$set : {"emailread" : true}});
+  	      console.log("ATTENDEE RECORD UPDATED SUCCESSFULLY!!");
 	      }
+      }
    }
 });
 
