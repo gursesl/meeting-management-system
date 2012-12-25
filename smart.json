@@ -1,9 +1,6 @@
 {
   "packages": {
     "router": {},
-    "jquery-rateit": {
-      "git": "https://github.com/dandv/meteor-jquery-rateit.git"
-    },
     "bootstrap-datepicker": {},
     "foundation-icons-general": {},
     "cookie": {}
