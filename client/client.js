@@ -28,22 +28,15 @@ var messages = {
 
 Meteor.Router.add({
     '/'						    : 'homepage',
-    '/welcome'				: 'welcome',
+    "/dashboard"      : 'dashboard',
     '/features'				: 'features',
     '/posts/:id'			: function(id) {
 							      Session.set('postId', id);
 							      return 'post';
 							  },
     '/invite/:id/:email'	: function (id, email) {
-      console.log("now time: " + new Date().getSeconds() + ":" + new Date().getTime());
-      console.log("landed in invite");
-      console.log("event id: " + id);
-      console.log("invitee email: " + email);
-    	
+      console.log("invite router");
     	var appt = Appointments.findOne(id);
-    	
-    	console.log(appt);
-    	
     	if (appt) {
     		Session.set("selected", appt._id);
     		Session.set("appointment", appt);
@@ -56,7 +49,6 @@ Meteor.Router.add({
 
 Meteor.Router.filters({
   requireLogin: function(page) {
-    console.log("Login filter");
     if (Meteor.user()) {
         return "homepage";
     } else {
@@ -68,19 +60,21 @@ Meteor.Router.filters({
 Meteor.Router.filter('requireLogin', {only: 'homepage'});
 
 Meteor.startup(function () {
-  console.log("Inside Meteor.startup");
+  console.log("startup");
   Meteor.autorun(function () {
-
-	  if (Meteor.user()) {
+    console.log("autorun");
+	  if (Meteor.userId()) {
+      console.log("autorun:user change");
       if (! Session.get("selected")) {
         var appointment = Appointments.findOne({"owner": Meteor.userId()}, {sort: {time: -1}});
         if (appointment) {
           Session.set("selected", appointment._id);
   	    }
 	    }
-	}
+	  }
   });
 });
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //Helper functions
@@ -182,10 +176,7 @@ Template.dashboard.appointments = function () {
     var regex = new RegExp(Session.get("eventname"), "i");
       return Appointments.find({"owner": this.userId, title: regex}, { sort: {time: -1}});
   } else {
-    console.log(Meteor.user()._id);
-    //
 	  return Appointments.find({"owner": Meteor.user()._id}, {sort: {time: -1}});
-	  
   }
 }
 
@@ -601,11 +592,6 @@ Template.invitepage.events({
 	}
 });
 
-Template.invitepage.rendered = function () {
-  console.log("Invite page rendered");
-}
-
-
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Invite time proposal
 Template.invitetimeproposal.events({
@@ -613,9 +599,8 @@ Template.invitetimeproposal.events({
 		Session.set("voted", true);
 		var rateid = '#' + this._id;
 		var rating = $(rateid).rateit('value')
-		
 		var userRatedAlready = TimeProposals.findOne({"_id" : this._id, "rsvps.email" : Session.get("inviteemail")});
-		console.log("Session email: " + Session.get("inviteemail") + " ---- userRatedAlready: " + userRatedAlready);
+		
 		if (userRatedAlready) {
 		  TimeProposals.update({"_id" : this._id, "rsvps.email" : Session.get("inviteemail")}, {$set : {"rsvps.$.rating" : rating}});
 		} else {
@@ -656,7 +641,6 @@ Template.invitetimeproposal.votes = function () {
 //Template: Attendees dialog
 Template.attendeesDialog.events({
 	'click #btnAddAttendee': function(event, template) {
-		console.log("Adding attendee ...");
 		var name=template.find("#attendeeName").value;
 		var email=template.find("#attendeeEmail").value;
 	    if (name.length && email.length) {
@@ -699,7 +683,6 @@ Template.timeProposalsDialog.events({
     var propDate = template.find("#proposalDate").value;
 	  var propTime = template.find("#proposalTime").value;
     if (propDate.length && propTime.length) {
-    	console.log("Adding time proposals for event " + Session.get("selected"));
 		  Meteor.call("addTimeProposal", Session.get("selected"), {
 		    pdate: propDate,
 			  ptime: propTime
