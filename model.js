@@ -2,10 +2,6 @@ Appointments = new Meteor.Collection("appointments");
 TimeProposals = new Meteor.Collection("timeproposals");
 Attendees = new Meteor.Collection("attendees");
 
-if (Meteor.is_client) {
-	console.log("Inside client model...");
-}
-
 ///////////////////////////////////////////////////////////////////////////////
 // Mongodb Indexes
 if (Meteor.is_server) {
