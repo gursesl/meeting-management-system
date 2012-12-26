@@ -7,6 +7,26 @@ body {
     padding-bottom: 60px;
 }
 
+.container, .navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
+    width: 940px;
+}
+
+.span3 {
+    width: 200px;
+}
+
+.span4 {
+    width: 240px;
+}
+
+.span8 {
+    width: 670px;
+}
+
+.span9 {
+    width: 700px;
+}
+
 small {
   font-size: 80%;
 }

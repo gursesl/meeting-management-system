@@ -1,14 +1,17 @@
 (function () {
 
+  ///////////////////////////////////////////////////////////////////////////////
+  //Router
   Meteor.Router.add('/404', [404, "Page not found!"]);
   
-  Meteor.Router.add({'/tracking/:eventid/:email'  : function (eventid, email) {
+  Meteor.Router.add({
+    '/tracking/:eventid/:email'  : function (eventid, email) {
       trackEmailReceipt(eventid, email);
     }
   });
   
   ///////////////////////////////////////////////////////////////////////////////
-  //Tracking
+  //Tracking: Email Receipt
   var trackEmailReceipt = function (appointmentid, email) {
     console.log("Email read receipt for event " + appointmentid + " and email " + email);
     if (appointmentid.length && email.length) {

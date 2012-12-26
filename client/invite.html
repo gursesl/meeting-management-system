@@ -2,22 +2,27 @@
   <div class="container">
     {{> header }}
     <div class="row">
-         {{#if selected }}
-           <div class="span3">
-	           <div class="page-header">
-	             	<h1>Event Details</h1>
-	           </div>
+      {{#if selected }}
+        <div class="span3">
+          <div class="page-header">
+            <h3>Event Details</h3>
+          </div>
 	          
 			    <div class="appointmentdetail">
-			      <h3 class="apttitle">{{selected.title}}</h3>
+			      <h4>{{selected.title}}</h4>
 			      <address>
 			        <strong>Location</strong><br>
 			        {{selected.location}}<br>
 			      </address>
-               </div>
-             </div>
+          </div>
+          
+          <div class="alert">
+            <strong>Tip: Voting for Events</strong><br/> Each box on the right displays one of the time proposals created by the event
+              organizer. Cast your vote of date and time by pressing the star ratings widget inside the box. Your vote will be registered as soon as you click the stars and you can change it anytime by clicking the stars one more time. You can vote for multiple time proposals. 
+          </div>
+        </div>
 			
-              <div class="span9">
+        <div class="span9">
 	
 				{{#if showVotedThankYou }}
 				    {{> thankyou }}
@@ -27,7 +32,7 @@
 			  <!-- Time Proposals -->
 			  {{#if anyTimeProposal }}
 				<div class="page-header">
-                  	<h1>Time Proposals</h1>
+          <h3>Time Proposals</h3>
 				</div>
                 
 			    <div class="row">
@@ -36,11 +41,6 @@
 			      {{/each}}
 			    </div>
 
-          <div class="alert alert-info">
-            <strong>Voting for events</strong><br/> The time proposals created by the event
-              organizer are above. Vote for your choice of date and time by pressing the
-              star ratings widget. Your vote will be registered as soon as you click the stars and you can change it anytime by clicking the stars one more time. You can vote for multiple time proposals. 
-          </div>  
 			  {{/if}}
 			  
 			  	  {{#unless anyTimeProposal }}

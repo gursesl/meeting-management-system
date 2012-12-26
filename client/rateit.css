@@ -76,7 +76,7 @@ div.rateit div.rateit-preset-rtl
 
 div.rateit div.rateit-reset
 {
-    background: url(delete.gif) 0 0;
+    background: url(/img/delete.gif) 0 0;
     width: 16px;
     height: 16px;
     display: -moz-inline-box;

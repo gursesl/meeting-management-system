@@ -20,7 +20,8 @@ var messages = {
   "timeproposaldelete" : {"success" : "Time proposal deleted successfully.", "error" : "There was an error deleting the time proposal."},
   "attendeecreate" : {"success" : "Attendee added successfully.", "error" : "There was an error adding the attendee."},
   "attendeesave" : {"success" : "Attendee saved successfully.", "error" : "There was an error saving the attendee."},
-  "attendeedelete" : {"success" : "Attendee deleted successfully.", "error" : "There was an error deleting the attendee."}
+  "attendeedelete" : {"success" : "Attendee deleted successfully.", "error" : "There was an error deleting the attendee."},
+  "voting" : {"success" : "Thank you for casting your vote. You can vote on multiple events and you can change your vote at any time by voting again.", "error" : "There was an error casting your vote. Please try again later."},
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -33,24 +34,68 @@ Meteor.Router.add({
     '/posts/:id'			: function(id) {
       Session.set('postId', id);
       return 'post';
-    },
-							  
-    '/invite/:id/:email'	: function (id, email) {
-      console.log("invite router");
-    	var appt = Appointments.findOne(id);
-    	if (appt) {
-    		Session.set("selected", appt._id);
-    		Session.set("appointment", appt);
-    	}
-    	
-    	Session.set("inviteemail", email);
-    	return 'invitepage';
+  },
+  
+  '/invite/:id/:email'	: function (id, email) {
+    console.log("invite router on the client");
+  	var appt = Appointments.findOne(id);
+  	if (appt) {
+  		Session.set("selected", appt._id);
+  		Session.set("appointment", appt);
+  		trackClickInviteLink(appt._id, email);
+  	}
+  	
+  	Session.set("inviteemail", email);
+  	return 'invitepage';
   }
 });
 
+///////////////////////////////////////////////////////////////////////////////
+//Tracking: Click Invite Link
+var trackClickInviteLink = function (appointmentid, email) {
+  if (appointmentid.length && email.length) {
+    Meteor.call("updateAttendeeClickInviteLink", {
+      appointmentId: appointmentid,
+      email: email
+      }, function (error) {
+		    if (! error)
+			    console.log("Link click tracking updated successfully.");
+			  else
+			    console.log(error.reason);
+    });
+  }
+}
 
+var trackVote = function (appointmentid, email) {
+  console.log("Vote click for event " + appointmentid + " and email " + email);
+  if (appointmentid && email && appointmentid.length && email.length) {
+    Meteor.call("updateAttendeeVoteTracking", {
+      appointmentId: appointmentid,
+      email: email
+      }, function (error) {
+		    if (! error){
+		      console.log("Vote tracking updated successfully.");
+			    showNotification({
+              message: messages.voting.success,
+              autoClose: true,
+              type: "success",
+              duration: 10
+          });
+        } else {
+          console.log(error.reason);
+			    showNotification({
+              message: messages.voting.error,
+              autoClose: true,
+              type: "error",
+              duration: 8
+          });
+        }
+    });
+  }
+}
 
-
+///////////////////////////////////////////////////////////////////////////////
+//Start up
 Meteor.startup(function () {
   console.log("startup");
   Meteor.autorun(function () {
@@ -101,11 +146,7 @@ Template.homepage.events({
 	   } else {
 		  Session.set("eventname", null);
 	   }
-	},
-	'click input.reset': function () {
-		document.getElementsByName('find_event')[0].value="";
-		Session.set("eventname", null);
-	},
+	}
 });
 
 Template.homepage.isuser = function() {
@@ -169,9 +210,9 @@ Template.dashboard.anyAppointments = function() {
 Template.dashboard.appointments = function () {
   if (Session.get("eventname") != null && Session.get("eventname") != "") {
     var regex = new RegExp(Session.get("eventname"), "i");
-      return Appointments.find({"owner": this.userId, title: regex}, { sort: {time: -1}});
+    return Appointments.find({"owner": this.userId, title: regex}, { sort: {time: -1}});
   } else {
-	  return Appointments.find({"owner": Meteor.user()._id}, {sort: {time: -1}});
+    return Appointments.find({"owner": Meteor.user()._id}, {sort: {time: -1}});
   }
 }
 
@@ -605,6 +646,8 @@ Template.invitetimeproposal.events({
 		} else {
 			TimeProposals.update({"_id" : this._id}, {$push : {"rsvps" : {"email" : Session.get("inviteemail"), "rating" : rating}}});
 		}
+		
+		trackVote(Session.get("selected"), Session.get("inviteemail"));
 	}
 });
 

@@ -93,7 +93,7 @@
     <div class="row">
       <div class="span12">
         <div class="alert alert-info">
-          <strong>Add Events</strong><br/> Looks like you have not created any events yet. 
+          <strong>Add Events</strong><br/> You have not created any events yet. 
           Use the "Add Event" bar below to get started.
         </div>
       </div>
@@ -107,7 +107,7 @@
     <div class="span4 eventlist">
       <h2>List of Events</h2>
 		  <form class="navbar-search pull-left" action="">
-        <input type="text" class="search-query event_search_box input-xlarge" placeholder="Search your events..." name="find_event" >
+        <input type="text" class="search-query event_search_box input-large" placeholder="Search your events..." name="find_event" >
       </form>
 		  <br/><br/>
 		  {{#each appointments}}
@@ -216,11 +216,11 @@
 	<div class="span3">
 		<div class="well">
 		{{#unless editattendee}}
-  			<strong>{{name}}</strong><br/>
-			<small><a href="#">{{email}}</a></small><br/>
+  		<strong>{{name}}</strong><br/>
+			<small><a href="#">{{email}}</a><br/>
 			Invited: <strong>{{invited}}</strong> Read email: <strong>{{emailread}}</strong><br>
 			Link clicked: <strong>{{linkclicked}}</strong>  Voted: <strong>{{voted}}</strong><br/>
-			<small><a href="#" class="linkDeleteAttendee">Delete</a> | <a href="#" class="linkEditAttendee">Edit</a> | <a href="#" class="linkSendOneInvite">Send Invite</a></small>
+			<a href="#" class="linkDeleteAttendee">Delete</a> | <a href="#" class="linkEditAttendee">Edit</a> | <a href="#" class="linkSendOneInvite">Send Invite</a></small>
 
 		{{/unless }}
 		
@@ -289,7 +289,8 @@
         </div>
         
         <div class="span3">
-          <h2>Send invitations</h2>
+          <h4>Powerful analytics</h4>
+          <img >
           <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
           <p><a class="btn" href="#">View details &raquo;</a></p>
         </div>
