@@ -31,9 +31,10 @@ Meteor.Router.add({
     "/dashboard"      : 'dashboard',
     '/features'				: 'features',
     '/posts/:id'			: function(id) {
-							      Session.set('postId', id);
-							      return 'post';
-							  },
+      Session.set('postId', id);
+      return 'post';
+    },
+							  
     '/invite/:id/:email'	: function (id, email) {
       console.log("invite router");
     	var appt = Appointments.findOne(id);
@@ -45,22 +46,12 @@ Meteor.Router.add({
     	Session.set("inviteemail", email);
     	return 'invitepage';
   },
-  '/tracking/:eventid/:email'  : function(eventid, email) {
+  
+  '/tracking/:eventid/:email'  : function (eventid, email) {
     trackEmailReceipt(eventid, email);
   }
+  
 });
-
-Meteor.Router.filters({
-  requireLogin: function(page) {
-    if (Meteor.user()) {
-        return "homepage";
-    } else {
-      return 'landingSlider';
-    }
-  }
-});
-
-Meteor.Router.filter('requireLogin', {only: 'homepage'});
 
 Meteor.startup(function () {
   console.log("startup");
@@ -133,7 +124,11 @@ Template.homepage.events({
 		Session.set("eventname", null);
 	},
 });
-	
+
+Template.homepage.isuser = function() {
+  return Meteor.user();
+}
+
 Template.newappointment.events({
 	  'click #btnAddEvent': function (event, template) {
 		  var title = template.find("#title").value;

@@ -94,6 +94,8 @@ Meteor.methods({
       var from = contactEmail(user);
       var fromName = displayName(user);
       var to = options.toemail;
+      var pixelTrackerLink = "<img src='" + Meteor.absoluteUrl("tracking/" + appointment._id + "/" + to) + "' width='1' height='1'>";
+      var inviteLink = Meteor.absoluteUrl("invite/" + appointment._id + "/" + to);
       if (Meteor.isServer && to) {
         // This code only runs on the server. If you didn't want clients
         // to be able to see it, you could move it to a separate file.
@@ -102,9 +104,16 @@ Meteor.methods({
           to: to,
           replyTo: from || undefined,
           subject: "[Maria] Vote for Event: " + appointment.title,
-          html: "Dear <strong>" + options.toname + "</strong>,<br><br> This is Maria, the world's quickest online meeting organizer.<br><br> On behalf of " + fromName + ", I\'d like to invite you to the event <strong>" + appointment.title + "</strong>.<br><br>The event organizer has created a quick poll with several time proposals. Please visit this link to RSVP and cast your vote for the best time for the event.<br><br> " + Meteor.absoluteUrl("invite/" + appointment._id + "/" + to) + "<br><br>Thank you for your time,<br>--Maria<br><br>" + Meteor.absoluteUrl()
+          html: "Dear <strong>" + options.toname + "</strong>,<br><br> This is Maria, the world's quickest online meeting organizer.<br><br> On behalf of " + fromName + ", I\'d like to invite you to the event <strong>" + appointment.title + "</strong>.<br><br>The event organizer has created a quick poll with several time proposals. Please visit this link to RSVP and cast your vote for the best time for the event.<br><br> " + inviteLink + "<br><br>Thank you for your time,<br>--Maria<br><br>" + Meteor.absoluteUrl() + "<br>" + pixelTrackerLink
           //, text: "Dear " + options.toname + ",\n\n This is Maria, your friendly meeting assistant.\n\n On behalf of " + fromName + ", I\'d like to invite you to the event '" + appointment.title + "'." + "\n\nThe event organizer has created a quick poll with several time proposals. Please visit this link to RSVP and cast your vote for the best time for the event.\n\n " + Meteor.absoluteUrl("invite/" + appointment._id + "/" + to, {"rootUrl" : "http://maria-app.herokuapp.com"}) + "\n\nThank you for your time,\n--Maria\n\nwww.maria-app.herokuapp.com"
         });
+        
+        var found = Attendees.findOne({"email" : to, "appointmentId" : appointment._id});
+        if (! found) {
+          throw new Meteor.Error(400, "Event cannot be found or user not invited.");
+        } else {
+  	      Attendees.update({"email" : to, "appointmentId" : appointment._id}, {$set : {"invited" : true}});
+	      }
       }
     }
   },
@@ -179,7 +188,6 @@ Meteor.methods({
    
   updateAttendeeEmailReceipt: function (options) {
     if (Meteor.is_server) {
-      console.log("inside tracking model");
       options = options || {};
       if (! (typeof options.appointmentId === "string" && options.appointmentId.length &&
   	    typeof options.email === "string" && options.email.length))
@@ -187,11 +195,9 @@ Meteor.methods({
         
         var found = Attendees.findOne({"email" : options.email, "appointmentId" : options.appointmentId});
         if (! found) {
-          console.log("ATTENDEE RECORD NOT FOUND. ABORTING.");
           throw new Meteor.Error(400, "Event cannot be found or the user has not been invited.");
         } else {
   	      Attendees.update({"email" : options.email, "appointmentId" : options.appointmentId}, {$set : {"emailread" : true}});
-  	      console.log("ATTENDEE RECORD UPDATED SUCCESSFULLY!!");
 	      }
       }
    }

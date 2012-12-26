@@ -36,8 +36,14 @@
   
 	{{> header }}
   
-  <div class="container">    
-     {{> dashboard }}
+  <div class="container">
+    {{#if isuser}}  
+      {{> dashboard }}
+    {{/if }}
+    
+    {{#unless isuser}}
+      {{> landingSlider}}
+    {{/unless }}
   </div>
     
   {{> footer }}
@@ -252,7 +258,6 @@
 
 
 <template name="landingSlider">
-  {{> header }}
   <div class="container">
   <div>
     <!-- Jumbotron -->
@@ -293,8 +298,6 @@
 
   </div>
   </div>
-  
-  {{> footer }}
 </template>
 
 <template name="updateAppointmentDialog">
@@ -424,4 +427,3 @@
     </div>
   </div>
 </template>
-
