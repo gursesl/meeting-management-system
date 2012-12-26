@@ -95,8 +95,8 @@ Meteor.methods({
       var fromName = displayName(user);
       var to = options.toemail;
       var pixelTrackerLink = "<img src='" + Meteor.absoluteUrl("tracking/" + appointment._id + "/" + to) + "' width='1' height='1'>";
-      var randomImageLink = "<img src='https://www.google.com/logos/2012/holiday_series_2012_2-999005-hp.jpg'>";
-      var inviteLink = Meteor.absoluteUrl("invite/" + appointment._id + "/" + to);
+      var headerImageLink = "<img src='https://www.google.com/logos/2012/holiday_series_2012_2-999005-hp.jpg'>";
+      var inviteLink = "<a href='" + Meteor.absoluteUrl("invite/" + appointment._id + "/" + to) + "'>" + Meteor.absoluteUrl("invite/" + appointment._id + "/" + to) + "</a>";
       if (Meteor.isServer && to) {
         // This code only runs on the server. If you didn't want clients
         // to be able to see it, you could move it to a separate file.
@@ -105,15 +105,17 @@ Meteor.methods({
           to: to,
           replyTo: from || undefined,
           subject: "[Maria] Vote for Event: " + appointment.title,
-          html: "<html><body>Dear <strong>" + options.toname + "</strong>,<br><br> This is Maria, the world's quickest online meeting organizer.<br><br> On behalf of " + fromName + ", I\'d like to invite you to the event <strong>" + appointment.title + "</strong>.<br><br>The event organizer has created a quick poll with several time proposals. Please visit this link to RSVP and cast your vote for the best time for the event.<br><br> " + inviteLink + "<br><br>Thank you for your time,<br>--Maria<br><br>" + Meteor.absoluteUrl() + "<br>" + pixelTrackerLink + "<br><br>" + randomImageLink + "</body></html>"
+          html: "<html><body>Dear <strong>" + options.toname + "</strong>,<br><br> This is Maria, the world's quickest online meeting organizer.<br><br> On behalf of " + fromName + ", I\'d like to invite you to the event <strong>" + appointment.title + "</strong>.<br><br>The event organizer has created a quick poll with several time proposals. Please visit this link to RSVP and cast your vote for the best time for the event.<br><br> " + inviteLink + "<br><br>Thank you for your time,<br>--Maria<br><br>" + Meteor.absoluteUrl() + "<br>" + pixelTrackerLink + "<br><br>" + headerImageLink + "</body></html>"
           //, text: "Dear " + options.toname + ",\n\n This is Maria, your friendly meeting assistant.\n\n On behalf of " + fromName + ", I\'d like to invite you to the event '" + appointment.title + "'." + "\n\nThe event organizer has created a quick poll with several time proposals. Please visit this link to RSVP and cast your vote for the best time for the event.\n\n " + Meteor.absoluteUrl("invite/" + appointment._id + "/" + to, {"rootUrl" : "http://maria-app.herokuapp.com"}) + "\n\nThank you for your time,\n--Maria\n\nwww.maria-app.herokuapp.com"
         });
+        
+        console.log("Email sent successfully.");
         
         var found = Attendees.findOne({"email" : to, "appointmentId" : appointment._id});
         if (! found) {
           throw new Meteor.Error(400, "Event cannot be found or user not invited.");
         } else {
-  	      Attendees.update({"email" : to, "appointmentId" : appointment._id}, {$set : {"invited" : true}});
+  	      Attendees.update({"email" : to, "appointmentId" : appointment._id}, {$set : {"invited" : true, "emailread" : false}});
 	      }
       }
     }
@@ -135,7 +137,18 @@ Meteor.methods({
 	    	"time": options.ptime, 
 	    	"votes": 0,
 	    	"rsvps": []
-	    });
+	    }, function (error) {
+  		    if (! error) {
+  			    console.log("Time proposal added successfully.");
+			    } else {
+  			      if (error.code == "11000") {
+  			        throw new Meteor.Error(403, "Time proposal date and time must be unique. Please check the existing proposal and choose a diffrent date or time.");
+			        } else {
+  			        throw new Meteor.Error(403, "System Error.");
+			        }
+  			    console.log(error);
+			    }
+      });
     }
   },
   

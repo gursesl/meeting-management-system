@@ -15,7 +15,7 @@ var messages = {
   "eventdelete" : {"success" : "Event deleted successfully.", "error" : "There was an error deleting the event."},
   "inviteone" : {"success" : "Invite sent successfully.", "error" : "There was an error sending the invite."},
   "inviteall" : {"success" : "Invite sent successfully to all attendees.", "error" : "There was an error sending the invite."},
-  "timeproposalcreate" : {"success" : "Time proposal created successfully.", "error" : "There was an error creating the time proposal."},
+  "timeproposalcreate" : {"success" : "Time proposal created successfully.", "error" : "There was an error creating the time proposal.", "validation" : "Date and time are both required to create a time proposal."},
   "timeproposalsave" : {"success" : "Time proposal saved successfully.", "error" : "There was an error saving the time proposal."},
   "timeproposaldelete" : {"success" : "Time proposal deleted successfully.", "error" : "There was an error deleting the time proposal."},
   "attendeecreate" : {"success" : "Attendee added successfully.", "error" : "There was an error adding the attendee."},
@@ -45,13 +45,11 @@ Meteor.Router.add({
     	
     	Session.set("inviteemail", email);
     	return 'invitepage';
-  },
-  
-  '/tracking/:eventid/:email'  : function (eventid, email) {
-    trackEmailReceipt(eventid, email);
   }
-  
 });
+
+
+
 
 Meteor.startup(function () {
   console.log("startup");
@@ -95,21 +93,6 @@ var make_okcancelhandler = function (options) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-//Tracking
-var trackEmailReceipt = function (appointmentid, email) {
-  console.log("now tracking event " + appointmentid + " and email " + email);
-  if (appointmentid.length && email.length) {
-    Meteor.call("updateAttendeeEmailReceipt", {
-      appointmentId: appointmentid,
-      email: email
-      }, function (error) {
-		    if (! error)
-			    console.log("tracking updated successfully!!!!!!");
-    });
-  }
-}
-
-///////////////////////////////////////////////////////////////////////////////
 //Template: Homepage 
 Template.homepage.events({
     'input input.event_search_box' : function () {
@@ -143,7 +126,7 @@ Template.newappointment.events({
               message: messages.eventcreate.success,
               autoClose: true,
               type: "success",
-              duration: 2
+              duration: 4
           });
 				  Session.set("selected", appointment);
 				  openUpdateAppointmentDialog();
@@ -202,7 +185,7 @@ Template.attendee.events({
           message: messages.attendeedelete.success,
           autoClose: true,
           type: "success",
-          duration: 2
+          duration: 4
       });
     },
     'click .linkEditAttendee' : function (event, template) {
@@ -236,7 +219,7 @@ var saveAttendee = function (event, template) {
             message: messages.attendeesave.success,
             autoClose: true,
             type: "success",
-            duration: 2
+            duration: 4
         });
 		  }
 	  });
@@ -280,7 +263,7 @@ Template.appointment.events({
           message: messages.eventdelete.success,
           autoClose: true,
           type: "success",
-          duration: 2
+          duration: 4
       });
     	return false;
   }
@@ -334,7 +317,7 @@ Template.appointmentdetail.events({
           message: messages.eventdelete.success,
           autoClose: true,
           type: "succeess",
-          duration: 2
+          duration: 4
       });
     	return false;
   },
@@ -376,7 +359,7 @@ var sendOneInvite = function (invitee) {
               message: messages.inviteone.success,
               autoClose: true,
               type: "success",
-              duration: 2
+              duration: 4
           }); */
 		  }
 	  });
@@ -399,7 +382,7 @@ Template.timeproposal.events({
         message: messages.timeproposaldelete.success,
         autoClose: true,
         type: "success",
-        duration: 2
+        duration: 4
     });
   },
   'click #linkEditTimeProposal' : function (event, template) {
@@ -472,7 +455,7 @@ var saveTimeProposal = function (event, template) {
             message: messages.timeproposalsave.success,
             autoClose: true,
             type: "success",
-            duration: 2
+            duration: 4
         });
 		  }
 	  });
@@ -561,7 +544,7 @@ Template.updateAppointmentDialog.events({
                 message: messages.eventsave.success,
                 autoClose: true,
                 type: "success",
-                duration: 2
+                duration: 4
             });
   			  }
   		  });
@@ -669,7 +652,7 @@ Template.attendeesDialog.events({
               message: messages.attendeecreate.success,
               autoClose: true,
               type: "success",
-              duration: 2
+              duration: 4
           });
 			  }
 	    });
@@ -708,16 +691,23 @@ Template.timeProposalsDialog.events({
             message: messages.timeproposalcreate.success,
             autoClose: true,
             type: "success",
-            duration: 2
+            duration: 4
+        });
+		  } else {
+		    showNotification({
+            message: error.reason,
+            autoClose: true,
+            type: "error",
+            duration: 8
         });
 		  }
 	  });
     } else {
 		   showNotification({
-            message: messages.timeproposalcreate.error,
+            message: messages.timeproposalcreate.validation,
             autoClose: true,
             type: "error",
-            duration: 4
+            duration: 8
         });
 	  }
   },
