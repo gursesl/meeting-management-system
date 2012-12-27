@@ -705,6 +705,13 @@ Template.attendeesDialog.events({
               type: "success",
               duration: 4
           });
+			  } else {
+			    showNotification({
+              message: error.reason,
+              autoClose: true,
+              type: "error",
+              duration: 8
+          });
 			  }
 	    });
 	  } else {

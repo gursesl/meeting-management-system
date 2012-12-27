@@ -1,4 +1,10 @@
 /* CSS declarations go here */
+
+/*
+  Blue -- #0088CC; rgb(0, 136, 204);
+  Green -- #51A351; rgb(81, 163, 81);
+*/
+
 body {
     background-color: #fff;
     color: #333333;
@@ -149,6 +155,15 @@ input#location {
   margin: 0 auto;
 }
 
+.homebox h3 {
+  font-size: 160%;
+  text-align: left;
+}
+
+.homebox p {
+  margin: 16px 0px;
+}
+
 .homebox a { display:block; cursor:pointer;
 	background:#f6f6f6;
 	background:-webkit-gradient(linear, left top, left bottom, color-stop(50%, rgba(249,249,249,1)), color-stop(100%, rgba(240,240,240,1)));
@@ -174,7 +189,7 @@ input#location {
 	background:     -o-linear-gradient(top, rgba(249,249,249,1) 50%, rgba(224,224,224,1) 100%);
 	background:        linear-gradient(top, rgba(249,249,249,1) 50%, rgba(224,224,224,1) 100%);
 }
-.homebox .curve-down { display:inline-block; height:160px; width:100%; _display:inline; _zoom:1; border:1px solid #e0e0e0; border-top-color:#efefef; border-bottom-color:#ccc; }
+.homebox .curve-down { display:inline-block; height:115px; width:100%; _display:inline; _zoom:1; border:1px solid #e0e0e0; border-top-color:#efefef; border-bottom-color:#ccc; }
 .homebox .curve-down:nth-child(1n) { border:none;
 	-webkit-border-radius:100% / 33px;
 	   -moz-border-radius:100% / 33px;

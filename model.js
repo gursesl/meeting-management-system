@@ -182,8 +182,19 @@ Meteor.methods({
 	      "voted" : false,
 	      "emailread" : false,
 	      "linkclicked" : false
-	    });
-    }
+	    }, function (error) {
+    		    if (! error) {
+    			    console.log("Attendee added successfully.");
+  			    } else {
+    			      if (error.code == "11000") {
+    			        throw new Meteor.Error(403, "Attendee emails must be unique. Please check the existing attendees or choose a diffrent email address.");
+  			        } else {
+    			        throw new Meteor.Error(403, "System Error.");
+  			        }
+    			    console.log(error);
+  			    }
+        });
+      }
   },
   
   updateAttendee: function (options) {
