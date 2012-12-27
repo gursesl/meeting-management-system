@@ -19,6 +19,10 @@ body {
     width: 240px;
 }
 
+.span5 {
+    width: 300px;
+}
+
 .span8 {
     width: 670px;
 }
@@ -139,8 +143,11 @@ input#location {
 	border-top: solid #ddd 1px;
 }
 
- 
-
+.piechart {
+  min-width: 300px; 
+  min-height: 300px; 
+  margin: 0 auto;
+}
 
 .homebox a { display:block; cursor:pointer;
 	background:#f6f6f6;
