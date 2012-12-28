@@ -604,6 +604,11 @@ Template.updateAppointmentDialog.events({
     }
 });
 
+Template.updateAppointmentDialog.rendered = function () {
+  console.log("rendered update appt");
+  $('#txtdescription').wysihtml5();
+};
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Invite page

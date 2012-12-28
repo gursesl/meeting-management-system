@@ -17,6 +17,38 @@ body {
     width: 940px;
 }
 
+.toplogo {
+  background: url("/img/maria-logo-grey.svg") no-repeat;
+  background-size: 38px 28px;
+}
+
+.toplogo:hover {
+  background: url("/img/maria-logo-white.svg") no-repeat;
+  background-size: 38px 28px;
+}
+
+.bottomlogo {
+  background: url("/img/maria-logo-grey.svg") no-repeat;
+  background-size: 38px 28px;
+  height: 50px;
+  width: 100px;
+  padding: 30px;
+}
+
+.bottomlogo:hover {
+  background: url("/img/maria-logo.svg") no-repeat;
+  background-size: 38px 28px;
+}
+
+.navbar .brand {
+  padding: 4px 100px 6px 44px;
+  margin: 6px 0px 0px 0px;
+}
+
+.navbar-inner {
+  padding-left: 10px;
+}
+
 .span3 {
     width: 200px;
 }
