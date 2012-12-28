@@ -9,12 +9,116 @@ body {
     background-color: #fff;
     color: #333333;
     font: 12px/18px Lucida Grande, Arial, Helvetica, Geneva, Verdana, sans-serif;
-    padding-top: 20px;
-    padding-bottom: 60px;
 }
 
-.container, .navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
-    width: 940px;
+#background {
+    background: url("/img/page_bg.png") no-repeat scroll center 40px #75495C;
+}
+
+.clearfix:after {
+    clear: both;
+    content: " ";
+    display: block;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+    width: 0;
+}
+
+#header {
+    background: none repeat scroll 0 0 #000000;
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.6);
+    padding: 0;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+.row {
+    margin: 0 auto;
+    max-width: 1170px;
+    min-width: 735px;
+    position: relative;
+    width: 100%;
+}
+
+#nav {
+    padding-top: 60px;
+    text-align: center;
+}
+
+#nav li {
+    display: inline-block;
+    padding: 35px 12px;
+}
+
+#nav li.disabled a {
+    opacity: 0.25;
+}
+#nav li.disabled a:hover {
+}
+#nav li a.n-home {
+    background-position: 9px 0;
+}
+#nav li a.n-home:hover, #nav li a.n-home.active {
+    background-position: 9px -108px;
+}
+#nav li a.n-venue {
+    background-position: -135px 0;
+}
+#nav li a.n-venue:hover, #nav li a.n-venue.active {
+    background-position: -135px -108px;
+}
+#nav li a.n-agenda {
+    background-position: -279px 0;
+}
+#nav li a.n-agenda:hover, #nav li a.n-agenda.active {
+    background-position: -279px -108px;
+}
+#nav li a.n-sponsors {
+    background-position: -1118px 0;
+}
+#nav li a.n-sponsors:hover, #nav li a.n-sponsors.active {
+    background-position: -1118px -108px;
+}
+#nav li a.n-speakers {
+    background-position: -423px 0;
+}
+#nav li a.n-speakers:hover, #nav li a.n-speakers.active {
+    background-position: -423px -108px;
+}
+#nav li a.n-startups {
+    background-position: -567px 0;
+}
+#nav li a.n-startups:hover, #nav li a.n-startups.active {
+    background-position: -567px -108px;
+}
+#nav li a.n-hackathon {
+    background-position: -711px 0;
+}
+#nav li a.n-hackathon:hover, #nav li a.n-hackathon.active {
+    background-position: -711px -108px;
+}
+#nav li a.n-startupbattle {
+    background-position: -855px 0;
+}
+#nav li a.n-startupbattle:hover, #nav li a.n-startupbattle.active {
+    background-position: -855px -108px;
+}
+
+#nav li a.n-home:hover, #nav li a.n-home.active {
+    background-position: 9px -108px;
+}
+#nav li a.n-home {
+    background-position: 9px 0;
+}
+#nav li a {
+    background: url("/img/nav-sprite-5.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    height: 106px;
+    text-indent: -9999px;
+    width: 110px;
 }
 
 .toplogo {
@@ -40,6 +144,9 @@ body {
   background-size: 38px 28px;
 }
 
+.navbar {
+  margin-bottom: 2px;
+}
 .navbar .brand {
   padding: 4px 100px 6px 44px;
   margin: 6px 0px 0px 0px;

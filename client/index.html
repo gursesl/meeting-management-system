@@ -50,36 +50,64 @@
 </template>
 
 <template name="header">
-  <div class="container">
-    <div class="masthead">
-      <!-- Navbar -->
-	  <div class="navbar navbar-inverse">
-	    <div class="navbar-inner">
-	      <div class="container" style="width: auto;">
-	        <a class="toplogo brand" href="/">Maria</a>
-	        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-	          <span class="icon-bar"></span>
-	          <span class="icon-bar"></span>
-	          <span class="icon-bar"></span>
-	        </a>
-	        <div class="nav-collapse">
-	          <ul class="nav">
-	            <li class="active"><a href="/">Home</a></li>
-	            <li><a href="/features">Features</a></li>
-	            <li><a href="#">Why Maria?</a></li>
-	            <li><a href="#">Sign Up Free</a></li>
-	          </ul>
-	          
-	          <ul class="nav pull-right right-fix">
-	            <li><a href="#">{{loginButtons}}</a></li>
-	          </ul>
-	          
-	        </div><!-- /.nav-collapse -->
-	      </div>
-	    </div><!-- /navbar-inner -->
-	  </div><!-- /navbar -->
-      </div>
-  </div>
+  <!-- Navbar -->
+  
+  
+  <div id="background">
+  		<div class="container clearfix" id="header">
+  	    <div class="row">
+  	        <div class="navbar navbar-inverse">
+                <div class="container" style="width: auto;">
+
+                          <div class="row">
+                            <div class="span12">
+                  <a class="toplogo brand" href="/">Maria</a>
+                  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          	          <span class="icon-bar"></span>
+          	          <span class="icon-bar"></span>
+          	          <span class="icon-bar"></span>
+          	        </a>
+          	        <div class="nav-collapse">
+          	          <ul class="nav">
+          	            <li class="active"><a href="/">Home</a></li>
+          	            <li><a href="/features">Features</a></li>
+          	            <li><a href="#">Why Maria?</a></li>
+          	            <li><a href="#">Sign Up Free</a></li>
+          	          </ul>
+
+          	          <ul class="nav pull-right right-fix">
+          	            <li><a href="#">{{loginButtons}}</a></li>
+          	          </ul>
+          	          </div>
+          	        </div><!-- /.nav-collapse -->
+          	      </div>
+          	    </div><!-- /navbar-inner -->
+          	  </div><!-- /navbar -->
+          	  </div>
+  	     
+  	     
+       </div>
+
+       <div class="container clearfix" id="navigation">
+          <div class="row">
+
+           <ul id="nav">
+               <li><a class="n-home active" href="#">Create a Meeting</a></li>
+               <li><a class="n-agenda " href="#">Agenda</a></li>
+               <li><a class="n-speakers " href="#">Speakers</a></li>
+               <li><a class="n-startups " href="#">Startups</a></li>
+               <li><a class="n-startupbattle " href="">Startup Battle</a></li>
+               <li><a class="n-hackathon " href="">Hack Battle</a></li>
+               <li><a class="n-sponsors " href="">Sponsors</a></li>
+               <li><a class="n-venue " href="">Venue</a></li>
+               <!--<li><a href="#" class="n-amsterdam ">Amsterdam</a></li> -->
+           </ul>
+         </div>  
+       </div>
+  	</div>
+  
+  
+
 </template>
 
 <template name="footer">
