@@ -371,12 +371,10 @@ input#location {
 }
 
 .wizardPaneStepOne {
-  width: 1030px; 
-  height: 400px;
-  padding: 20px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  margin-left: 200px;
+  min-height: 500px;
+  padding: 40px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
   background: rgba(0, 0, 0, 0.5);
   color:#fff;
   
