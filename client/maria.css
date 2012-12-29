@@ -15,6 +15,10 @@ body {
     background: url("/img/page_bg.png") no-repeat scroll center 40px #75495C;
 }
 
+#background-blue {
+    background: url("/img/page_bg_blue.png") no-repeat scroll center 40px #103352;
+}
+
 .clearfix:after {
     clear: both;
     content: " ";
@@ -41,6 +45,11 @@ body {
     min-width: 735px;
     position: relative;
     width: 100%;
+}
+
+.eventlist {
+  padding: 0px;
+  margin: 0px;
 }
 
 #nav {
@@ -147,33 +156,10 @@ body {
 .navbar {
   margin-bottom: 2px;
 }
+
 .navbar .brand {
   padding: 4px 100px 6px 44px;
   margin: 6px 0px 0px 0px;
-}
-
-.navbar-inner {
-  padding-left: 10px;
-}
-
-.span3 {
-    width: 200px;
-}
-
-.span4 {
-    width: 240px;
-}
-
-.span5 {
-    width: 300px;
-}
-
-.span8 {
-    width: 670px;
-}
-
-.span9 {
-    width: 700px;
 }
 
 small {
@@ -295,8 +281,9 @@ input#location {
 }
 
 .homebox h3, .homeboxclean h3 {
-  font-size: 160%;
+  font-size: 190%;
   text-align: center;
+  border-bottom: 1px solid #ddd;
 }
 
 .homebox p, .homeboxclean h3 {
