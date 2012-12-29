@@ -566,6 +566,13 @@ Template.homepage.showAttendeesDialog = function () {
 };
 
 
+///////////////////////////////////////////////////////////////////////////////
+//Template: Landing slider
+Template.landingSlider.events({
+  'click #linkGetStartedToday' : function (event, template) {
+    slideHomePageWizard(event, template);
+  } 
+});
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Header
@@ -576,28 +583,28 @@ Template.header.tallbg = function() {
 
 Template.header.events({
   'click #linkHomeNavCreateEvent' : function (event, template) {
-    console.log("create event clicked");
-    if (Session.get("openTallBg")) {
-      //$(".ca-menu").css({"margin-bottom" : "260px"});
-      $(".hiddenWizardStepOne").css({"height" : "0px"});
-      $(".wizardPaneStepOne").css({"opacity" : "0"});
-      Session.set("openTallBg", null);
-      //$(".hiddenWizardStepOne").css({"display" : "none"});
-    } else {
-      //$(".ca-menu").css({"margin-bottom" : "800px"});
-      $(".hiddenWizardStepOne").css({"height" : "600px"});
-      $(".wizardPaneStepOne").css({"opacity" : "1"});
-      //$(".hiddenWizardStepOne").css({"opacity" : "1"});
-      //$(".hiddenWizardStepOne").css({"display" : "block"});
-      Session.set("openTallBg", true);
-      
-    }
-    
-    console.log("doc id: " + template.find('.ca-menu'));
-  }
+    slideHomePageWizard(event, template);
+  } 
 });
 
-
+var slideHomePageWizard = function(event, template) {
+  console.log("create event clicked");
+  if (Session.get("openTallBg")) {
+    //$(".ca-menu").css({"margin-bottom" : "260px"});
+    $(".hiddenWizardStepOne").css({"height" : "0px"});
+    $(".wizardPaneStepOne").css({"opacity" : "0"});
+    Session.set("openTallBg", null);
+    //$(".hiddenWizardStepOne").css({"display" : "none"});
+  } else {
+    //$(".ca-menu").css({"margin-bottom" : "800px"});
+    $(".hiddenWizardStepOne").css({"height" : "600px"});
+    $(".wizardPaneStepOne").css({"opacity" : "1"});
+    //$(".hiddenWizardStepOne").css({"opacity" : "1"});
+    //$(".hiddenWizardStepOne").css({"display" : "block"});
+    Session.set("openTallBg", true);
+    
+  }
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Update event page
