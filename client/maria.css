@@ -250,6 +250,13 @@ input#location {
   font-size: 100px;
   line-height: 1;
 }
+
+.jumbotron p {
+  max-width: 960px;
+  margin: 30px auto;
+}
+
+
 .jumbotron .lead {
   font-size: 24px;
   line-height: 1.25;
