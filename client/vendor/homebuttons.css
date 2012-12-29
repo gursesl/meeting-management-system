@@ -25,8 +25,19 @@
     /*
     padding: 0 0 0 48px;
     width: 1020px;
+    
+    transition: margin-bottom 1000ms linear 0;
+    -moz-transition: margin-bottom 10000ms linear 0;
+    -webkit-transition: margin-bottom 1s linear;
     */
+    
+    -webkit-transition: margin-bottom 1000ms ease-in-out;
+    -moz-transition: margin-bottom 1000ms ease-in-out;
+    -o-transition: margin-bottom 1000ms ease-in-out;
+    -ms-transition: margin-bottom 1000ms ease-in-out;
+    transition: margin-bottom 1000ms ease-in-out;
 }
+
 
 .ca-menu li {
     width: 120px;

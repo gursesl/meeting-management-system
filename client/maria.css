@@ -16,7 +16,8 @@ body {
 }
 
 #background-blue {
-    background: url("/img/page_bg_blue.png") no-repeat scroll center 40px #103352;
+    background: url("/img/page_bg_blue.jpg") no-repeat #103352;
+    z-index: -1;
 }
 
 .clearfix:after {
@@ -234,6 +235,11 @@ input#location {
   margin: 0 auto;
 }
 
+.container .homepage {
+  background: #fff;
+  z-index: 5;
+}
+
 .container > hr {
   margin: 60px 0;
 }
@@ -347,3 +353,41 @@ input#location {
 	   -moz-border-radius:5px;
 	        border-radius:5px;
 }
+
+.hiddenWizardStepOne {
+  height: 0px;
+  background: url("/img/page_bg_blue.jpg") no-repeat 0 -260px #103352;
+  position: relative;
+  display: block;
+  z-index: 0;
+  display: block;
+  clear:both;
+  overflow: hidden;
+  -webkit-transition: height 1000ms ease-in-out;
+  -moz-transition: height 1000ms ease-in-out;
+  -o-transition: height 1000ms ease-in-out;
+  -ms-transition: height 1000ms ease-in-out;
+  transition: height 1000ms ease-in-out;
+}
+
+.wizardPaneStepOne {
+  width: 960px; 
+  height: 400px;
+  padding: 20px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  margin-left: 200px;
+  background: rgba(0, 0, 0, 0.5);
+  color:#fff;
+  
+  -webkit-transition: opacity 2000ms ease-in-out;
+  -moz-transition: opacity 2000ms ease-in-out;
+  -o-transition: opacity 2000ms ease-in-out;
+  -ms-transition: opacity 2000ms ease-in-out;
+  transition: opacity 2000ms ease-in-out;
+}
+
+
+
+
+

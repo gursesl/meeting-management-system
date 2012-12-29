@@ -112,9 +112,8 @@ Meteor.startup(function () {
   });
 });
 
-
 ///////////////////////////////////////////////////////////////////////////////
-//Helper functions
+//Utility functions
 var okcancel_events = function (selector) {
   return 'keyup '+selector+', keydown '+selector+', focusout '+selector;
 }
@@ -135,6 +134,15 @@ var make_okcancelhandler = function (options) {
 				cancel.call(this, evt);
 		}
 	}
+}
+
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -557,6 +565,40 @@ Template.homepage.showAttendeesDialog = function () {
   return Session.get("showAttendeesDialog");
 };
 
+
+
+///////////////////////////////////////////////////////////////////////////////
+//Template: Header
+Template.header.tallbg = function() {
+  if (Session.get("openTallBg"))
+    return "tallbg";
+}
+
+Template.header.events({
+  'click #linkHomeNavCreateEvent' : function (event, template) {
+    console.log("create event clicked");
+    if (Session.get("openTallBg")) {
+      //$(".ca-menu").css({"margin-bottom" : "260px"});
+      $(".hiddenWizardStepOne").css({"height" : "0px"});
+      $(".wizardPaneStepOne").css({"opacity" : "0"});
+      Session.set("openTallBg", null);
+      //$(".hiddenWizardStepOne").css({"display" : "none"});
+    } else {
+      //$(".ca-menu").css({"margin-bottom" : "800px"});
+      $(".hiddenWizardStepOne").css({"height" : "600px"});
+      $(".wizardPaneStepOne").css({"opacity" : "1"});
+      //$(".hiddenWizardStepOne").css({"opacity" : "1"});
+      //$(".hiddenWizardStepOne").css({"display" : "block"});
+      Session.set("openTallBg", true);
+      
+    }
+    
+    console.log("doc id: " + template.find('.ca-menu'));
+  }
+});
+
+
+
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Update event page
 Template.updateAppointmentDialog.selected = function () {
@@ -651,7 +693,7 @@ Template.invitetimeproposal.events({
 	'click .rateit' : function (event, template) {
 		Session.set("voted", true);
 		var rateid = '#' + this._id;
-		var rating = $(rateid).rateit('value')
+		var rating = $(rateid).rateit('value');
 		var userRatedAlready = TimeProposals.findOne({"_id" : this._id, "rsvps.email" : Session.get("inviteemail")});
 		
 		if (userRatedAlready) {
