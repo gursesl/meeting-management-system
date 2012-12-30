@@ -1,4 +1,5 @@
 Appointments = new Meteor.Collection("appointments");
+AnonymousAppointments = new Meteor.Collection("anonymousappointments");
 TimeProposals = new Meteor.Collection("timeproposals");
 Attendees = new Meteor.Collection("attendees");
 
@@ -59,7 +60,8 @@ Meteor.methods({
       owner: this.userId,
       title: options.title,
       location: options.location,
-      description: '',
+      description: options.description,
+      anonymous: options.anonymous,
       proposalType: 1,
       createdDate: new Date(),
       attendees: [],
@@ -82,6 +84,29 @@ Meteor.methods({
     
       Appointments.update({"_id" : options.id}, {$set : {"title" : options.title, "location" : options.location, "description" : options.description, "proposalType" : options.proposalType}});
     }
+  },
+  
+  createAnonymousAppointment: function (options) {
+    if (Meteor.is_server) {
+    options = options || {};
+    if (! (typeof options.title === "string" && options.title.length &&
+    		typeof options.location === "string" && options.location.length))
+    throw new Meteor.Error(400, "Required parameter missing.");
+    if (options.title.length > 200)
+      throw new Meteor.Error(413, "Event title too long.");
+    
+    return AnonymousAppointments.insert({
+      linkid: Meteor.uuid(),
+      title: options.title,
+      location: options.location,
+      description: options.description,
+      proposalType: 1,
+      createdDate: new Date(),
+      attendees: [],
+      rsvps: [],
+      timeproposals: []
+    });
+  }
   },
   
   sendOneInvite: function (options) {

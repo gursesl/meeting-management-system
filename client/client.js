@@ -98,6 +98,8 @@ var trackVote = function (appointmentid, email) {
 //Start up
 Meteor.startup(function () {
   console.log("startup");
+  Backbone.history.start({pushState: true});
+  
   Meteor.autorun(function () {
     console.log("autorun");
 	  if (Meteor.userId()) {
@@ -168,7 +170,8 @@ Template.newappointment.events({
 		  if (title.length && location.length) {
 			  Meteor.call("createAppointment", {
 				title: title,
-				location: location
+				location: location,
+				description: ""
 		  }, function (error, appointment) {
 			  if (! error) {
 				  showNotification({
