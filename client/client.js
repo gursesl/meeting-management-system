@@ -595,12 +595,18 @@ var slideHomePageWizard = function(event, template) {
     //$(".ca-menu").css({"margin-bottom" : "260px"});
     $(".hiddenWizardStepOne").css({"height" : "0px"});
     $(".wizardPaneStepOne").css({"opacity" : "0"});
+    $("#liStepOne").removeClass("selected");
+    $("#liStepOne .ca-icon").removeClass("selected");
+    $("#liStepOne .ca-main").removeClass("selected");
     Session.set("openTallBg", null);
     //$(".hiddenWizardStepOne").css({"display" : "none"});
   } else {
     //$(".ca-menu").css({"margin-bottom" : "800px"});
     $(".hiddenWizardStepOne").css({"height" : "600px"});
     $(".wizardPaneStepOne").css({"opacity" : "1"});
+    $("#liStepOne").addClass("selected");
+    $("#liStepOne .ca-icon").addClass("selected");
+    $("#liStepOne .ca-main").addClass("selected");
     //$(".hiddenWizardStepOne").css({"opacity" : "1"});
     //$(".hiddenWizardStepOne").css({"display" : "block"});
     Session.set("openTallBg", true);

@@ -1,13 +1,6 @@
-/* GENERIC */
-
-
-
-/* SPECIFIC */
-
 #homenavigation ol, #homenavigation ul {
 	list-style:none;
 }
-
 
 @font-face {
     font-family: 'WebSymbolsRegular';
@@ -115,6 +108,17 @@
     display: none;
 }
 
+.ca-menu .selected {
+  border-color: #333;
+  color: #333;
+  opacity: 1;
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
 .ca-menu li:hover {
     border-color: #333;
     z-index: 999;
@@ -137,7 +141,7 @@
     */
 }
 
-.ca-menu li:hover .ca-main{
+.ca-menu li:hover .ca-main {
     color: #000;
     /*
     -webkit-animation: moveFromBottom 500ms ease-in-out;
