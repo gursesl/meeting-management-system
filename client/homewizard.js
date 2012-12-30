@@ -22,22 +22,23 @@ Template.homewizlogin.events({
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Home Page Wizard: Create an Event
 Template.homewizcreateevent.events({
+  
   'click #linkWizCreateEventCancel' : function ( event, template ) {
     console.log("Cancel create event button clicked");
     slideHomePageWizard(event, template);
   },
+  
   'click #linkWizCreateEventNext' : function ( event, template ) {
-    console.log("Create event: Next button clicked");
 
     // Read form variables
     var title = template.find("#txtTitle").value;
     var location = template.find("#txtLocation").value;
-    var desc = template.find("#txtDescrption").value;
+    var desc = template.find("#txtDescription").value;
      
     // Set session variables
     Session.set("wiztitle", title);
     Session.set("wizlocation", location);
-    Session.set("wizdesc", desc);
+    Session.set("wizdecription", desc);
          
     if (title.length && location.length) {
 			  Meteor.call("createAnonymousAppointment", {
@@ -53,7 +54,7 @@ Template.homewizcreateevent.events({
               duration: 4
           });
 				  Session.set("selected", appointment);
-				  openUpdateAppointmentDialog();
+				  //openUpdateAppointmentDialog();
 			  } else {
 			    showNotification({
               message: messages.eventcreate.error,
@@ -78,7 +79,5 @@ Template.homewizcreateevent.events({
 });
 
 Template.homewizcreateevent.rendered = function () {
-  //$('#txtTitle').focus();
-  //this.find('#txtTitle').focus();
-  console.log(this.find('#txtTitle'));
+
 }

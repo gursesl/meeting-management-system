@@ -10,19 +10,19 @@
 
       <li>
         <label for="txtTitle">Event Title:</label>
-        <input class="input-xlarge" id="txtTitle" placeholder="Company Restructuring Meeting" required autofocus tabindex="1">
+        <input class="input-xlarge" id="txtTitle" placeholder="Company Restructuring Meeting" required autofocus tabindex="1" value="{{wiztitle}}">
         <span class="form_hint">Enter event title</span>
       </li>
       
       <li>
         <label for="txtLocation">Location:</label>
-        <input class="input-xlarge" id="txtLocation" placeholder="Initech Headquarters, Palo Alto, CA" required tabindex="5">
+        <input class="input-xlarge" id="txtLocation" placeholder="Initech Headquarters, Palo Alto, CA" required tabindex="5" value="{{wizlocation}}">
         <span class="form_hint">Enter event location or address</span>
       </li>
         
       <li>
         <label for="name">Description:</label>
-        <textarea id="txtDescrption" rows="4" class="input-xlarge" placeholder="Is this good for the company?" tabindex="10"></textarea>
+        <textarea id="txtDescription" rows="4" class="input-xlarge" placeholder="Is this good for the company?" tabindex="10">{{wizdecription}}</textarea>
         <span class="form_hint">Enter a few words about the event</span>
       </li>
       

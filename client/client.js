@@ -98,7 +98,6 @@ var trackVote = function (appointmentid, email) {
 //Start up
 Meteor.startup(function () {
   console.log("startup");
-  Backbone.history.start({pushState: true});
   
   Meteor.autorun(function () {
     console.log("autorun");
