@@ -8,13 +8,13 @@
       
       <li>
         <label for="name">Email:</label>
-        <input id="login-email" type="email" placeholder="E.g. maria@gmail.com">
+        <input id="login-email" type="email" placeholder="E.g. maria@gmail.com" required pattern="^([0-9a-zA-Z]([-\.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$">
         <span class="form_hint">Valid email format "name@emailprovider.com"</span>
       </li>
 
       <li>
         <label for="name">Password:</label>
-        <input id="login-password" type="password" placeholder="Your password">
+        <input id="login-password" type="password" placeholder="Your password" pattern=".{6,}" required>
         <span class="form_hint">Minimum six characters</span>
       </li>        
     </ul>
@@ -37,17 +37,20 @@
 
       <li>
         <label for="txtTitle">Event Title:</label>
-        <input id="txtTitle" placeholder="Company Meeting" >
+        <input id="txtTitle" placeholder="Company Meeting" required>
+        <span class="form_hint">Enter event title</span>
       </li>
       
       <li>
         <label for="name">Location:</label>
-        <input id="txtLocation" placeholder="Initech Offices">
+        <input id="txtLocation" placeholder="Initech Offices" required>
+        <span class="form_hint">Enter event location or address</span>
       </li>
         
       <li>
         <label for="name">Description:</label>
         <textarea id="txtDescrption" rows="4" class="input-xlarge" placeholder="Is this good for the company?"></textarea>
+        <span class="form_hint">Enter a few words about the event</span>
       </li>
       
       <li>
