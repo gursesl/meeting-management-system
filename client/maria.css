@@ -329,7 +329,9 @@ input#location {
 	   -moz-box-shadow:0 -3px 1px rgba(255,255,255,.6), inset 0 2px 1px rgba(255,255,255,.97), 0 0 3px -1px rgba(0,0,0,.7);
 	        box-shadow:0 -3px 1px rgba(255,255,255,.6), inset 0 2px 1px rgba(255,255,255,.97), 0 0 3px -1px rgba(0,0,0,.7);
 }
+
 .homebox a:nth-child(1n) { border-color:#fff; }
+
 .homebox a:hover {
 	background:#f0f0f0;
 	background:-webkit-gradient(linear,left top, left bottom, color-stop(50%, rgba(249,249,249,1)), color-stop(100%, rgba(224,224,224,1)));
@@ -339,7 +341,9 @@ input#location {
 	background:     -o-linear-gradient(top, rgba(249,249,249,1) 50%, rgba(224,224,224,1) 100%);
 	background:        linear-gradient(top, rgba(249,249,249,1) 50%, rgba(224,224,224,1) 100%);
 }
+
 .homebox .curve-down { display:inline-block; height:115px; width:100%; _display:inline; _zoom:1; border:1px solid #e0e0e0; border-top-color:#efefef; border-bottom-color:#ccc; }
+
 .homebox .curve-down:nth-child(1n) { border:none;
 	-webkit-border-radius:100% / 33px;
 	   -moz-border-radius:100% / 33px;
@@ -348,13 +352,14 @@ input#location {
        -moz-box-shadow:0 8px 3px -5px rgba(0,0,0,.2);
             box-shadow:0 8px 3px -5px rgba(0,0,0,.2);
 }
+
 .homebox a img { display:block;
 	-webkit-border-radius:5px;
 	   -moz-border-radius:5px;
 	        border-radius:5px;
 }
 
-.hiddenWizardStepOne {
+.wizardPane {
   height: 0px;
   background: url("/img/page_bg_blue.jpg") no-repeat 0 -260px #103352;
   position: relative;
@@ -370,18 +375,17 @@ input#location {
   transition: height 1000ms ease-in-out;
 }
 
-.wizardPaneStepOne {
+.wizardPaneStep {
   height: 400px;
   -moz-border-radius: 20px;
   border-radius: 20px;
   background: rgba(0, 0, 0, 0.5);
   color:#fff;
-  
-  -webkit-transition: opacity 2000ms ease-in-out;
-  -moz-transition: opacity 2000ms ease-in-out;
-  -o-transition: opacity 2000ms ease-in-out;
-  -ms-transition: opacity 2000ms ease-in-out;
-  transition: opacity 2000ms ease-in-out;
+  -webkit-transition: opacity 1000ms ease-in-out;
+  -moz-transition: opacity 1000ms ease-in-out;
+  -o-transition: opacity 1000ms ease-in-out;
+  -ms-transition: opacity 1000ms ease-in-out;
+  transition: opacity 1000ms ease-in-out;
 }
 
 

@@ -1,38 +1,62 @@
 <!-- Home Page Event Wizard -->
 
-<template name="homewizcreateevent">
-  <form id="homewizcreateevent" name="homewizcreateevent" class="styledform">
-    <ul>
-      <li>
-        <h2>Step 1: Create an Event</h2>
-        <span class="required_notification">* Denotes Required Field</span>
-      </li>
+<!-- Wizard: Step One -->
+<template name="homewizstepone">
+  <div id="homewizstepone">
+    <form name="homewizstepone" class="styledform">
+      <ul>
+        <li>
+          <h2>Step 1: Create an Event</h2>
+          <span class="required_notification">* Denotes Required Field</span>
+        </li>
 
-      <li>
-        <label for="txtTitle">Event Title:</label>
-        <input class="input-xlarge" id="txtTitle" placeholder="Company Restructuring Meeting" required autofocus tabindex="1" value="{{wiztitle}}">
-        <span class="form_hint">Enter event title</span>
-      </li>
+        <li>
+          <label for="txtTitle">Event Title:</label>
+          <input class="input-xlarge" id="txtTitle" placeholder="Company Restructuring Meeting" required autofocus tabindex="1" value="{{wiztitle}}">
+          <span class="form_hint">Enter event title</span>
+        </li>
       
-      <li>
-        <label for="txtLocation">Location:</label>
-        <input class="input-xlarge" id="txtLocation" placeholder="Initech Headquarters, Palo Alto, CA" required tabindex="5" value="{{wizlocation}}">
-        <span class="form_hint">Enter event location or address</span>
-      </li>
+        <li>
+          <label for="txtLocation">Location:</label>
+          <input class="input-xlarge" id="txtLocation" placeholder="Initech Headquarters, Palo Alto, CA" required tabindex="5" value="{{wizlocation}}">
+          <span class="form_hint">Enter event location or address</span>
+        </li>
         
-      <li>
-        <label for="name">Description:</label>
-        <textarea id="txtDescription" rows="4" class="input-xlarge" placeholder="Is this good for the company?" tabindex="10">{{wizdecription}}</textarea>
-        <span class="form_hint">Enter a few words about the event</span>
-      </li>
+        <li>
+          <label for="name">Description:</label>
+          <textarea id="txtDescription" rows="4" class="input-xlarge" placeholder="Is this good for the company?" tabindex="10">{{wizdecription}}</textarea>
+          <span class="form_hint">Enter a few words about the event</span>
+        </li>
       
-      <li>
-          <a href="#" class="btn" id="linkWizCreateEventCancel" tabindex="20">Cancel</a>
-          <a href="#" class="btn btn-primary" id="linkWizCreateEventNext" tabindex="15">Next</a>
-      </li>
+        <li>
+            <a href="#" class="btn" id="cancel" tabindex="20">Cancel</a>
+            <a href="#" class="btn btn-primary" id="next" tabindex="15">Next</a>
+        </li>
         
-    </ul>
-  </form>
+        
+      </ul>
+    </form>
+  </div>
+</template>
+
+<!-- Wizard: Step Two -->
+<template name="homewizsteptwo">
+  <div id="homewizsteptwo">
+    <form name="homewizsteptwo" class="styledform">
+      <ul>
+        <li>
+          <h2>Step 2: Add Time Proposals</h2>
+          <span class="required_notification">* Denotes Required Field</span>
+        </li>
+      
+        <li>
+            <a href="#" class="btn" id="cancel" tabindex="20">Cancel</a>
+            <a href="#" class="btn btn-primary" id="prev" tabindex="15">Previous</a>
+            <a href="#" class="btn btn-primary" id="next" tabindex="15">Next</a>
+        </li>
+      </ul>
+    </form>
+  </div>
 </template>
 
 <!-- TBD What to do with this template -->

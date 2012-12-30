@@ -96,9 +96,10 @@ var trackVote = function (appointmentid, email) {
 
 ///////////////////////////////////////////////////////////////////////////////
 //Start up
+
 Meteor.startup(function () {
   console.log("startup");
-  
+    
   Meteor.autorun(function () {
     console.log("autorun");
 	  if (Meteor.userId()) {
@@ -578,40 +579,53 @@ Template.landingSlider.events({
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Header
-Template.header.tallbg = function() {
-  if (Session.get("openTallBg"))
-    return "tallbg";
-}
 
 Template.header.events({
   'click #linkHomeNavCreateEvent' : function (event, template) {
     slideHomePageWizard(event, template);
-  } 
+  }
 });
 
 var slideHomePageWizard = function(event, template) {
   console.log("create event clicked");
-  if (Session.get("openTallBg")) {
-    //$(".ca-menu").css({"margin-bottom" : "260px"});
-    $(".hiddenWizardStepOne").css({"height" : "0px"});
-    $(".wizardPaneStepOne").css({"opacity" : "0"});
+  console.log(Session.get("wizone"));
+  if (Session.get("wizone")) {
+    // Set session vars
+    //Session.set("wizone", null);
+    transition("one", null);
+    
+    // Animate panes
+    $(".wizardPane").css({"height" : "0px"});
+    $(".wizardPaneStep").css({"opacity" : "0"});
+        
+    // Deselect button
     $("#liStepOne").removeClass("selected");
     $("#liStepOne .ca-icon").removeClass("selected");
     $("#liStepOne .ca-main").removeClass("selected");
-    Session.set("openTallBg", null);
-    //$(".hiddenWizardStepOne").css({"display" : "none"});
   } else {
-    //$(".ca-menu").css({"margin-bottom" : "800px"});
-    $(".hiddenWizardStepOne").css({"height" : "600px"});
-    $(".wizardPaneStepOne").css({"opacity" : "1"});
+    // Set session vars
+    console.log("slide else block");
+    //Session.set("wizone", true);
+    $(".wizardPane").css({"height" : "500px"});
+    $(".wizardPaneStep").css({"opacity" : "1"});
+
+    // Animate panes
+    transition(null, "one");
+    //$("#homewizstepone").css({"height" : "400px"});
+    //$("#homewizstepone").css({"opacity" : "1"});
+    
+    // Keep button selected
     $("#liStepOne").addClass("selected");
     $("#liStepOne .ca-icon").addClass("selected");
     $("#liStepOne .ca-main").addClass("selected");
-    //$(".hiddenWizardStepOne").css({"opacity" : "1"});
-    //$(".hiddenWizardStepOne").css({"display" : "block"});
-    Session.set("openTallBg", true);
-    
   }
+}
+
+Template.header.rendered = function (event, template) {
+    //slideHomePageWizard(event, template);
+    console.log("header template rendered");
+    //transition(null, "one");
+    //Session.set("wizone", true);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
