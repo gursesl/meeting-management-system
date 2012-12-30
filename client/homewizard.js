@@ -1,10 +1,10 @@
 "use strict";
     
 ///////////////////////////////////////////////////////////////////////////////
-//Template: Home Page Wizard
+//Template: Home Page Wizard: Login
 Template.homewizlogin.events({
   'click #login-buttons-password' : function( event, template ) {
-    console.log("Wizard login button clicked!");
+    console.log("Wizard login button clicked");
     
     var email = template.find("#login-email").value;
     var password = template.find("#login-password").value;
@@ -16,5 +16,14 @@ Template.homewizlogin.events({
         console.log("Login failed!");
       }
     })
+  }
+});
+
+///////////////////////////////////////////////////////////////////////////////
+//Template: Home Page Wizard: Create an Event
+Template.homewizcreateevent.events({
+  'click #linkWizCreateEventCancel' : function ( event, template ) {
+    console.log("Cancel create event button clicked");
+    slideHomePageWizard(event, template);
   }
 });

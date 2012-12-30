@@ -371,8 +371,7 @@ input#location {
 }
 
 .wizardPaneStepOne {
-  min-height: 500px;
-  padding: 40px;
+  height: 400px;
   -moz-border-radius: 20px;
   border-radius: 20px;
   background: rgba(0, 0, 0, 0.5);
