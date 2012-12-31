@@ -589,19 +589,23 @@ Template.header.events({
 var slideHomePageWizard = function(event, template) {
   console.log("create event clicked");
   console.log(Session.get("wizone"));
-  if (Session.get("wizone")) {
-    // Set session vars
-    //Session.set("wizone", null);
+  if (Session.get("wizone") || Session.get("wiztwo")) {
+    // Reset session vars
+    Session.set("wizone", null);
+    Session.set("wiztwo", null);
+
+    // Reset div heights
     transition("one", null);
+    transition("two", null);
     
     // Animate panes
     $(".wizardPane").css({"height" : "0px"});
     $(".wizardPaneStep").css({"opacity" : "0"});
         
     // Deselect button
-    $("#liStepOne").removeClass("selected");
-    $("#liStepOne .ca-icon").removeClass("selected");
-    $("#liStepOne .ca-main").removeClass("selected");
+    $("#lione").removeClass("selected");
+    $("#lione .ca-icon").removeClass("selected");
+    $("#lione .ca-main").removeClass("selected");
   } else {
     // Set session vars
     console.log("slide else block");
@@ -615,9 +619,9 @@ var slideHomePageWizard = function(event, template) {
     //$("#homewizstepone").css({"opacity" : "1"});
     
     // Keep button selected
-    $("#liStepOne").addClass("selected");
-    $("#liStepOne .ca-icon").addClass("selected");
-    $("#liStepOne .ca-main").addClass("selected");
+    $("#lione").addClass("selected");
+    $("#lione .ca-icon").addClass("selected");
+    $("#lione .ca-main").addClass("selected");
   }
 }
 

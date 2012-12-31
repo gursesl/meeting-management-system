@@ -107,6 +107,10 @@ var transition = function ( fromStep, toStep ) {
   var fromsession = "wiz" + fromStep;
   var tosession = "wiz" + toStep;
   
+  var frombutton = "#li" + fromStep;
+  var tobutton = "#li" + toStep;
+  
+  
   Session.set(fromsession, null);
   Session.set(tosession, true);
   
@@ -120,6 +124,18 @@ var transition = function ( fromStep, toStep ) {
   //$(tostep).css({"display" : "block"});
   $(tostep).css({"height" : "400px"});
   $(tostep).css({"opacity" : "1"});
+  
+  
+  
+  // Buttons
+  $(tobutton).addClass("selected");
+  $(tobutton + " .ca-icon").addClass("selected");
+  $(tobutton + " .ca-main").addClass("selected");
+  
+  $(frombutton).removeClass("selected");
+  $(frombutton + " .ca-icon").removeClass("selected");
+  $(frombutton + " .ca-main").removeClass("selected");
+  
   /*
   
   if (Session.get("wizone")) {
