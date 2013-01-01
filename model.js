@@ -1,3 +1,4 @@
+DeployLogs = new Meteor.Collection("deploylogs");
 Appointments = new Meteor.Collection("appointments");
 AnonymousAppointments = new Meteor.Collection("anonymousappointments");
 TimeProposals = new Meteor.Collection("timeproposals");
@@ -12,6 +13,10 @@ if (Meteor.is_server) {
 	
 	//For a given event, allow oly unique email addresses
 	Attendees._ensureIndex({"email" : 1, "appointmentId" : 1}, {"unique" : true, "sparse" : true});
+	
+	//Ensure one revision and deployment date
+	DeployLogs._ensureIndex({"lastdeployed" : 1, "revision" : 1}, {"unique" : true, "sparse" : true});
+	
 }
 
 Appointments.allow({

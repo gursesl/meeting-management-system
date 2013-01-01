@@ -1,5 +1,5 @@
 (function () {
-
+    
   ///////////////////////////////////////////////////////////////////////////////
   //Router
   Meteor.Router.add('/404', [404, "Page not found!"]);
@@ -42,10 +42,45 @@
   Meteor.publish("attendees", function () {
 	  return Attendees.find({owner: this.userId});
   });
+  
+  Meteor.publish("deploylogs", function () {
+    return DeployLogs.find({}, {sort: {createdDate: -1}});
+  });
+  
 
   Meteor.startup(function () {
+    console.log("server startup");    
     process.env.MAIL_URL = 'smtp://info%4064clicks.com:passw0rd@smtp.gmail.com:465';
+    updateDeploymentInfo();
+    
   });
 
 }) ();
 
+
+var updateDeploymentInfo = function () {
+  var fs = __meteor_bootstrap__.require('fs');
+  var file = './public/config.json';
+
+  fs.readFile(file, 'utf8', function (err, data) {
+    if (err) {
+      console.log('Error: ' + err);
+    return;
+    }
+
+    data = JSON.parse(data);
+    
+    //TODO: Replace with Meteor.call(....)
+    Fiber(function() {
+      DeployLogs.insert({lastdeployed : data.lastdeployed, revision : data.revision, createdDate : new Date()}, function (error) {
+  		    if (! error) {
+  			    console.log("Deployment time and revision info added successfully.");
+			    } else {
+  			    //console.log (error);
+  			    // Die quietly
+			    }
+      });
+    }).run();
+  });
+  
+}

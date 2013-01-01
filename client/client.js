@@ -1,11 +1,12 @@
 "use strict";
-    
+
 ///////////////////////////////////////////////////////////////////////////////
 //Data subscriptions 
 Meteor.subscribe("directory");
 Meteor.subscribe("appointments");
 Meteor.subscribe("timeproposals");
 Meteor.subscribe("attendees");
+Meteor.subscribe("deploylogs");
 
 ///////////////////////////////////////////////////////////////////////////////
 //Messages
@@ -98,10 +99,11 @@ var trackVote = function (appointmentid, email) {
 //Start up
 
 Meteor.startup(function () {
-  console.log("startup");
+  console.log("client startup");
     
   Meteor.autorun(function () {
-    console.log("autorun");
+    console.log("client autorun");
+    
 	  if (Meteor.userId()) {
       console.log("autorun:user change");
       if (! Session.get("selected")) {
@@ -628,9 +630,23 @@ var slideHomePageWizard = function(event, template) {
 
 Template.header.rendered = function (event, template) {
     //slideHomePageWizard(event, template);
-    console.log("header template rendered");
     //transition(null, "one");
     //Session.set("wizone", true);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+//Template: Footer
+Template.footer.lastdeployed = function (event, template) {
+    if (DeployLogs.findOne()) {
+      return DeployLogs.findOne().lastdeployed;
+    }
+}
+
+Template.footer.revision = function (event, template) {
+    if (DeployLogs.findOne()) {
+      return DeployLogs.findOne().revision;
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
