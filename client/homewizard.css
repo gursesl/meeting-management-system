@@ -131,7 +131,7 @@ input:required, textarea:required {
   outline: none;
 }
 
-#homewizstepone, #homewizsteptwo {
+#homewizone, #homewiztwo, #homewizthree, #homewizfour, #homewizfive, #homewizsix  {
   height: 0px;
   opacity: 0;
   overflow: hidden;

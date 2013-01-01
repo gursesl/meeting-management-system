@@ -590,6 +590,7 @@ var slideHomePageWizard = function(event, template) {
   console.log("create event clicked");
   console.log(Session.get("wizone"));
   if (Session.get("wizone") || Session.get("wiztwo")) {
+    
     // Reset session vars
     Session.set("wizone", null);
     Session.set("wiztwo", null);
@@ -615,8 +616,8 @@ var slideHomePageWizard = function(event, template) {
 
     // Animate panes
     transition(null, "one");
-    //$("#homewizstepone").css({"height" : "400px"});
-    //$("#homewizstepone").css({"opacity" : "1"});
+    //$("#homewizone").css({"height" : "400px"});
+    //$("#homewizone").css({"opacity" : "1"});
     
     // Keep button selected
     $("#lione").addClass("selected");

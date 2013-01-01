@@ -20,8 +20,8 @@ Template.homewizlogin.events({
 });
 
 ///////////////////////////////////////////////////////////////////////////////
-//Template: Home Page Wizard: Create an Event
-Template.homewizstepone.events({
+//Template: Home Page Wizard: Step One
+Template.homewizone.events({
   
   'click #cancel' : function ( event, template ) {
     console.log("Cancel create event button clicked");
@@ -86,8 +86,8 @@ Template.homewizstepone.events({
 });
 
 ///////////////////////////////////////////////////////////////////////////////
-//Template: Home Page Wizard: Create an Event
-Template.homewizsteptwo.events({
+//Template: Home Page Wizard: Step Two
+Template.homewiztwo.events({
   
   'click #cancel' : function ( event, template ) {
     console.log("Cancel create event button clicked");
@@ -97,12 +97,102 @@ Template.homewizsteptwo.events({
   
   'click #prev' : function ( event, template ) {
     transition("two", "one");
+  },
+  
+  'click #next' : function ( event, template ) {
+    transition ( "two", "three" );
+  }
+});
+
+///////////////////////////////////////////////////////////////////////////////
+//Template: Home Page Wizard: Step Three
+Template.homewizthree.events({
+  
+  'click #cancel' : function ( event, template ) {
+    console.log("Cancel button clicked");
+    transition("three", "two");
+    transition("two", "one");
+    slideHomePageWizard(event, template);
+  },
+  
+  'click #prev' : function ( event, template ) {
+    transition("three", "two");
+  },
+  
+  'click #next' : function ( event, template ) {
+    transition ( "three", "four" );
+  }
+});
+
+///////////////////////////////////////////////////////////////////////////////
+//Template: Home Page Wizard: Step Four
+Template.homewizfour.events({
+  
+  'click #cancel' : function ( event, template ) {
+    console.log("Cancel button clicked");
+    transition("four", "three");
+    transition("three", "two");
+    transition("two", "one");
+    slideHomePageWizard(event, template);
+  },
+  
+  'click #prev' : function ( event, template ) {
+    transition("four", "three");
+  },
+  
+  'click #next' : function ( event, template ) {
+    transition ( "four", "five" );
+  }
+});
+
+///////////////////////////////////////////////////////////////////////////////
+//Template: Home Page Wizard: Step Five
+Template.homewizfive.events({
+  
+  'click #cancel' : function ( event, template ) {
+    console.log("Cancel button clicked");
+    transition("five", "four");
+    transition("four", "three");
+    transition("three", "two");
+    transition("two", "one");
+    slideHomePageWizard(event, template);
+  },
+  
+  'click #prev' : function ( event, template ) {
+    transition("five", "four");
+  },
+  
+  'click #next' : function ( event, template ) {
+    transition ( "five", "six" );
+  }
+});
+
+///////////////////////////////////////////////////////////////////////////////
+//Template: Home Page Wizard: Step Six
+Template.homewizsix.events({
+  
+  'click #cancel' : function ( event, template ) {
+    console.log("Cancel button clicked");
+    transition("six", "five");
+    transition("five", "four");
+    transition("four", "three");
+    transition("three", "two");
+    transition("two", "one");
+    slideHomePageWizard(event, template);
+  },
+  
+  'click #prev' : function ( event, template ) {
+    transition("six", "five");
+  },
+  
+  'click #next' : function ( event, template ) {
+    transition ( "six", null );
   }
 });
 
 var transition = function ( fromStep, toStep ) {
-  var fromstep = "#homewizstep" + fromStep;
-  var tostep = "#homewizstep" + toStep;
+  var fromstep = "#homewiz" + fromStep;
+  var tostep = "#homewiz" + toStep;
   
   var fromsession = "wiz" + fromStep;
   var tosession = "wiz" + toStep;
