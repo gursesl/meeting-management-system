@@ -34,14 +34,26 @@ Template.homewizone.events({
     var title = template.find("#txtTitle").value;
     var location = template.find("#txtLocation").value;
     var desc = template.find("#txtDescription").value;
-     
-    // Set session variables
-    Session.set("wiztitle", title);
-    Session.set("wizlocation", location);
-    Session.set("wizdecription", desc);
     
-    // Transition wizard panes
-    transition("one", "two");
+    //Validation
+    if (validateHomeWizOne(title, location)) {
+      // Set session variables
+      Session.set("wiztitle", title);
+      Session.set("wizlocation", location);
+      Session.set("wizdecription", desc);
+      
+      // Transition
+      transition("one", "two");
+    } else {
+      showNotification({
+          message: messages.eventcreate.validation,
+          autoClose: true,
+          type: "error",
+          duration: 4
+      });
+    }
+    
+    
     
     /*  
     if (title.length && location.length) {
@@ -90,7 +102,6 @@ Template.homewizone.events({
 Template.homewiztwo.events({
   
   'click #cancel' : function ( event, template ) {
-    console.log("Cancel create event button clicked");
     transition("two", "one");
     slideHomePageWizard(event, template);
   },
@@ -101,15 +112,62 @@ Template.homewiztwo.events({
   
   'click #next' : function ( event, template ) {
     transition ( "two", "three" );
+  },
+  
+  'click #add' : function (event, template) {
+    console.log("Add time prop clicked");
+    var date = template.find("#txtDate").value;
+    var time = template.find("#txtTime").value;
+    
+    if (validateDateTime(date, time)) {
+      var aTimeProposal = new TimeProposal(date, time);
+      var propArray = Session.get("homewiztimeproposals");
+    
+      if (!propArray) {
+        propArray = new Array();
+      }
+     
+      propArray.push(aTimeProposal);
+      Session.set("homewiztimeproposals", propArray);
+      console.log (propArray);
+
+    }
+  },
+  
+  'click #deltp' : function (event, template) {
+    var propArray = Session.get("homewiztimeproposals");
+  
+    if (propArray) {
+      
+      var where = _.where(propArray, {id: this.id});
+      console.log("where" + where.id);
+      var evens = _.without(propArray, where.id);
+      console.log("evens" + evens);
+      
+      //Session.set("homewiztimeproposals", reducedArray);
+      //var ids = _.pluck(propArray, 'id');
+      //console.log(ids);
+      console.log(this.id);
+    }
+    
   }
 });
+
+Template.homewiztwo.timeproposals = function() {
+  return Session.get("homewiztimeproposals");
+}
+
+Template.homewiztwo.rendered = function () {
+  //TODO: This is a hack to force step two pane to redraw itself. Remove this once issue resolved.
+  transition ("one", "two");
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Home Page Wizard: Step Three
 Template.homewizthree.events({
   
   'click #cancel' : function ( event, template ) {
-    console.log("Cancel button clicked");
     transition("three", "two");
     transition("two", "one");
     slideHomePageWizard(event, template);
@@ -191,6 +249,8 @@ Template.homewizsix.events({
 });
 
 var transition = function ( fromStep, toStep ) {
+  console.log("Transitioning from " + fromStep + " to " + toStep);
+  
   var fromstep = "#homewiz" + fromStep;
   var tostep = "#homewiz" + toStep;
   

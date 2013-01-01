@@ -589,9 +589,13 @@ Template.header.events({
 });
 
 var slideHomePageWizard = function(event, template) {
-  console.log("create event clicked");
-  console.log(Session.get("wizone"));
+  
+  console.log("slide home wizard");
+
+
   if (Session.get("wizone") || Session.get("wiztwo")) {
+    
+    console.log("if: slide home wizard");
     
     // Reset session vars
     Session.set("wizone", null);
@@ -610,8 +614,9 @@ var slideHomePageWizard = function(event, template) {
     $("#lione .ca-icon").removeClass("selected");
     $("#lione .ca-main").removeClass("selected");
   } else {
+    
+    console.log("else: slide home wizard");
     // Set session vars
-    console.log("slide else block");
     //Session.set("wizone", true);
     $(".wizardPane").css({"height" : "500px"});
     $(".wizardPaneStep").css({"opacity" : "1"});
