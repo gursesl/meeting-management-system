@@ -105,7 +105,6 @@ Meteor.startup(function () {
     console.log("client autorun");
     
 	  if (Meteor.userId()) {
-      console.log("autorun:user change");
       if (! Session.get("selected")) {
         var appointment = Appointments.findOne({"owner": Meteor.userId()}, {sort: {time: -1}});
         if (appointment) {
@@ -113,6 +112,12 @@ Meteor.startup(function () {
   	    }
 	    }
 	  }
+	  
+	  // Redraw wizard step 2 in order to preserve height/opacity
+	  if (Session.get("homewiztimeproposals")) {
+	    transition ("one", "two");
+	  }
+	  
   });
 });
 
@@ -583,36 +588,37 @@ Template.landingSlider.events({
 //Template: Header
 
 Template.header.events({
-  'click #linkHomeNavCreateEvent' : function (event, template) {
-    slideHomePageWizard(event, template);
+  'click .linkhome' : function (event, template) {
+    console.log("clicked home button");
+    console.log("current step: " + event.currentTarget.id);
+    
+    slideHomePageWizard(event, template, event.currentTarget.id);
   }
 });
 
-var slideHomePageWizard = function(event, template) {
+var slideHomePageWizard = function (event, template, step) {
   
-  console.log("slide home wizard");
-
-
-  if (Session.get("wizone") || Session.get("wiztwo")) {
+  if (Session.get("wizone") || Session.get("wiztwo") || Session.get("wizthree") || Session.get("wizfour") || Session.get("wizfive") || Session.get("wizsix")) {
     
-    console.log("if: slide home wizard");
+    _.each(["one", "two", "three", "four", "five", "six"], function (element) {
+      
+      // Reset session vars
+      Session.set("wiz" + element, null);
+      
+      // Reset div heights
+      transition( element, null );
+    });
     
-    // Reset session vars
-    Session.set("wizone", null);
-    Session.set("wiztwo", null);
-
-    // Reset div heights
-    transition("one", null);
-    transition("two", null);
-    
+   
     // Animate panes
     $(".wizardPane").css({"height" : "0px"});
     $(".wizardPaneStep").css({"opacity" : "0"});
         
     // Deselect button
-    $("#lione").removeClass("selected");
-    $("#lione .ca-icon").removeClass("selected");
-    $("#lione .ca-main").removeClass("selected");
+    $("#li" + step).removeClass("selected");
+    $("#li" + step + " .ca-icon").removeClass("selected");
+    $("#li" + step + " .ca-main").removeClass("selected");
+    
   } else {
     
     console.log("else: slide home wizard");
@@ -622,14 +628,12 @@ var slideHomePageWizard = function(event, template) {
     $(".wizardPaneStep").css({"opacity" : "1"});
 
     // Animate panes
-    transition(null, "one");
-    //$("#homewizone").css({"height" : "400px"});
-    //$("#homewizone").css({"opacity" : "1"});
+    transition(null, step);
     
     // Keep button selected
-    $("#lione").addClass("selected");
-    $("#lione .ca-icon").addClass("selected");
-    $("#lione .ca-main").addClass("selected");
+    $("#li" + step).addClass("selected");
+    $("#li" + step + " .ca-icon").addClass("selected");
+    $("#li" + step + " .ca-main").addClass("selected");
   }
 }
 

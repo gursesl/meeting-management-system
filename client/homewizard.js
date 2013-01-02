@@ -130,7 +130,13 @@ Template.homewiztwo.events({
       propArray.push(aTimeProposal);
       Session.set("homewiztimeproposals", propArray);
       console.log (propArray);
-
+    } else {
+      showNotification({
+          message: messages.timeproposalcreate.validation,
+          autoClose: true,
+          type: "error",
+          duration: 4
+      });
     }
   },
   
@@ -151,12 +157,13 @@ Template.homewiztwo.events({
 });
 
 Template.homewiztwo.timeproposals = function() {
+  console.log("Session var homewiztimeproposals changed!! Redraw!!!")
   return Session.get("homewiztimeproposals");
 }
 
 Template.homewiztwo.rendered = function () {
   //TODO: This is a hack to force step two pane to redraw itself. Remove this once issue resolved.
-  transition ("one", "two");
+  //transition ("one", "two");
   
   // Render datepicker
   $('#txtDate').datepicker({
@@ -166,7 +173,7 @@ Template.homewiztwo.rendered = function () {
   });
   
   // Render timepicker
-  $('#txtTime').timepicker();
+  $('#txtTime').timepicker({ 'scrollDefaultNow': true });
 }
 
 
