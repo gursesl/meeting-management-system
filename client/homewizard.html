@@ -48,15 +48,22 @@
           <span class="required_notification">* Denotes Required Field</span>
         </li>
         
-        {{#each timeproposals}}
-          <li>
-            <h5>{{date}}:{{time}}:{{id}}<a href="#" class="{{id}}" id="deltp">Delete</a></h5>
-          </li>
-        {{/each}}
-        
-        <li><label for="txtDate">Date:</label><input class="input-small" id="txtDate" placeholder="E.g. 3/14/2013" required autofocus tabindex="1"><label for="txtTime">Time:</label><input class="input-small" id="txtTime" placeholder="E.g. 10:00am" required tabindex="5">
-          <a href="#" class="btn btn-primary" id="add" tabindex="10">Add</a>
+        <li>
+          <div class="row">
+            {{#each timeproposals}}
+              <div class="span3">
+                <strong>{{date}} {{time}}</strong><a href="#" id="{{id}}" class="deltp" title="Delete time proposal">
+                  <i class="icon-minus-sign icon-white"></i></a>
+              </div>
+            {{/each}}
+          </div>
         </li>
+        
+        <li><input class="input-small" id="txtDate" placeholder="3/14/2013" required autofocus tabindex="1">&nbsp;<input class="input-small" id="txtTime" placeholder="10:30am" required tabindex="5">
+          <a href="#" class="btn btn-primary" id="add" tabindex="10"><i class="icon-plus-sign icon-white" title="Add time proposal"></i>Add</a>
+        </li>
+        
+        <li></li>
           
         <li>
             <a href="#" class="btn" id="cancel" tabindex="25">Cancel</a>

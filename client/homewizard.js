@@ -134,22 +134,19 @@ Template.homewiztwo.events({
     }
   },
   
-  'click #deltp' : function (event, template) {
+  'click .deltp' : function (event, template) {
     var propArray = Session.get("homewiztimeproposals");
-  
+    var victimId = this.id;
     if (propArray) {
-      
-      var where = _.where(propArray, {id: this.id});
-      console.log("where" + where.id);
-      var evens = _.without(propArray, where.id);
-      console.log("evens" + evens);
-      
-      //Session.set("homewiztimeproposals", reducedArray);
-      //var ids = _.pluck(propArray, 'id');
-      //console.log(ids);
-      console.log(this.id);
+      $.each(propArray, function(index, value) {
+        if (value.id == victimId) {
+          // Remove the victim time proposal from array
+          propArray.splice(index, 1);
+          Session.set("homewiztimeproposals", propArray);
+          return false;
+        }
+      });
     }
-    
   }
 });
 
@@ -160,6 +157,16 @@ Template.homewiztwo.timeproposals = function() {
 Template.homewiztwo.rendered = function () {
   //TODO: This is a hack to force step two pane to redraw itself. Remove this once issue resolved.
   transition ("one", "two");
+  
+  // Render datepicker
+  $('#txtDate').datepicker({
+    format: 'mm/dd/yyyy',
+    todayBtn: true,
+    autoclose: true
+  });
+  
+  // Render timepicker
+  $('#txtTime').timepicker();
 }
 
 
