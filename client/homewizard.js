@@ -4,16 +4,14 @@
 //Template: Home Page Wizard: Login
 Template.homewizlogin.events({
   'click #login-buttons-password' : function( event, template ) {
-    console.log("Wizard login button clicked");
-    
     var email = template.find("#login-email").value;
     var password = template.find("#login-password").value;
     
     Meteor.loginWithPassword(email, password, function (error) {
       if (! error) {
-        console.log("Login successful!");
+        // Dome something useful
       } else {
-        console.log("Login failed!");
+        // Throw an error
       }
     })
   }
@@ -22,14 +20,12 @@ Template.homewizlogin.events({
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Home Page Wizard: Step One
 Template.homewizone.events({
-  
   'click #cancel' : function ( event, template ) {
-    console.log("Cancel create event button clicked");
     slideHomePageWizard(event, template);
   },
   
   'click #next' : function ( event, template ) {
-    console.log("Next button clicked");
+
     // Read form variables
     var title = template.find("#txtTitle").value;
     var location = template.find("#txtLocation").value;
@@ -115,21 +111,19 @@ Template.homewiztwo.events({
   },
   
   'click #add' : function (event, template) {
-    console.log("Add time prop clicked");
     var date = template.find("#txtDate").value;
     var time = template.find("#txtTime").value;
     
     if (validateDateTime(date, time)) {
-      var aTimeProposal = new TimeProposal(date, time);
+      var timeproposal = new TimeProposal(date, time);
       var propArray = Session.get("homewiztimeproposals");
     
       if (!propArray) {
         propArray = new Array();
       }
      
-      propArray.push(aTimeProposal);
+      propArray.push(timeproposal);
       Session.set("homewiztimeproposals", propArray);
-      console.log (propArray);
     } else {
       showNotification({
           message: messages.timeproposalcreate.validation,
@@ -140,7 +134,7 @@ Template.homewiztwo.events({
     }
   },
   
-  'click .deltp' : function (event, template) {
+  'click .del' : function ( event, template ) {
     var propArray = Session.get("homewiztimeproposals");
     var victimId = this.id;
     if (propArray) {
@@ -149,7 +143,6 @@ Template.homewiztwo.events({
           // Remove the victim time proposal from array
           propArray.splice(index, 1);
           Session.set("homewiztimeproposals", propArray);
-          return false;
         }
       });
     }
@@ -157,14 +150,10 @@ Template.homewiztwo.events({
 });
 
 Template.homewiztwo.timeproposals = function() {
-  console.log("Session var homewiztimeproposals changed!! Redraw!!!")
   return Session.get("homewiztimeproposals");
 }
 
 Template.homewiztwo.rendered = function () {
-  //TODO: This is a hack to force step two pane to redraw itself. Remove this once issue resolved.
-  //transition ("one", "two");
-  
   // Render datepicker
   $('#txtDate').datepicker({
     format: 'mm/dd/yyyy',
@@ -178,7 +167,7 @@ Template.homewiztwo.rendered = function () {
 
 
 ///////////////////////////////////////////////////////////////////////////////
-//Template: Home Page Wizard: Step Three
+//Template: Home Page Wizard: Step Three (Add Attendees)
 Template.homewizthree.events({
   
   'click #cancel' : function ( event, template ) {
@@ -193,15 +182,64 @@ Template.homewizthree.events({
   
   'click #next' : function ( event, template ) {
     transition ( "three", "four" );
+  },
+  
+  'click #add' : function (event, template) {
+    var name = template.find("#txtName").value;
+    var email = template.find("#txtEmail").value;
+    
+    if (validateNameAndEmail(name, email)) {
+      var attendee = new Attendee (name, email);
+      var atArray = Session.get("homewizattendees");
+    
+      if (!atArray) {
+        atArray = new Array();
+      }
+     
+      atArray.push(attendee);
+      Session.set("homewizattendees", atArray);
+
+    } else {
+      showNotification({
+          message: messages.attendeecreate.validation,
+          autoClose: true,
+          type: "error",
+          duration: 4
+      });
+    }
+  },
+  
+  'click .del' : function ( event, template ) {
+    var atArray = Session.get("homewizattendees");
+    var victimId = this.id;
+    if (atArray) {
+      $.each(atArray, function ( index, value ) {
+        if (value.id == victimId) {
+          // Remove the victim time proposal from array
+          atArray.splice(index, 1);
+          Session.set("homewizattendees", atArray);
+        }
+      });
+    }
   }
 });
+
+Template.homewizthree.attendees = function () {
+    return Session.get("homewizattendees");
+}
+
+Template.homewizthree.rendered = function () {
+  // Add HTML5 input patterns
+  $('#txtName').attr("pattern", patterns.fullname);
+  $('#txtEmail').attr("pattern", patterns.email);
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Home Page Wizard: Step Four
 Template.homewizfour.events({
   
   'click #cancel' : function ( event, template ) {
-    console.log("Cancel button clicked");
+
     transition("four", "three");
     transition("three", "two");
     transition("two", "one");
@@ -222,7 +260,7 @@ Template.homewizfour.events({
 Template.homewizfive.events({
   
   'click #cancel' : function ( event, template ) {
-    console.log("Cancel button clicked");
+
     transition("five", "four");
     transition("four", "three");
     transition("three", "two");
@@ -244,7 +282,7 @@ Template.homewizfive.events({
 Template.homewizsix.events({
   
   'click #cancel' : function ( event, template ) {
-    console.log("Cancel button clicked");
+
     transition("six", "five");
     transition("five", "four");
     transition("four", "three");
@@ -263,7 +301,7 @@ Template.homewizsix.events({
 });
 
 var transition = function ( fromStep, toStep ) {
-  console.log("Transitioning from " + fromStep + " to " + toStep);
+
   
   var fromstep = "#homewiz" + fromStep;
   var tostep = "#homewiz" + toStep;

@@ -52,7 +52,7 @@
           <div class="row">
             {{#each timeproposals}}
               <div class="span3">
-                <strong>{{date}} {{time}}</strong><a href="#" id="{{id}}" class="deltp" title="Delete time proposal">
+                <strong>{{date}} {{time}}</strong><a href="#" id="{{id}}" class="del" title="Delete time proposal">
                   <i class="icon-minus-sign icon-white"></i></a>
               </div>
             {{/each}}
@@ -84,7 +84,25 @@
           <h2>Step 3: Add Attendees</h2>
           <span class="required_notification">* Denotes Required Field</span>
         </li>
+        
+        <li>
+          <div class="row">
+            {{#each attendees}}
+              <div class="span4">
+                <i class="icon-user icon-white" title="Add attendee"></i>
+                <strong>{{name}}</strong> <a href="mailto:{{email}}">{{email}}</a><a href="#" id="{{id}}" class="del" title="Delete attendee">
+                  <i class="icon-minus-sign icon-white"></i></a>
+              </div>
+            {{/each}}
+          </div>
+        </li>
       
+        <li><input class="input-large" id="txtName" placeholder="Jane Doe" required autofocus tabindex="300">&nbsp;<span class="form_hint">Enter attendee full name</span><input class="input-large" id="txtEmail" placeholder="jane@mail.com" required tabindex="305">
+          <a href="#" class="btn btn-primary" id="add" tabindex="310"><i class="icon-plus-sign icon-white" title="Add attendee"></i>Add</a>
+        </li>
+        
+        <li></li>
+        
         <li>
             <a href="#" class="btn" id="cancel" tabindex="320">Cancel</a>
             <a href="#" class="btn btn-primary" id="prev" tabindex="315">Previous</a>
