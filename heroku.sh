@@ -12,7 +12,7 @@ cat public/config-mod.json > public/config.json
 rm -rf public/config-mod.json
 
 # Commit changes
-git commit public/config.json -m "Updated revision and date information"
+git commit public/config.json -m "Automated deployment to Heroku with updated date and revision."
 
 # Push to Github
 git push origin master
