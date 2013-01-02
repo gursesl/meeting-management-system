@@ -1,5 +1,7 @@
 .styledform {
   overflow: hidden;
+  height: 320px;
+  border-bottom: 1px solid #777;
 }
 
 .styledform label {
@@ -24,13 +26,11 @@
 }
 
 .styledform li:first-child {
-    border-bottom: 1px solid #777;
+  border-bottom: 1px solid #777;
 }
 
 .styledform li:last-child {
-  border-top: 1px solid #aaa;
-  border-bottom: 0px;
-  padding: 10px 154px;
+  
 }
 
 .styledform h2 {
@@ -142,11 +142,18 @@ input:required, textarea:required {
    transition: height 500ms ease-in-out, opacity 500ms ease-in-out;
 }
 
-#homewiztwo strong {
-  font-size: 1.5em;
+#homewiztwo strong, #homewizthree strong {
+  font-size: 1.1em;
   font-weight: bold;
+  padding: 3px;
+  margin: 3px 10px 0px 4px;
 }
 
-#homewiztwo .row, #homewiztwo .span3 {
-  padding: 10px 0px;
+#homewiztwo .row, #homewiztwo .span3, #homewizthree .row, #homewizthree .span3 {
+  padding: 5px 0px;
+}
+
+#homewizthree .span3 {
+  width: 340px;
+  margin-left: 0px;
 }

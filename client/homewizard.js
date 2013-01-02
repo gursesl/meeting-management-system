@@ -25,7 +25,6 @@ Template.homewizone.events({
   },
   
   'click #next' : function ( event, template ) {
-
     // Read form variables
     var title = template.find("#txtTitle").value;
     var location = template.find("#txtLocation").value;
@@ -48,50 +47,13 @@ Template.homewizone.events({
           duration: 4
       });
     }
-    
-    
-    
-    /*  
-    if (title.length && location.length) {
-			  Meteor.call("createAnonymousAppointment", {
-				title: title,
-				location: location,
-				description: desc
-		  }, function (error, appointment) {
-			  if (! error) {
-				  showNotification({
-              message: messages.eventcreate.success,
-              autoClose: true,
-              type: "success",
-              duration: 4
-          });
-				  //Session.set("selected", appointment);
-				  //openUpdateAppointmentDialog();
-				  Session.set("wizone", null);
-				  Session.set("wizStepTwoActive", true);
-				  
-			  } else {
-			    showNotification({
-              message: messages.eventcreate.error,
-              autoClose: true,
-              type: "error",
-              duration: 4
-          });
-			  }
-		  });
-		  Session.set("showCreateDialog", false);
-		  } else {
-			  showNotification({
-            message: messages.eventcreate.validation,
-            autoClose: true,
-            type: "error",
-            duration: 4
-        });
-		  }
-      */
-
   }
 });
+
+Template.homewizone.rendered = function () {
+  $('#txtTitle').attr("pattern", patterns.title);
+  $('#txtLocation').attr("pattern", patterns.location);
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Home Page Wizard: Step Two
@@ -154,6 +116,10 @@ Template.homewiztwo.timeproposals = function() {
 }
 
 Template.homewiztwo.rendered = function () {
+  
+  transition ("one", "two");
+  transition ("three", null);
+  
   // Render datepicker
   $('#txtDate').datepicker({
     format: 'mm/dd/yyyy',
@@ -163,6 +129,9 @@ Template.homewiztwo.rendered = function () {
   
   // Render timepicker
   $('#txtTime').timepicker({ 'scrollDefaultNow': true });
+  
+  $('#txtDate').attr("pattern", patterns.date);
+  $('#txtTime').attr("pattern", patterns.time);
 }
 
 
@@ -232,14 +201,15 @@ Template.homewizthree.rendered = function () {
   // Add HTML5 input patterns
   $('#txtName').attr("pattern", patterns.fullname);
   $('#txtEmail').attr("pattern", patterns.email);
+  
+  transition ("two", "three");
+  transition ("four", null);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Home Page Wizard: Step Four
 Template.homewizfour.events({
-  
   'click #cancel' : function ( event, template ) {
-
     transition("four", "three");
     transition("three", "two");
     transition("two", "one");
@@ -258,9 +228,7 @@ Template.homewizfour.events({
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Home Page Wizard: Step Five
 Template.homewizfive.events({
-  
   'click #cancel' : function ( event, template ) {
-
     transition("five", "four");
     transition("four", "three");
     transition("three", "two");
@@ -280,9 +248,7 @@ Template.homewizfive.events({
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Home Page Wizard: Step Six
 Template.homewizsix.events({
-  
   'click #cancel' : function ( event, template ) {
-
     transition("six", "five");
     transition("five", "four");
     transition("four", "three");
@@ -300,9 +266,8 @@ Template.homewizsix.events({
   }
 });
 
+// Transition between two steps in homepage wizard
 var transition = function ( fromStep, toStep ) {
-
-  
   var fromstep = "#homewiz" + fromStep;
   var tostep = "#homewiz" + toStep;
   
@@ -316,18 +281,11 @@ var transition = function ( fromStep, toStep ) {
   Session.set(fromsession, null);
   Session.set(tosession, true);
   
-  //$(fromstep).css({"display" : "none"});
-  //$(tostep).css({"display" : "block"});
-  
   $(fromstep).css({"height" : "0px"});
   $(fromstep).css({"opacity" : "0"});
-  //$(fromstep).css({"display" : "none"});
-  //sleep(1000);
-  //$(tostep).css({"display" : "block"});
+
   $(tostep).css({"height" : "400px"});
   $(tostep).css({"opacity" : "1"});
-  
-  
   
   // Buttons
   $(tobutton).addClass("selected");
@@ -337,30 +295,4 @@ var transition = function ( fromStep, toStep ) {
   $(frombutton).removeClass("selected");
   $(frombutton + " .ca-icon").removeClass("selected");
   $(frombutton + " .ca-main").removeClass("selected");
-  
-  /*
-  
-  if (Session.get("wizone")) {
-     //$(".ca-menu").css({"margin-bottom" : "260px"});
-     $(".wizardPane").css({"height" : "0px"});
-     $(".wizardPaneStep").css({"opacity" : "0"});
-     $("#liStepOne").removeClass("selected");
-     $("#liStepOne .ca-icon").removeClass("selected");
-     $("#liStepOne .ca-main").removeClass("selected");
-     Session.set("wizone", null);
-     //$(".wizardPane").css({"display" : "none"});
-   } else {
-     //$(".ca-menu").css({"margin-bottom" : "800px"});
-     Session.set("wizone", true);
-     $(".wizardPane").css({"height" : "600px"});
-     $(".wizardPaneStep").css({"opacity" : "1"});
-     $("#liStepOne").addClass("selected");
-     $("#liStepOne .ca-icon").addClass("selected");
-     $("#liStepOne .ca-main").addClass("selected");
-     //$(".wizardPane").css({"opacity" : "1"});
-     //$(".wizardPane").css({"display" : "block"});
-     Session.set("wizone", true);
-   }
-   
-   */
 }

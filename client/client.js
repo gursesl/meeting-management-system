@@ -95,17 +95,6 @@ Meteor.startup(function () {
   	    }
 	    }
 	  }
-	  
-	  // Redraw wizard Step 2 in order to preserve height/opacity
-	  if (Session.get("homewiztimeproposals")) {
-	    transition ("one", "two");
-	  }
-	  
-	  // Redraw wizard Step 3 in order to preserve height/opacity
-	  if (Session.get("homewizattendees")) {
-	    transition ("two", "three");
-	  }
-	  
   });
 });
 
