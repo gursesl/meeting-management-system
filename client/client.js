@@ -579,8 +579,8 @@ Template.homepage.showAttendeesDialog = function () {
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Landing slider
 Template.landingSlider.events({
-  'click #linkGetStartedToday' : function (event, template) {
-    slideHomePageWizard(event, template);
+  'click .linkhome' : function (event, template) {
+    slideHomePageWizard(event, template, event.currentTarget.id);
   } 
 });
 
@@ -589,25 +589,32 @@ Template.landingSlider.events({
 
 Template.header.events({
   'click .linkhome' : function (event, template) {
-    console.log("clicked home button");
-    console.log("current step: " + event.currentTarget.id);
-    
     slideHomePageWizard(event, template, event.currentTarget.id);
   }
 });
 
 var slideHomePageWizard = function (event, template, step) {
   
+  var stepFound = false;
+  _.each(["one", "two", "three", "four", "five", "six"], function (element) {
+        
+    if (element == step)
+      stepFound = true;
+  });
+  
+  //If step not found, set to "one"
+  if (!stepFound) {
+    step = "one";
+  }
+  
+  
   if (Session.get("wizone") || Session.get("wiztwo") || Session.get("wizthree") || Session.get("wizfour") || Session.get("wizfive") || Session.get("wizsix")) {
-    
     _.each(["one", "two", "three", "four", "five", "six"], function (element) {
-      
-      // Reset session vars
-      Session.set("wiz" + element, null);
-      
-      // Reset div heights
-      transition( element, null );
-    });
+    // Reset session vars
+    Session.set("wiz" + element, null);
+    // Reset div heights
+    transition( element, null );
+  });
     
    
     // Animate panes
