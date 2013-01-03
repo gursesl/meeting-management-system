@@ -61,7 +61,7 @@ Template.homewizone.rendered = function () {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-//Template: Home Page Wizard: Step Two
+//Template: Home Page Wizard: Step Two (Add Time Proposals)
 Template.homewiztwo.events({
   'click #cancel' : function ( event, template ) {
     Session.set("keepview", null);
@@ -201,7 +201,7 @@ Template.homewizthree.events({
 });
 
 Template.homewizthree.attendees = function () {
-    return Session.get("homewizattendees");
+  return Session.get("homewizattendees");
 }
 
 Template.homewizthree.rendered = function () {
@@ -224,8 +224,29 @@ Template.homewizfour.events({
   
   'click #next' : function ( event, template ) {
     transition ( "four", "five" );
+  },
+  
+  'click #addevent' : function ( event, template ) {
+    transition("four", "one");
+  },
+  
+  'click .addtp' : function ( event, template ) {
+    transition("four", "two");
+  },
+  
+  'click .addattendees' : function ( event, template ) {
+    transition("four", "three");
   }
+  
 });
+
+Template.homewizfour.attendees = function () {
+  return Template.homewizthree.attendees;
+}
+
+Template.homewizfour.timeproposals = function () {
+  return Template.homewiztwo.timeproposals;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Home Page Wizard: Step Five

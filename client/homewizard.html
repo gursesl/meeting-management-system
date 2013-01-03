@@ -50,14 +50,14 @@
             {{#each timeproposals}}
               <div class="span3">
                 <a href="#" id="{{id}}" class="del" title="Delete time proposal">
-                  <i class="icon-minus-sign icon-white"></i><i class="icon-calendar icon-white"/></a><strong>{{date}}</strong> {{time}}
+                  <i class="icon-minus-sign icon-red" /><i class="icon-time icon-white"/></a><strong>{{date}}</strong> {{time}}
               </div>
             {{/each}}
           </div>
         </li>
         
         <li><input class="input-small" id="txtDate" placeholder="9/14/2013" required autofocus tabindex="200">&nbsp;<input class="input-small" id="txtTime" placeholder="2:30pm" required tabindex="205">
-          <a href="#" class="btn btn-primary" id="add" tabindex="210"><i class="icon-plus-sign icon-white" title="Add time proposal"></i>Add</a>
+          <a href="#" class="btn btn-primary" id="add" tabindex="210"><i class="icon-plus-sign icon-white" title="Add time proposal"></i> Add</a>
         </li>
       </ul>
     </form>
@@ -83,7 +83,7 @@
             {{#each attendees}}
               <div class="span3">
                 <a href="#" id="{{id}}" class="del" title="Delete attendee">
-                  <i class="icon-minus-sign icon-white"></i><i class="icon-user icon-white"/></a><strong>{{name}}</strong> <a href="mailto:{{email}}">{{email}}</a>
+                  <i class="icon-minus-sign icon-red"></i><i class="icon-user icon-white"/></a><strong>{{name}}</strong> <a href="mailto:{{email}}">{{email}}</a>
               </div>
             {{/each}}
           </div>
@@ -116,14 +116,29 @@
           <div class="row">
             <div class="span2">
               <h5>Event Details</h5>
+              <a href="#" class="btn" id="addevent" tabindex="405">Add Event Details</a>
             </div>
             
             <div class="span2">
-              <h5>Time Proposals</h5>
+              <h5>
+                <a href="#" title="Add time proposals" class="addtp">
+                <i class="icon-plus-sign icon-green"/><i class="icon-time icon-white"/> Time Proposals</a>
+              </h5>
+              
+              {{#each timeproposals}}
+                <i class="icon-time icon-white"/><small>{{date}} {{time}}</strong><br/>
+              {{/each}}
+              
             </div>
             
             <div class="span2">
-              <h5>Attendees</h5>
+              <h5>
+                <a href="#" title="Add attendees" class="addattendees">
+                <i class="icon-plus-sign icon-green"/><i class="icon-user icon-white"/> Attendees</a>
+              </h5>
+              {{#each attendees}}
+                <i class="icon-user icon-white"/><small>{{name}}</small><br/>
+              {{/each}}
             </div>
             
           </div>
