@@ -1,7 +1,7 @@
 <template name="invitepage">
+  {{> header }}
   <div class="container">
-    {{> header }}
-    <div class="row">
+    <div class="row topdrop">
       {{#if selected }}
         <div class="span3">
           <div class="page-header">
@@ -43,18 +43,18 @@
 
 			  {{/if}}
 			  
-			  	  {{#unless anyTimeProposal }}
-			        <div class="alert alert-block">
-			          <strong>Time Proposals</strong><br/> No time proposals found for this event. 
-			        </div>
-				  {{/unless }}
+        {{#unless anyTimeProposal }}
+          <div class="alert alert-block">
+            <strong>Time Proposals</strong><br/> No time proposals found for this event. 
+          </div>
+        {{/unless }}
 				
-					<hr>
-				  <center>
-				  	<a class="btn-large btn-success" href="#" id="btnFinished" >
-				  		<i class="icon-ok icon-white"></i> Done!</a>
-				  </center>
-				
+        <hr>
+        
+        <center>
+          <a class="btn-large btn-success" href="#" id="btnFinished" >
+            <i class="icon-ok icon-white"></i> Done!</a>
+        </center>
 				
 				{{/unless }}
 				</div><!-- /span9 -->
