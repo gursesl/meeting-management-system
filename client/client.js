@@ -586,13 +586,7 @@ var slideHomePageWizard = function (event, template, step) {
   
   
   if (Session.get("wizone") || Session.get("wiztwo") || Session.get("wizthree") || Session.get("wizfour") || Session.get("wizfive") || Session.get("wizsix")) {
-    _.each(["one", "two", "three", "four", "five", "six"], function (element) {
-    // Reset session vars
-    Session.set("wiz" + element, null);
-    // Reset div heights
-    transition( element, null );
-  });
-    
+    resetWizard();
    
     // Animate panes
     $(".wizardPane").css({"height" : "0px"});
@@ -625,6 +619,8 @@ Template.header.rendered = function (event, template) {
     //slideHomePageWizard(event, template);
     //transition(null, "one");
     //Session.set("wizone", true);
+    console.log("header transition");
+    resetWizard();
 }
 
 

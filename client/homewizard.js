@@ -51,6 +51,7 @@ Template.homewizone.events({
 });
 
 Template.homewizone.rendered = function () {
+  // Add HTML5 input patterns
   $('#txtTitle').attr("pattern", patterns.title);
   $('#txtLocation').attr("pattern", patterns.location);
 }
@@ -58,7 +59,6 @@ Template.homewizone.rendered = function () {
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Home Page Wizard: Step Two
 Template.homewiztwo.events({
-  
   'click #cancel' : function ( event, template ) {
     transition("two", "one");
     slideHomePageWizard(event, template);
@@ -130,6 +130,7 @@ Template.homewiztwo.rendered = function () {
   // Render timepicker
   $('#txtTime').timepicker({ 'scrollDefaultNow': true });
   
+  // Add HTML5 input patterns
   $('#txtDate').attr("pattern", patterns.date);
   $('#txtTime').attr("pattern", patterns.time);
 }
@@ -268,6 +269,7 @@ Template.homewizsix.events({
 
 // Transition between two steps in homepage wizard
 var transition = function ( fromStep, toStep ) {
+  console.log ("transition: " + fromStep + " --> " + toStep);
   var fromstep = "#homewiz" + fromStep;
   var tostep = "#homewiz" + toStep;
   
@@ -295,4 +297,14 @@ var transition = function ( fromStep, toStep ) {
   $(frombutton).removeClass("selected");
   $(frombutton + " .ca-icon").removeClass("selected");
   $(frombutton + " .ca-main").removeClass("selected");
+}
+
+var resetWizard = function () {
+  _.each(["one", "two", "three", "four", "five", "six"], function (element) {
+  // Reset session vars
+  Session.set("wiz" + element, null);
+  // Reset div heights
+  transition( element, null );
+});
+  
 }

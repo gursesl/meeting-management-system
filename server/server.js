@@ -47,9 +47,7 @@
     return DeployLogs.find({}, {sort: {createdDate: -1}});
   });
   
-
   Meteor.startup(function () {
-    console.log("server startup");    
     process.env.MAIL_URL = 'smtp://info%4064clicks.com:passw0rd@smtp.gmail.com:465';
     updateDeploymentInfo();
     
