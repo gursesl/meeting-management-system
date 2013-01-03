@@ -1,6 +1,6 @@
 // Session vars used in home page wizard
 var wizvars = ['wiztitle', 'wizlocation', 'wizdecription', 'wizone', 'wiztwo', 'wizthree', 
-            'wizfour', 'wizfive', 'wizsix'];
+            'wizfour', 'wizfive', 'wizsix', 'homewiztimeproposals', 'homewizattendees'];
 
 // Register Handlebar functions for template usage
 wizvars.forEach (function (wiz) {

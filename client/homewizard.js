@@ -120,10 +120,6 @@ Template.homewiztwo.events({
   }
 });
 
-Template.homewiztwo.timeproposals = function() {
-  return Session.get("homewiztimeproposals");
-}
-
 Template.homewiztwo.rendered = function () {
   // Render datepicker
   $('#txtDate').datepicker({
@@ -200,10 +196,6 @@ Template.homewizthree.events({
   }
 });
 
-Template.homewizthree.attendees = function () {
-  return Session.get("homewizattendees");
-}
-
 Template.homewizthree.rendered = function () {
   // Add HTML5 input patterns
   $('#txtName').attr("pattern", patterns.fullname);
@@ -211,7 +203,7 @@ Template.homewizthree.rendered = function () {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-//Template: Home Page Wizard: Step Four
+//Template: Home Page Wizard: Step Four (Send Invitations)
 Template.homewizfour.events({
   'click #cancel' : function ( event, template ) {
     Session.set("keepview", null);
@@ -226,7 +218,7 @@ Template.homewizfour.events({
     transition ( "four", "five" );
   },
   
-  'click #addevent' : function ( event, template ) {
+  'click .addevent' : function ( event, template ) {
     transition("four", "one");
   },
   
@@ -247,6 +239,8 @@ Template.homewizfour.attendees = function () {
 Template.homewizfour.timeproposals = function () {
   return Template.homewiztwo.timeproposals;
 }
+
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Home Page Wizard: Step Five

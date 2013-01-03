@@ -23,7 +23,7 @@
         </li>
         
         <li>
-          <label for="name">Description:</label>
+          <label for="txtDescription">Description:</label>
           <textarea id="txtDescription" rows="4" class="input-xlarge" placeholder="Is this good for the company?" tabindex="110">{{wizdecription}}</textarea>
           <span class="form_hint">Enter a few words about the event</span>
         </li>
@@ -47,7 +47,7 @@
         
         <li>
           <div class="row">
-            {{#each timeproposals}}
+            {{#each homewiztimeproposals}}
               <div class="span3">
                 <a href="#" id="{{id}}" class="del" title="Delete time proposal">
                   <i class="icon-minus-sign icon-red" /><i class="icon-time icon-white"/></a><strong>{{date}}</strong> {{time}}
@@ -80,7 +80,7 @@
         
         <li>
           <div class="row">
-            {{#each attendees}}
+            {{#each homewizattendees}}
               <div class="span3">
                 <a href="#" id="{{id}}" class="del" title="Delete attendee">
                   <i class="icon-minus-sign icon-red"></i><i class="icon-user icon-white"/></a><strong>{{name}}</strong> <a href="mailto:{{email}}">{{email}}</a>
@@ -90,7 +90,7 @@
         </li>
       
         <li><input class="input-large" id="txtName" placeholder="Jane Doe" required autofocus tabindex="300">&nbsp;<span class="form_hint">Enter attendee full name</span><input class="input-large" id="txtEmail" placeholder="jane@mail.com" required tabindex="305">
-          <a href="#" class="btn btn-primary" id="add" tabindex="310"><i class="icon-plus-sign icon-white" title="Add attendee"></i>Add</a>
+          <a href="#" class="btn btn-primary" id="add" tabindex="310"><i class="icon-plus-sign icon-white" title="Add attendee"></i> Add</a>
         </li>
         
       </ul>
@@ -114,9 +114,15 @@
         
         <li>
           <div class="row">
-            <div class="span2">
-              <h5>Event Details</h5>
-              <a href="#" class="btn" id="addevent" tabindex="405">Add Event Details</a>
+            
+            <div class="span3">
+              <h5>
+                <a href="#" title="Add event details" class="addevent">
+                <i class="icon-plus-sign icon-green"/><i class="icon-map-marker icon-white"/> Event Details</a>
+              </h5>
+              <div class="title"><i class="icon-pushpin icon-white"/><small>{{wiztitle}}</small></div><br/>
+              <div class="location"><i class="icon-map-marker icon-white"/><small>{{wizlocation}}</small></div><br/>
+              <div class="description"><i class="icon-info-sign icon-white"/><small>{{wizdecription}}</small></div>
             </div>
             
             <div class="span2">
@@ -125,7 +131,7 @@
                 <i class="icon-plus-sign icon-green"/><i class="icon-time icon-white"/> Time Proposals</a>
               </h5>
               
-              {{#each timeproposals}}
+              {{#each homewiztimeproposals}}
                 <i class="icon-time icon-white"/><small>{{date}} {{time}}</strong><br/>
               {{/each}}
               
@@ -136,7 +142,7 @@
                 <a href="#" title="Add attendees" class="addattendees">
                 <i class="icon-plus-sign icon-green"/><i class="icon-user icon-white"/> Attendees</a>
               </h5>
-              {{#each attendees}}
+              {{#each homewizattendees}}
                 <i class="icon-user icon-white"/><small>{{name}}</small><br/>
               {{/each}}
             </div>
