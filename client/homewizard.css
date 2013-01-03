@@ -8,6 +8,10 @@
   font-size: 1em;
 }
 
+.styledform .centerbutton {
+  text-align: center;
+}
+
 .form_hint {
   font-size: 11px;
 }
