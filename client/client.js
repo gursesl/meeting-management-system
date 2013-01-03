@@ -594,6 +594,9 @@ var slideHomePageWizard = function (event, template, step) {
     if ( !Session.get("keepview") ) {
       $(".wizardPane").css({"height" : "0px"});
       $(".wizardPaneStep").css({"opacity" : "0"});
+    } else {
+      $(".wizardPane").css({"height" : "500px"});
+      $(".wizardPaneStep").css({"opacity" : "1"});
     }
         
     // Deselect button
