@@ -143,11 +143,12 @@ input:required, textarea:required {
    transition: height 500ms ease-in-out, opacity 500ms ease-in-out;
 }
 
-#homewiztwo strong, #homewizthree strong {
+.styledform strong {
   font-size: 1.1em;
   font-weight: bold;
   padding: 3px;
   margin: 3px 10px 0px 4px;
+  letter-spacing: 0.08em;
 }
 
 #homewiztwo .row, #homewiztwo .span3, #homewizthree .row, #homewizthree .span3 {
