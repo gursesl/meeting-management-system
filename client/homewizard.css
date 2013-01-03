@@ -37,6 +37,7 @@
   font-size: 2em;
   margin:0;
   display: inline;
+  letter-spacing: 1px;
 }
 
 .required_notification {

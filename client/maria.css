@@ -8,16 +8,32 @@
 body {
     background-color: #fff;
     color: #333333;
-    font: 12px/18px Lucida Grande, Arial, Helvetica, Geneva, Verdana, sans-serif;
+    font: 12px/18px  Helvetica, Lucida Grande, Geneva, Arial, Verdana, sans-serif, Myriad Pro;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+i {
+  color: #fff;
+}
+
+.icon-red {
+  color: #d45252;
+}
+
+.icon-green {
+  color: #52d452;
 }
 
 #background {
-    background: url("/img/page_bg.png") no-repeat scroll center 40px #75495C;
+  background: url("/img/page_bg.png") no-repeat scroll center 40px #75495C;
 }
 
 #background-blue {
-    background: url("/img/page_bg_blue.jpg") no-repeat #103352;
-    z-index: -1;
+  background: url("/img/page_bg_blue.jpg") no-repeat #103352;
+  z-index: -1;
 }
 
 .clearfix:after {
@@ -159,7 +175,7 @@ body {
 }
 
 .navbar .brand {
-  padding: 4px 100px 6px 44px;
+  padding: 7px 100px 6px 44px;
   margin: 6px 0px 0px 0px;
 }
 
