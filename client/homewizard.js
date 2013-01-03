@@ -37,6 +37,9 @@ Template.homewizone.events({
       Session.set("wizlocation", location);
       Session.set("wizdecription", desc);
       
+      // Keep next view open
+      Session.set("keepview", "two");
+      
       // Transition
       transition("one", "two");
     } else {
@@ -60,15 +63,18 @@ Template.homewizone.rendered = function () {
 //Template: Home Page Wizard: Step Two
 Template.homewiztwo.events({
   'click #cancel' : function ( event, template ) {
+    Session.set("keepview", null);
     transition("two", "one");
     slideHomePageWizard(event, template);
   },
   
   'click #prev' : function ( event, template ) {
+    Session.set("keepview", null);
     transition("two", "one");
   },
   
   'click #next' : function ( event, template ) {
+    Session.set("keepview", "three");
     transition ( "two", "three" );
   },
   
@@ -86,6 +92,7 @@ Template.homewiztwo.events({
      
       propArray.push(timeproposal);
       Session.set("homewiztimeproposals", propArray);
+      Session.set("keepview", "two");
     } else {
       showNotification({
           message: messages.timeproposalcreate.validation,
@@ -105,6 +112,7 @@ Template.homewiztwo.events({
           // Remove the victim time proposal from array
           propArray.splice(index, 1);
           Session.set("homewiztimeproposals", propArray);
+          Session.set("keepview", "two");
         }
       });
     }
@@ -116,10 +124,7 @@ Template.homewiztwo.timeproposals = function() {
 }
 
 Template.homewiztwo.rendered = function () {
-  
-  transition ("one", "two");
-  transition ("three", null);
-  
+  console.log("homewiztwo.rendered");
   // Render datepicker
   $('#txtDate').datepicker({
     format: 'mm/dd/yyyy',
@@ -141,16 +146,16 @@ Template.homewiztwo.rendered = function () {
 Template.homewizthree.events({
   
   'click #cancel' : function ( event, template ) {
-    transition("three", "two");
-    transition("two", "one");
     slideHomePageWizard(event, template);
   },
   
   'click #prev' : function ( event, template ) {
+    Session.set("keepview", "two");
     transition("three", "two");
   },
   
   'click #next' : function ( event, template ) {
+    Session.set("keepview", "four");
     transition ( "three", "four" );
   },
   
@@ -168,7 +173,7 @@ Template.homewizthree.events({
      
       atArray.push(attendee);
       Session.set("homewizattendees", atArray);
-
+      Session.set("keepview", "three");
     } else {
       showNotification({
           message: messages.attendeecreate.validation,
@@ -188,6 +193,7 @@ Template.homewizthree.events({
           // Remove the victim time proposal from array
           atArray.splice(index, 1);
           Session.set("homewizattendees", atArray);
+          Session.set("keepview", "three");
         }
       });
     }
@@ -202,18 +208,12 @@ Template.homewizthree.rendered = function () {
   // Add HTML5 input patterns
   $('#txtName').attr("pattern", patterns.fullname);
   $('#txtEmail').attr("pattern", patterns.email);
-  
-  transition ("two", "three");
-  transition ("four", null);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Home Page Wizard: Step Four
 Template.homewizfour.events({
   'click #cancel' : function ( event, template ) {
-    transition("four", "three");
-    transition("three", "two");
-    transition("two", "one");
     slideHomePageWizard(event, template);
   },
   
@@ -230,10 +230,6 @@ Template.homewizfour.events({
 //Template: Home Page Wizard: Step Five
 Template.homewizfive.events({
   'click #cancel' : function ( event, template ) {
-    transition("five", "four");
-    transition("four", "three");
-    transition("three", "two");
-    transition("two", "one");
     slideHomePageWizard(event, template);
   },
   
@@ -250,11 +246,6 @@ Template.homewizfive.events({
 //Template: Home Page Wizard: Step Six
 Template.homewizsix.events({
   'click #cancel' : function ( event, template ) {
-    transition("six", "five");
-    transition("five", "four");
-    transition("four", "three");
-    transition("three", "two");
-    transition("two", "one");
     slideHomePageWizard(event, template);
   },
   
@@ -299,12 +290,19 @@ var transition = function ( fromStep, toStep ) {
   $(frombutton + " .ca-main").removeClass("selected");
 }
 
-var resetWizard = function () {
+var resetWizard = function ( step ) {
+  console.log ("reset wizard");
   _.each(["one", "two", "three", "four", "five", "six"], function (element) {
-  // Reset session vars
-  Session.set("wiz" + element, null);
-  // Reset div heights
-  transition( element, null );
-});
+    
+    // Reset session vars
+    Session.set("wiz" + element, null);
+    
+    // Reset div heights
+    transition( element, null );
+  });
   
+  if ( step != null ) {
+    console.log("found keepview: " + step);
+    transition (null, step);
+  }
 }
