@@ -404,7 +404,7 @@ input#location {
   transition: opacity 1000ms ease-in-out;
 }
 
-
-
-
+.topdrop {
+  padding-top: 70px;
+}
 

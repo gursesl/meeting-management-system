@@ -52,6 +52,7 @@
 <template name="header">
   
   <div id="background-blue">
+    
   		<div class="container clearfix" id="header">
   	    <div class="row">
           <div class="navbar navbar-inverse">
@@ -66,10 +67,11 @@
           	        </a>
           	        <div class="nav-collapse">
           	          <ul class="nav">
-          	            <li class="active"><a href="/">Home</a></li>
-          	            <li><a href="/features">Features</a></li>
-          	            <li><a href="#">Why Maria?</a></li>
-          	            <li><a href="#">Sign Up Free</a></li>
+          	            <li><a href="/">Home</a></li>
+          	            <li><a href="/why">Why Maria?</a></li>
+          	            <li><a href="/tour">Tour</a></li>
+          	            <li><a href="/pricing">Pricing</a></li>
+          	            <li><a href="/signup">Sign Up Free</a></li>
           	          </ul>
 
           	          <ul class="nav pull-right right-fix">
@@ -83,80 +85,13 @@
         	</div>
        </div><!-- /header -->
        
-       <div class="container clearfix" id="homenavigation">
-         <div class="row">
-           <div class="ca-menu">
-             
-             <ul>
-               
-               <li id="lione">
-                 <a href="#" class="linkhome" id="one">
-                   <span class="ca-icon">?</span>
-                   <div class="ca-content">
-                     <h2 class="ca-main">Create an Event</h2>
-                     <h3 class="ca-sub">Personalized to your needs</h3>
-                   </div>
-                 </a>
-               </li>
-               
-               <li id="litwo">
-                 <a href="#" class="linkhome" id="two">
-                   <span class="ca-icon">P</span>
-                   <div class="ca-content">
-                     <h2 class="ca-main">Add Time Proposals</h2>
-                     <h3 class="ca-sub">Advanced use of technology</h3>
-                   </div>
-                 </a>
-               </li>
-               
-               <li id="lithree">
-                 <a href="#" class="linkhome" id="three">
-                   <span class="ca-icon">U</span>
-                   <div class="ca-content">
-                     <h2 class="ca-main">Add Attendees</h2>
-                     <h3 class="ca-sub">Professionals in action</h3>
-                   </div>
-                 </a>
-               </li>
-               
-               <li id="lifour">
-                 <a href="#" class="linkhome" id="four">
-                   <span class="ca-icon">@</span>
-                   <div class="ca-content">
-                     <h2 class="ca-main">Send Invitations</h2>
-                     <h3 class="ca-sub">24/7 for you needs</h3>
-                   </div>
-                 </a>
-               </li>
-               
-               <li id="lifive">
-                 <a href="#" class="linkhome" id="five">
-                   <span class="ca-icon">u</span>
-                   <div class="ca-content">
-                     <h2 class="ca-main">Track Progress</h2>
-                     <h3 class="ca-sub">24/7 for you needs</h3>
-                   </div>
-                 </a>
-              </li>
-              
-              <li id="lisix">
-                <a href="#" class="linkhome" id="six">
-                  <span class="ca-icon">N</span>
-                  <div class="ca-content">
-                    <h2 class="ca-main">Pick a Winner</h2>
-                    <h3 class="ca-sub">24/7 for you needs</h3>
-                  </div>
-                </a>
-             </li>
-             
-           </ul>
-         </div>
-       </div>
-     </div>
-  	</div>
+       {{#unless isuser}}
+        {{>homenavigation }}
+       {{/unless }}
+     
+  	</div><!-- /background-blue -->
   
     <div class="wizardPane">
-
       <div class="row">
         <div class="span2"></div>
         <div class="span8">
@@ -175,9 +110,78 @@
        </div>
      </div>
    </div>
-  
-   
-     
+</template>
+
+<template name="homenavigation">
+  <div class="container clearfix" id="homenavigation">
+     <div class="row">
+       <div class="ca-menu">
+         <ul>
+           <li id="lione">
+             <a href="#" class="linkhome" id="one">
+               <span class="ca-icon">?</span>
+               <div class="ca-content">
+                 <h2 class="ca-main">Create an Event</h2>
+                 <h3 class="ca-sub">Personalized to your needs</h3>
+               </div>
+             </a>
+           </li>
+           
+           <li id="litwo">
+             <a href="#" class="linkhome" id="two">
+               <span class="ca-icon">P</span>
+               <div class="ca-content">
+                 <h2 class="ca-main">Add Time Proposals</h2>
+                 <h3 class="ca-sub">Advanced use of technology</h3>
+               </div>
+             </a>
+           </li>
+           
+           <li id="lithree">
+             <a href="#" class="linkhome" id="three">
+               <span class="ca-icon">U</span>
+               <div class="ca-content">
+                 <h2 class="ca-main">Add Attendees</h2>
+                 <h3 class="ca-sub">Professionals in action</h3>
+               </div>
+             </a>
+           </li>
+           
+           <li id="lifour">
+             <a href="#" class="linkhome" id="four">
+               <span class="ca-icon">@</span>
+               <div class="ca-content">
+                 <h2 class="ca-main">Send Invitations</h2>
+                 <h3 class="ca-sub">24/7 for you needs</h3>
+               </div>
+             </a>
+           </li>
+           
+           <li id="lifive">
+             <a href="#" class="linkhome" id="five">
+               <span class="ca-icon">u</span>
+               <div class="ca-content">
+                 <h2 class="ca-main">Track Progress</h2>
+                 <h3 class="ca-sub">24/7 for you needs</h3>
+               </div>
+             </a>
+          </li>
+          
+          <li id="lisix">
+            <a href="#" class="linkhome" id="six">
+              <span class="ca-icon">N</span>
+              <div class="ca-content">
+                <h2 class="ca-main">Pick a Winner</h2>
+                <h3 class="ca-sub">24/7 for you needs</h3>
+              </div>
+            </a>
+         </li>
+         
+       </ul>
+       
+     </div>
+   </div>
+ </div><!-- /homenavigation -->
 </template>
 
 <template name="footer">
@@ -193,6 +197,7 @@
 </template>
 
 <template name="dashboard">
+  <div class="topdrop">
   {{#unless anyAppointments }}
     <div class="row">
       <div class="span12">
@@ -224,15 +229,14 @@
     </div>
   </div>
   {{/if }}
-  
+  </div>
 </template>
 
 <template name="newappointment">
-  <br/>
   <form class="well form-search">
-  <p><input type="text" id="title" placeholder="Event title">
-  <input type="text" id="location" placeholder="Location (e.g. 1600 American Dream Way, Reston, VA 20122)">
-  <a id="btnAddEvent" value="Add Event" class="btn btn-primary">Add Event</a>
+    <p><input type="text" id="title" placeholder="Event title">
+    <input type="text" id="location" placeholder="Location (e.g. 1600 American Dream Way, Reston, VA 20122)">
+    <a id="btnAddEvent" value="Add Event" class="btn btn-primary">Add Event</a>
   </form>	
 </template>
 
@@ -394,7 +398,7 @@
           <div class="homeboxclean">
             <h3>Increase Attendance</h3>
             <div class="svgwrap"><img alt="Increase Attendence" src="/img/homebox-1.svg"></div>
-            <p>Whether you're organizing a casual lunch or a company meeting, Maria helps you find the best times for your attendees. By using Maria's easy event polls its easier than ever to collect feedback and put together the perfect event schedule. The result is increased attendance and more effective meetings.</p>
+            <p>Whether you're organizing a casual lunch or a company meeting, Maria helps you find the best times for your attendees. By using Maria's event polling its easier than ever to collect feedback and design the perfect schedule. The result is increased attendance and more effective events.</p>
           </div>
           
           <p><a class="btn linkhome" href="#" id="oneextra">Create an event &raquo;</a></p>
@@ -403,7 +407,7 @@
           <div class="homeboxclean">
             <h3>Improve Productivity</h3>
             <div class="svgwrap"><img alt="Save Time and Money" src="/img/homebox-2.svg"></div>
-            <p>Get ready for some attention! By eliminating unnecessary lines of communication and collecting all information in one central place you will cut down on hours of time, countless emails and phone calls. The outcome will be fewer schedule conflicts and more productive meetings.</p>
+            <p>Get ready for attention! By eliminating unnecessary lines of communication and collecting all information in one place you will save hours of coordination, countless emails and phone calls. The outcome will be fewer schedule conflicts and more productive events.</p>
           </div>
           <p><a class="btn linkhome" href="#" id="two">View details &raquo;</a></p>
        </div>

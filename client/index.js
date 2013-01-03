@@ -12,25 +12,25 @@ Meteor.subscribe("deploylogs");
 //Router 
 
 Meteor.Router.add({
-    '/'						    : 'homepage',
-    "/dashboard"      : 'dashboard',
-    '/features'				: 'features',
-    '/posts/:id'			: function(id) {
-      Session.set('postId', id);
-      return 'post';
-  },
-  
+  '/'						    : 'homepage',
+  "/dashboard"      : 'dashboard',
+  '/why'				    : 'why',
+  '/tour'				    : 'tour',
+  '/pricing'				: 'pricing',
+  '/terms'			    : 'terms',
+  '/privacy'		    : 'privacy',
+  '/signup'		    : 'signup',
   '/invite/:id/:email'	: function (id, email) {
     console.log("invite router on the client");
-  	var appt = Appointments.findOne(id);
-  	if (appt) {
+	  var appt = Appointments.findOne(id);
+	  if (appt) {
   		Session.set("selected", appt._id);
   		Session.set("appointment", appt);
   		trackClickInviteLink(appt._id, email);
   	}
-  	
-  	Session.set("inviteemail", email);
-  	return 'invitepage';
+	
+	  Session.set("inviteemail", email);
+	  return 'invitepage';
   }
 });
 
@@ -617,6 +617,10 @@ var slideHomePageWizard = function (event, template, step) {
     $("#li" + step + " .ca-icon").addClass("selected");
     $("#li" + step + " .ca-main").addClass("selected");
   }
+}
+
+Template.header.isuser = function() {
+  return Template.homepage.isuser;
 }
 
 Template.header.rendered = function (event, template) {
