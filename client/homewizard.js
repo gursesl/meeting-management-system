@@ -21,6 +21,7 @@ Template.homewizlogin.events({
 //Template: Home Page Wizard: Step One
 Template.homewizone.events({
   'click #cancel' : function ( event, template ) {
+    Session.set("keepview", null);
     slideHomePageWizard(event, template);
   },
   
@@ -124,7 +125,6 @@ Template.homewiztwo.timeproposals = function() {
 }
 
 Template.homewiztwo.rendered = function () {
-  console.log("homewiztwo.rendered");
   // Render datepicker
   $('#txtDate').datepicker({
     format: 'mm/dd/yyyy',
@@ -144,8 +144,8 @@ Template.homewiztwo.rendered = function () {
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Home Page Wizard: Step Three (Add Attendees)
 Template.homewizthree.events({
-  
   'click #cancel' : function ( event, template ) {
+    Session.set("keepview", null);
     slideHomePageWizard(event, template);
   },
   
@@ -214,6 +214,7 @@ Template.homewizthree.rendered = function () {
 //Template: Home Page Wizard: Step Four
 Template.homewizfour.events({
   'click #cancel' : function ( event, template ) {
+    Session.set("keepview", null);
     slideHomePageWizard(event, template);
   },
   
@@ -230,6 +231,7 @@ Template.homewizfour.events({
 //Template: Home Page Wizard: Step Five
 Template.homewizfive.events({
   'click #cancel' : function ( event, template ) {
+    Session.set("keepview", null);
     slideHomePageWizard(event, template);
   },
   
@@ -246,6 +248,7 @@ Template.homewizfive.events({
 //Template: Home Page Wizard: Step Six
 Template.homewizsix.events({
   'click #cancel' : function ( event, template ) {
+    Session.set("keepview", null);
     slideHomePageWizard(event, template);
   },
   
@@ -260,7 +263,7 @@ Template.homewizsix.events({
 
 // Transition between two steps in homepage wizard
 var transition = function ( fromStep, toStep ) {
-  console.log ("transition: " + fromStep + " --> " + toStep);
+
   var fromstep = "#homewiz" + fromStep;
   var tostep = "#homewiz" + toStep;
   

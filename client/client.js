@@ -566,7 +566,9 @@ Template.landingSlider.events({
 
 Template.header.events({
   'click .linkhome' : function (event, template) {
-    slideHomePageWizard(event, template, event.currentTarget.id);
+    var step = event.currentTarget.id;
+    Session.set("keepview", step);
+    slideHomePageWizard(event, template, step);
   }
 });
 
@@ -586,11 +588,13 @@ var slideHomePageWizard = function (event, template, step) {
   
   
   if (Session.get("wizone") || Session.get("wiztwo") || Session.get("wizthree") || Session.get("wizfour") || Session.get("wizfive") || Session.get("wizsix")) {
-    resetWizard();
+    resetWizard( Session.get("keepview") );
    
     // Animate panes
-    $(".wizardPane").css({"height" : "0px"});
-    $(".wizardPaneStep").css({"opacity" : "0"});
+    if ( !Session.get("keepview") ) {
+      $(".wizardPane").css({"height" : "0px"});
+      $(".wizardPaneStep").css({"opacity" : "0"});
+    }
         
     // Deselect button
     $("#li" + step).removeClass("selected");
