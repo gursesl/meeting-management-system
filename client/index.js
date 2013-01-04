@@ -19,7 +19,7 @@ Meteor.Router.add({
   '/pricing'				: 'pricing',
   '/terms'			    : 'terms',
   '/privacy'		    : 'privacy',
-  '/signup'		    : 'signup',
+  '/signup'		      : 'signup',
   '/invite/:id/:email'	: function (id, email) {
     console.log("invite router on the client");
 	  var appt = Appointments.findOne(id);
@@ -79,8 +79,7 @@ var trackVote = function (appointmentid, email) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-//Start up
-
+//Start-up
 Meteor.startup(function () {
   console.log("client startup");
     
@@ -97,39 +96,6 @@ Meteor.startup(function () {
 	  }
   });
 });
-
-///////////////////////////////////////////////////////////////////////////////
-//Utility functions
-var okcancel_events = function (selector) {
-  return 'keyup '+selector+', keydown '+selector+', focusout '+selector;
-}
-	
-var make_okcancelhandler = function (options) {
-	var ok = options.ok || function () {};
-	var cancel = options.cancel || function () {};
-	
-	return function (evt) {
-		if (evt.type === "keydown" && evt.which === 27) {
-			// escape = cancel
-			cancel.call(this.evt);
-		} else if (evt.type === "keyup" && evt.which === 13) {
-			var value = String(evt.target.value || "");
-			if (value)
-				ok.call(this, value, evt);
-			else
-				cancel.call(this, evt);
-		}
-	}
-}
-
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Homepage 
@@ -595,7 +561,7 @@ var slideHomePageWizard = function (event, template, step) {
       $(".wizardPane").css({"height" : "0px"});
       $(".wizardPaneStep").css({"opacity" : "0"});
     } else {
-      $(".wizardPane").css({"height" : "500px"});
+      $(".wizardPane").css({"height" : "450px"});
       $(".wizardPaneStep").css({"opacity" : "1"});
     }
         
@@ -606,7 +572,7 @@ var slideHomePageWizard = function (event, template, step) {
     
   } else {
 
-    $(".wizardPane").css({"height" : "500px"});
+    $(".wizardPane").css({"height" : "450px"});
     $(".wizardPaneStep").css({"opacity" : "1"});
 
     // Animate panes

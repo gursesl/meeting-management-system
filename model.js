@@ -101,7 +101,7 @@ Meteor.methods({
       throw new Meteor.Error(413, "Event title too long.");
     
     return AnonymousAppointments.insert({
-      linkid: Meteor.uuid(),
+      linkid: generateShortHash(),
       title: options.title,
       location: options.location,
       description: options.description,
@@ -124,8 +124,8 @@ Meteor.methods({
       var from = contactEmail(user);
       var fromName = displayName(user);
       var to = options.toemail;
-      var pixelTrackerLink = "<img src='" + Meteor.absoluteUrl("tracking/" + appointment._id + "/" + to) + "' width='1' height='1'>";
-      var inviteLink = "<a href='" + Meteor.absoluteUrl("invite/" + appointment._id + "/" + to) + "'>" + Meteor.absoluteUrl("invite/" + appointment._id + "/" + to) + "</a>";
+      var pixelTrackerLink = "<img src='" + getPixelTrackingUrl( appointment._id, to) + "' width='1' height='1'>";
+      var inviteLink = "<a href='" + getInviteUrl( appointment._id, to ) + "'>" + getInviteUrl( appointment._id, to ) + "</a>";
       if (Meteor.isServer && to) {
         // This code only runs on the server. If you didn't want clients
         // to be able to see it, you could move it to a separate file.

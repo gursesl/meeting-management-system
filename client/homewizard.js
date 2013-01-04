@@ -17,6 +17,8 @@ Template.homewizlogin.events({
   }
 });
 
+
+
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Home Page Wizard: Step One
 Template.homewizone.events({
@@ -32,7 +34,7 @@ Template.homewizone.events({
     var desc = template.find("#txtDescription").value;
     
     //Validation
-    if (validateHomeWizOne(title, location)) {
+    if ( validateHomeWizOne( title, location ) ) {
       // Set session variables
       Session.set("wiztitle", title);
       Session.set("wizlocation", location);
@@ -202,6 +204,8 @@ Template.homewizthree.rendered = function () {
   $('#txtEmail').attr("pattern", patterns.email);
 }
 
+
+
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Home Page Wizard: Step Four (Send Invitations)
 Template.homewizfour.events({
@@ -240,6 +244,10 @@ Template.homewizfour.timeproposals = function () {
   return Template.homewiztwo.timeproposals;
 }
 
+
+Template.homewizfour.eventlink = function () {
+  return generateShortHash();
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////
