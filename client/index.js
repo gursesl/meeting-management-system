@@ -609,6 +609,8 @@ var slideHomePageWizard = function (event, template, step) {
       $(".wizardPane").css({"height" : "450px"});
       $(".wizardPane").css({"padding-top" : "80px"});
       $(".wizardPaneStep").css({"opacity" : "1"});
+      $("html, body").animate({ scrollTop: 0 }, "slow");
+      
     }
         
     // Deselect button
@@ -620,6 +622,7 @@ var slideHomePageWizard = function (event, template, step) {
     $(".wizardPane").css({"height" : "450px"});
     $(".wizardPane").css({"padding-top" : "80px"});
     $(".wizardPaneStep").css({"opacity" : "1"});
+    $("html, body").animate({ scrollTop: 0 }, "slow");
 
     // Animate panes
     transition(null, step);

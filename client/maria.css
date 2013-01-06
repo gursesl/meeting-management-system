@@ -417,3 +417,7 @@ input#location {
   color: #000;
   overflow: hidden;
 }
+
+.linkhome {
+  cursor: pointer;
+}
