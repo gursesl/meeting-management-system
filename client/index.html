@@ -42,7 +42,7 @@
     {{/if }}
     
     {{#unless isuser}}
-      {{> landingSlider}}
+      {{> landing}}
     {{/unless }}
   </div>
     
@@ -380,61 +380,103 @@
 </template>
 
 
-<template name="landingSlider">
+<template name="landing">
   <div class="container">
-  <div>
     <!-- Jumbotron -->
-      <div class="jumbotron">
-        <h1>Simple events!</h1>
-        <p class="lead">Maria helps you organize better events by drastically reducing the time to design the event, create a schedule and track attendance. Maria is fast and easy to use. Best of all, it's FREE.</p>
-        <a class="btn btn-large btn-success linkhome" href="#" id="one">Get started today</a>
-      </div>
-
-      <hr>
-
-      <!-- Example row of columns -->
-      <div class="row-fluid">
-        <div class="span3">
-          <div class="homeboxclean">
-            <h3>Increase Attendance</h3>
-            <div class="svgwrap"><img alt="Increase Attendence" src="/img/homebox-1.svg"></div>
-            <p>Whether you're organizing a casual lunch or a company meeting, Maria helps you find the best times for your attendees. By using Maria's event polling its easier than ever to collect feedback and design the perfect schedule. The result is increased attendance and more effective events.</p>
-          </div>
-          
-          <p><a class="btn linkhome" href="#" id="oneextra">Create an event &raquo;</a></p>
-        </div>
-        <div class="span3">
-          <div class="homeboxclean">
-            <h3>Improve Productivity</h3>
-            <div class="svgwrap"><img alt="Save Time and Money" src="/img/homebox-2.svg"></div>
-            <p>Get ready for attention! By eliminating unnecessary lines of communication and collecting all information in one place you will save hours of coordination, countless emails and phone calls. The outcome will be fewer schedule conflicts and more productive events.</p>
-          </div>
-          <p><a class="btn linkhome" href="#" id="two">View details &raquo;</a></p>
-       </div>
-        <div class="span3">
-          <div class="homeboxclean">
-            <h3>Gain Insight</h3>
-            <div class="svgwrap"><img alt="Powerful Analytics" src="/img/homebox-3.svg"></div>
-            <p>Maria helps you find the best suitable times for your meetings and events. Whether you're organizing a lunch or a company outing, Maria's event management tools will save you time and help you find the best suitable time for all attendees.</p>
-          </div>
-          <p><a class="btn linkhome" href="#" id="three">View details &raquo;</a></p>
-        </div>
-        
-        <div class="span3">
-          <div class="homeboxclean">
-            <h3>Work Anywhere</h3>
-            <div class="svgwrap"><img alt="Powerful Analytics" src="/img/homebox-4.svg"></div>
-            
-            <p>Maria helps you find the best suitable times for your meetings and events. Whether you're organizing a lunch or a company outing, Maria's event management tools will save you time and help you find the best suitable time for all attendees.</p>
-          </div>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
-        </div>
-      </div>
-
-      <hr>
-
+    <div class="jumbotron">
+    <h1>Simple events!</h1>
+    <p class="lead">Maria helps you organize better events by drastically reducing the time to design the event, create a schedule and track attendance. Maria is fast and easy to use. Best of all, it's FREE.</p>
+    <a class="btn btn-large btn-success linkhome" href="#" id="one">Get started today</a>
   </div>
-  </div>
+
+ 
+    <center><h2 class="itemh2">What's on your mind? Maria can help.</h2><center>
+    
+    <ul class="ch-grid lovegrid">
+		  
+			<li class="item">
+				<div class="ch-item ch-img-4">
+					<div class="ch-info">
+						<h3>Surprise Birthdays</h3>
+						<p>by Angela Duncan <a href="http://drbl.in/eOPF">View on Dribbble</a></p>
+					</div>
+				</div>
+			</li>
+			
+			<li class="item">
+				<div class="ch-item ch-img-2">
+					<div class="ch-info">
+						<h3>Common Causes of Stains</h3>
+						<p>by Antonio F. Mondragon <a href="http://drbl.in/eKMi">View on Dribbble</a></p>
+					</div>
+				</div>
+			</li>
+			
+			<li class="item">
+				<div class="ch-item ch-img-3">
+					<div class="ch-info">
+						<h3>Pink Lightning</h3>
+						<p>by Charlie Wagers <a href="http://drbl.in/ekhp">View on Dribbble</a></p>
+					</div>
+				</div>
+			</li>
+			
+			<li class="item">
+				<div class="ch-item ch-img-4">
+					<div class="ch-info">
+						<h3>Use what you have</h3>
+						<p>by Angela Duncan <a href="http://drbl.in/eOPF">View on Dribbble</a></p>
+					</div>
+				</div>
+			</li>
+
+			<li class="item">
+				<div class="ch-item ch-img-2">
+					<div class="ch-info">
+						<h3>Common Causes of Stains</h3>
+						<p>by Antonio F. Mondragon <a href="http://drbl.in/eKMi">View on Dribbble</a></p>
+					</div>
+				</div>
+			</li>
+
+			<li class="item">
+				<div class="ch-item ch-img-3">
+					<div class="ch-info">
+						<h3>Pink Lightning</h3>
+						<p>by Charlie Wagers <a href="http://drbl.in/ekhp">View on Dribbble</a></p>
+					</div>
+				</div>
+			</li>
+			
+			<li class="item">
+				<div class="ch-item ch-img-1">
+					<div class="ch-info">
+						<h3>Use what you have</h3>
+						<p>by Angela Duncan <a href="http://drbl.in/eOPF">View on Dribbble</a></p>
+					</div>
+				</div>
+			</li>
+
+			<li class="item">
+				<div class="ch-item ch-img-2">
+					<div class="ch-info">
+						<h3>Common Causes of Stains</h3>
+						<p>by Antonio F. Mondragon <a href="http://drbl.in/eKMi">View on Dribbble</a></p>
+					</div>
+				</div>
+			</li>
+
+			<li class="item">
+				<div class="ch-item ch-img-3">
+					<div class="ch-info">
+						<h3>Pink Lightning</h3>
+						<p>by Charlie Wagers <a href="http://drbl.in/ekhp">View on Dribbble</a></p>
+					</div>
+				</div>
+			</li>
+			
+		</ul>
+    
 </template>
 
 <template name="updateAppointmentDialog">

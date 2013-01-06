@@ -1,3 +1,7 @@
+#homenavigation {
+  display:none;
+}
+
 #homenavigation ol, #homenavigation ul {
 	list-style:none;
 }

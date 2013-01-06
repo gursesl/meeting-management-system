@@ -521,11 +521,55 @@ Template.homepage.showAttendeesDialog = function () {
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Landing slider
-Template.landingSlider.events({
+Template.landing.events({
   'click .linkhome' : function (event, template) {
     slideHomePageWizard(event, template, event.currentTarget.id);
   } 
 });
+
+Template.landing.rendered = function () {
+  
+  $(".lovegrid").gridalicious({
+    gutter: 20,
+    width: 200,
+    animate: true, 
+      animationOptions: { 
+        speed: 1000,
+        duration: 1500
+        },
+  });
+
+  $(window).scroll(function () {
+     if ($(window).scrollTop() >= $(document).height() - $(window).height() - 300) {
+        console.log("ready to append an item to the grid");
+        $(".lovegrid").gridalicious('append', makeboxes());
+     }
+  });
+  
+}
+
+var makeboxes = function() {
+  var count = Session.get("boxcount");
+  if (count == null) 
+    count = 0;
+    
+  var boxes = new Array;
+  var amount = Math.floor(Math.random()*10);
+  if (amount == 0) amount = 1;
+   
+  // for(var i=0;i<amount;i++){
+  if (count < 20) {
+    var div = $('<li></li>').addClass('item');
+    var p = "<div class=\"ch-item ch-img-3\"></div>";
+    div.append(p);
+    boxes.push(div);
+    count = count + 1;
+    Session.set("boxcount", count);
+  }
+  //  }
+    
+    return boxes;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Header
@@ -559,9 +603,11 @@ var slideHomePageWizard = function (event, template, step) {
     // Animate panes
     if ( !Session.get("keepview") ) {
       $(".wizardPane").css({"height" : "0px"});
+      $(".wizardPane").css({"padding-top" : "0px"});
       $(".wizardPaneStep").css({"opacity" : "0"});
     } else {
       $(".wizardPane").css({"height" : "450px"});
+      $(".wizardPane").css({"padding-top" : "80px"});
       $(".wizardPaneStep").css({"opacity" : "1"});
     }
         
@@ -571,8 +617,8 @@ var slideHomePageWizard = function (event, template, step) {
     $("#li" + step + " .ca-main").removeClass("selected");
     
   } else {
-
     $(".wizardPane").css({"height" : "450px"});
+    $(".wizardPane").css({"padding-top" : "80px"});
     $(".wizardPaneStep").css({"opacity" : "1"});
 
     // Animate panes
