@@ -199,7 +199,7 @@ input:required, textarea:required {
 	border-radius: 50%;
 	position: relative;
 	box-shadow: 
-		inset 0 0 0 16px rgba(255,255,255,0.6),
+		inset 0 0 0 0px rgba(255,255,255,0.6),
 		0 1px 2px rgba(0,0,0,0.1);
 		
 	-webkit-transition: all 0.4s ease-in-out;
@@ -237,7 +237,6 @@ input:required, textarea:required {
 	background-image: url(/img/lovegrid/grid-lime-green.jpg);
 }
 
-
 .ch-info {
 	position: absolute;
 	background: rgba(63,147,147, 0.8);
@@ -252,11 +251,11 @@ input:required, textarea:required {
 	-ms-transition: all 0.4s ease-in-out;
 	transition: all 0.4s ease-in-out;
 	
-	-webkit-transform: scale(0);
-	-moz-transform: scale(0);
-	-o-transform: scale(0);
-	-ms-transform: scale(0);
-	transform: scale(0);
+	-webkit-transform: scale(1);
+	-moz-transform: scale(1);
+	-o-transform: scale(1);
+	-ms-transform: scale(1);
+	transform: scale(1);
 	
 	-webkit-backface-visibility: hidden;
 
@@ -320,7 +319,7 @@ input:required, textarea:required {
 
 .ch-item:hover {
 	box-shadow: 
-		inset 0 0 0 1px rgba(255,255,255,0.1),
+		inset 0 0 0 1px rgba(255,255,255,0.6),
 		0 1px 2px rgba(0,0,0,0.1);
 }
 
