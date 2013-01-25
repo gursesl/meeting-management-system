@@ -11,7 +11,7 @@ cat public/config.json | sed "s/[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}/$dt/" > public/
 cat public/config-mod.json > public/config.json
 rm -rf public/config-mod.json
 
-# Commit changes
+# Commit changes to Github
 git commit public/config.json -m "Automated deployment to Heroku with updated date and revision."
 
 # Push to Github
