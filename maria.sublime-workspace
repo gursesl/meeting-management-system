@@ -1,0 +1,174 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"fo",
+				"font-size"
+			],
+			[
+				"co",
+				"color"
+			],
+			[
+				"fon",
+				"font-weight"
+			],
+			[
+				"size",
+				"font-size"
+			],
+			[
+				"h",
+				"h3	Tag"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+		],
+		"width": 392.0
+	},
+	"console":
+	{
+		"height": 139.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/gursesl/dev/blog/source/_includes/head.html",
+		"/Users/gursesl/dev/blog/source/stylesheets/custom.css",
+		"/Users/gursesl/dev/blog/source/stylesheets/screen.css",
+		"/Users/gursesl/dev/blog/source/_includes/custom/navigation.html",
+		"/Users/gursesl/dev/blog/_config.yml",
+		"/Users/gursesl/dev/blog/source/stylesheets/screen.css.old",
+		"/Users/gursesl/dev/blog/source/about/index.markdown",
+		"/Users/gursesl/dev/blog/source/_posts/2013-01-24-octopress-setup-today.markdown",
+		"/Users/gursesl/dev/blog/source/_posts/2013-01-24-octopress-setup-done-today.markdown",
+		"/Users/gursesl/dev/blog/.themes/classic/source/images/bird_32_gray.png",
+		"/Users/gursesl/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/Users/gursesl/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/gursesl/dev/blog/README.markdown"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"\"Amethysta\",serif",
+			".blog-index a[rel=\"full-article\"]",
+			".heading, body > header h2, article header p.meta, article > footer, #content .blog-index footer, html .gist .gist-file .gist-meta, #blog-archives a.category, #blog-archives time, aside.sidebar section, body, #content .blog-index a[rel=\"full-article\"]",
+			"\"Amethysta\",serif",
+			"font-family:",
+			"font-size: 2.6em;",
+			"#D64C4C",
+			" ",
+			"id2"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 229.0,
+	"status_bar_visible": true
+}

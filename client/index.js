@@ -541,7 +541,6 @@ Template.landing.rendered = function () {
 
   $(window).scroll(function () {
      if ($(window).scrollTop() >= $(document).height() - $(window).height() - 300) {
-        console.log("ready to append an item to the grid");
         $(".lovegrid").gridalicious('append', makeboxes());
      }
   });
@@ -557,18 +556,18 @@ var makeboxes = function() {
   var amount = Math.floor(Math.random()*10);
   if (amount == 0) amount = 1;
    
-  // for(var i=0;i<amount;i++){
-  if (count < 20) {
+  // Number of circles to add
+  var numCircles = 4;
+  if (count < numCircles) {
     var div = $('<li></li>').addClass('item');
-    var p = "<div class=\"ch-item ch-img-3\"></div>";
+    var p = "<div class=\"ch-item ch-img-" + (count+3) + "\"></div>";
     div.append(p);
     boxes.push(div);
     count = count + 1;
     Session.set("boxcount", count);
   }
-  //  }
     
-    return boxes;
+  return boxes;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
