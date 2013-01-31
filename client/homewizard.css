@@ -210,31 +210,43 @@ input:required, textarea:required {
 }
 
 .ch-img-1 { 
-	background-image: url(/img/lovegrid/grid002.jpg);
+	background-image: url(/img/lovegrid/grid001.jpg);
 }
 
 .ch-img-2 { 
-	background-image: url(/img/lovegrid/grid001.jpg);
-}
-
-.ch-img-3 { 
-	background-image: url(/img/lovegrid/grid-red.jpg);
-}
-
-.ch-img-4 { 
-	background-image: url(/img/lovegrid/grid-blue.jpg);
-}
-
-.ch-img-5 { 
 	background-image: url(/img/lovegrid/grid002.jpg);
 }
 
+.ch-img-3 { 
+	background-image: url(/img/lovegrid/grid003.jpg);
+}
+
+.ch-img-4 { 
+	background-image: url(/img/lovegrid/grid004.jpg);
+}
+
+.ch-img-5 { 
+	background-image: url(/img/lovegrid/grid005.jpg);
+}
+
 .ch-img-6 { 
-	background-image: url(/img/lovegrid/grid001.jpg);
+	background-image: url(/img/lovegrid/grid006.jpg);
 }
 
 .ch-img-7 { 
-	background-image: url(/img/lovegrid/grid-lime-green.jpg);
+	background-image: url(/img/lovegrid/grid007.jpg);
+}
+
+.ch-img-8 { 
+	background-image: url(/img/lovegrid/grid008.jpg);
+}
+
+.ch-img-9 { 
+	background-image: url(/img/lovegrid/grid009.jpg);
+}
+
+.ch-img-10 { 
+	background-image: url(/img/lovegrid/grid010.jpg);
 }
 
 .ch-info {
@@ -274,9 +286,8 @@ input:required, textarea:required {
 	text-transform: uppercase;
 	letter-spacing: 2px;
 	font-size: 22px;
-	margin: 0 30px;
-	padding: 45px 0 0 0;
-	height: 100px;
+	margin: 30px 30px 0px;
+	padding: 25px 0 10px 0;
 	line-height: 32px;
 	font-family: 'Open Sans', Arial, sans-serif;
 	text-shadow: 

@@ -557,7 +557,7 @@ var makeboxes = function() {
   if (amount == 0) amount = 1;
    
   // Number of circles to add
-  var numCircles = 4;
+  var numCircles = 0;
   if (count < numCircles) {
     var div = $('<li></li>').addClass('item');
     var p = "<div class=\"ch-item ch-img-" + (count+3) + "\"></div>";
