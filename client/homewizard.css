@@ -209,53 +209,33 @@ input:required, textarea:required {
 	transition: all 0.4s ease-in-out;
 }
 
-.ch-img-1 { 
-	background-image: url(/img/lovegrid/grid001.jpg);
+.ch-img-green { 
+	background-image: url(/img/lovegrid/grid-green.jpg);
 }
 
-.ch-img-2 { 
-	background-image: url(/img/lovegrid/grid002.jpg);
+.ch-img-lime-green { 
+	background-image: url(/img/lovegrid/grid-lime-green.jpg);
 }
 
-.ch-img-3 { 
-	background-image: url(/img/lovegrid/grid003.jpg);
+.ch-img-purple { 
+	background-image: url(/img/lovegrid/grid-purple.jpg);
 }
 
-.ch-img-4 { 
-	background-image: url(/img/lovegrid/grid004.jpg);
+.ch-img-red { 
+	background-image: url(/img/lovegrid/grid-red.jpg);
 }
 
-.ch-img-5 { 
-	background-image: url(/img/lovegrid/grid005.jpg);
-}
-
-.ch-img-6 { 
-	background-image: url(/img/lovegrid/grid006.jpg);
-}
-
-.ch-img-7 { 
-	background-image: url(/img/lovegrid/grid007.jpg);
-}
-
-.ch-img-8 { 
-	background-image: url(/img/lovegrid/grid008.jpg);
-}
-
-.ch-img-9 { 
-	background-image: url(/img/lovegrid/grid009.jpg);
-}
-
-.ch-img-10 { 
-	background-image: url(/img/lovegrid/grid010.jpg);
+.ch-img-blue { 
+	background-image: url(/img/lovegrid/grid-blue.jpg);
 }
 
 .ch-info {
 	position: absolute;
-	background: rgba(63,147,147, 0.8);
+	background: rgba(255,255,255, 0.8);
 	width: inherit;
 	height: inherit;
 	border-radius: 50%;
-	opacity: 0;
+	opacity: 1;
 	
 	-webkit-transition: all 0.4s ease-in-out;
 	-moz-transition: all 0.4s ease-in-out;
@@ -282,7 +262,7 @@ input:required, textarea:required {
 }
 
 .ch-info h3 {
-	color: #fff;
+	color: #999;
 	text-transform: uppercase;
 	letter-spacing: 2px;
 	font-size: 22px;
@@ -291,23 +271,23 @@ input:required, textarea:required {
 	line-height: 32px;
 	font-family: 'Open Sans', Arial, sans-serif;
 	text-shadow: 
-		0 0 1px #fff, 
+		0 0 1px #aaa, 
 		0 1px 2px rgba(0,0,0,0.3);
 }
 
 .ch-info p {
-	color: #fff;
+	color: #999;
 	padding: 10px 5px;
 	font-style: italic;
 	margin: 0 30px;
 	font-size: 12px;
 	border-top: 1px solid rgba(255,255,255,0.5);
-	opacity: 0;
-	-webkit-transition: all 1s ease-in-out 0.4s;
-	-moz-transition: all 1s ease-in-out 0.4s;
-	-o-transition: all 1s ease-in-out 0.4s;
-	-ms-transition: all 1s ease-in-out 0.4s;
-	transition: all 1s ease-in-out 0.4s;
+	opacity: 1;
+	-webkit-transition: all 0.4s ease-in-out 0.4s;
+	-moz-transition: all 0.4s ease-in-out 0.4s;
+	-o-transition: all 0.4s ease-in-out 0.4s;
+	-ms-transition: all 0.4s ease-in-out 0.4s;
+	transition: all 0.4s ease-in-out 0.4s;
 }
 
 .ch-info p a {
