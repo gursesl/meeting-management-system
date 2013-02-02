@@ -382,7 +382,7 @@ input#location {
 
 .wizardPane {
   height: 0px;
-  background: url("/img/page_bg_blue.jpg") no-repeat 0 -260px #103352;
+  background: url("/img/page_bg_blue.jpg") no-repeat 0 -20px #103352;
   position: relative;
   display: block;
   z-index: 0;
@@ -397,7 +397,7 @@ input#location {
 }
 
 .wizardPaneStep {
-  height: 400px;
+  padding: 3%;
   -moz-border-radius: 20px;
   border-radius: 20px;
   background: rgba(0, 0, 0, 0.5);

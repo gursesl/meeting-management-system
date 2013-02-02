@@ -584,19 +584,19 @@ Template.header.events({
 var slideHomePageWizard = function (event, template, step) {
   
   var stepFound = false;
-  _.each(["one", "two", "three", "four", "five", "six"], function (element) {
+  _.each(["zero", "one", "two", "three", "four", "five", "six"], function (element) {
         
     if (element == step)
       stepFound = true;
   });
   
-  //If step not found, set to "one"
+  //If step not found, set to "zero"
   if (!stepFound) {
-    step = "one";
+    step = "zero";
   }
   
   
-  if (Session.get("wizone") || Session.get("wiztwo") || Session.get("wizthree") || Session.get("wizfour") || Session.get("wizfive") || Session.get("wizsix")) {
+  if (Session.get("wizzero") || Session.get("wizone") || Session.get("wiztwo") || Session.get("wizthree") || Session.get("wizfour") || Session.get("wizfive") || Session.get("wizsix")) {
     resetWizard( Session.get("keepview") );
    
     // Animate panes
@@ -605,7 +605,7 @@ var slideHomePageWizard = function (event, template, step) {
       $(".wizardPane").css({"padding-top" : "0px"});
       $(".wizardPaneStep").css({"opacity" : "0"});
     } else {
-      $(".wizardPane").css({"height" : "450px"});
+      $(".wizardPane").css({"height" : "550px"});
       $(".wizardPane").css({"padding-top" : "80px"});
       $(".wizardPaneStep").css({"opacity" : "1"});
       $("html, body").animate({ scrollTop: 0 }, "slow");
@@ -618,7 +618,7 @@ var slideHomePageWizard = function (event, template, step) {
     $("#li" + step + " .ca-main").removeClass("selected");
     
   } else {
-    $(".wizardPane").css({"height" : "450px"});
+    $(".wizardPane").css({"height" : "550px"});
     $(".wizardPane").css({"padding-top" : "80px"});
     $(".wizardPaneStep").css({"opacity" : "1"});
     $("html, body").animate({ scrollTop: 0 }, "slow");

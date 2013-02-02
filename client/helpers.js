@@ -1,5 +1,5 @@
 // Session vars used in home page wizard
-var wizvars = ['wiztitle', 'wizlocation', 'wizdecription', 'wizone', 'wiztwo', 'wizthree', 
+var wizvars = ['wiztitle', 'wizlocation', 'wizdecription', 'wizzero', 'wizone', 'wiztwo', 'wizthree', 
             'wizfour', 'wizfive', 'wizsix', 'homewiztimeproposals', 'homewizattendees'];
 
 // Register Handlebar functions for template usage
