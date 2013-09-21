@@ -246,7 +246,8 @@ Template.homewizfour.timeproposals = function () {
 
 
 Template.homewizfour.eventlink = function () {
-  return generateShortHash();
+  //TODO: FIX THIS!!!
+  //return generateShortHash();
 }
 
 

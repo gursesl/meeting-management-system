@@ -50,35 +50,23 @@
   Meteor.startup(function () {
     process.env.MAIL_URL = 'smtp://info%4064clicks.com:passw0rd@smtp.gmail.com:465';
     updateDeploymentInfo();
-    
   });
 
 }) ();
 
 
 var updateDeploymentInfo = function () {
-  var fs = __meteor_bootstrap__.require('fs');
-  var file = './public/config.json';
 
-  fs.readFile(file, 'utf8', function (err, data) {
-    if (err) {
-      console.log('Error: ' + err);
-    return;
-    }
-
-    data = JSON.parse(data);
+    var data = {};
+    data = JSON.parse(Assets.getText("config.json"));
+    console.log('Data: ' + data.lastdeployed);
     
-    //TODO: Replace with Meteor.call(....)
-    Fiber(function() {
-      DeployLogs.insert({lastdeployed : data.lastdeployed, revision : data.revision, createdDate : new Date()}, function (error) {
-  		    if (! error) {
-  			    console.log("Deployment time and revision info added successfully.");
-			    } else {
-  			    //console.log (error);
-  			    // Die quietly
-			    }
-      });
-    }).run();
-  });
-  
+    DeployLogs.insert({lastdeployed : data.lastdeployed, revision : data.revision, createdDate : new Date()}, function (error) {
+		    if (! error) {
+			    console.log("Deployment time and revision info added successfully.");
+		    } else {
+			    console.log (error);
+			    // Die quietly
+		    }
+    });
 }

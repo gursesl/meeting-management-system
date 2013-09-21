@@ -153,7 +153,7 @@ Template.newappointment.events({
 	  }
   });
   
-  
+  /*
   Template.newappointment.events[okcancel_events('#location')] = make_okcancelhandler({
     ok: function (text, event) {
       var nameEntry = document.getElementById('title');
@@ -163,7 +163,7 @@ Template.newappointment.events({
         event.target.value = "";
       }
     }
-  });
+  }); */
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Dashboard

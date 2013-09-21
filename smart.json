@@ -1,8 +1,10 @@
 {
   "packages": {
     "router": {},
-    "bootstrap-datepicker": {},
     "foundation-icons-general": {},
-    "cookie": {}
+    "cookie": {},
+    "page-js": {},
+    "accounts-ui-bootstrap-dropdown": {},
+    "bootstrap-datepicker": {}
   }
 }

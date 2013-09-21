@@ -1,26 +1,19 @@
 {
-  "meteor": {
-    "git": "https://github.com/meteor/meteor.git",
-    "branch": "master",
-    "commit": "067113a37dd4e7824db1a16d5f7a90c3739eed9c"
-  },
+  "meteor": {},
   "dependencies": {
     "basePackages": {
       "router": {},
-      "bootstrap-datepicker": {},
       "foundation-icons-general": {},
-      "cookie": {}
+      "cookie": {},
+      "page-js": {},
+      "accounts-ui-bootstrap-dropdown": {},
+      "bootstrap-datepicker": {}
     },
     "packages": {
       "router": {
         "git": "https://github.com/tmeasday/meteor-router.git",
-        "tag": "v0.3.4",
-        "commit": "8f0d5303de5b93771e91f21f818be27358c2fb30"
-      },
-      "bootstrap-datepicker": {
-        "git": "https://github.com/acidsound/bootstrap-datepicker.git",
-        "tag": "v0.5.0",
-        "commit": "b20b1b7c764b2907019050c4bd7dacbee6cdcb95"
+        "tag": "v0.5.4.1",
+        "commit": "d00e380dda2184b70e909fc4a0fb5358d602c586"
       },
       "foundation-icons-general": {
         "git": "https://github.com/IainShigeoka/meteor-foundation-icons-general.git",
@@ -29,13 +22,33 @@
       },
       "cookie": {
         "git": "https://github.com/chuangbo/meteor-cookie.git",
-        "tag": "v1.0.2",
-        "commit": "263fd43ef3c7eaaa3f412b97bbc8d4622b348a6e"
+        "tag": "v1.0.2.2",
+        "commit": "e8659ecdec442916938726df11e9153f06c349e5"
       },
       "page-js": {
         "git": "https://github.com/tmeasday/meteor-page-js.git",
-        "tag": "v1.3.1",
-        "commit": "ee0b651869928abe50b5d06d7f32ccd2e657883a"
+        "tag": "v1.3.5",
+        "commit": "c652f795a86498aa4609ab637a694710421cb218"
+      },
+      "accounts-ui-bootstrap-dropdown": {
+        "git": "https://github.com/erobit/meteor-accounts-ui-bootstrap-dropdown.git",
+        "tag": "v0.6.5.1",
+        "commit": "c8b29d2e7f8611d6dec9d6d23c1c2b94e000b0fb"
+      },
+      "bootstrap-datepicker": {
+        "git": "https://github.com/acidsound/bootstrap-datepicker.git",
+        "tag": "v0.5.1",
+        "commit": "578d0bad1b5b5120c1abc333e449b8d0256969b4"
+      },
+      "page-js-ie-support": {
+        "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
+        "tag": "v1.3.5",
+        "commit": "b99ed8380aefd10b2afc8f18d9eed4dd0d8ea9cb"
+      },
+      "HTML5-History-API": {
+        "git": "https://github.com/tmeasday/meteor-HTML5-History-API.git",
+        "tag": "v4.0.0",
+        "commit": "dc4965f1424cfca625ec3fbea17eace03f8e32c5"
       }
     }
   }

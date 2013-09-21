@@ -52,6 +52,18 @@
 	},
 	"file_history":
 	[
+		"/Users/gursesl/dev/64clicks/tech/internal/64clicksV4-web/.git/MERGE_MSG",
+		"/Users/gursesl/dev/64clicks/.git/MERGE_MSG",
+		"/Users/gursesl/dev/64clicks/.git/COMMIT_EDITMSG",
+		"/Users/gursesl/dev/meteor/maria/client/index.html",
+		"/Users/gursesl/dev/meteor/maria/client/homewizard.css",
+		"/Users/gursesl/dev/meteor/maria/client/index.js",
+		"/Users/gursesl/dev/meteor/maria/client/maria.css",
+		"/Users/gursesl/dev/meteor/maria/client/homewizard.html",
+		"/Users/gursesl/dev/xcode/.git/COMMIT_EDITMSG",
+		"/Users/gursesl/dev/meteor/maria/objects.js",
+		"/Users/gursesl/dev/meteor/maria/maria.sublime-project",
+		"/Users/gursesl/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 		"/Users/gursesl/dev/blog/source/_includes/head.html",
 		"/Users/gursesl/dev/blog/source/stylesheets/custom.css",
 		"/Users/gursesl/dev/blog/source/stylesheets/screen.css",
@@ -63,7 +75,6 @@
 		"/Users/gursesl/dev/blog/source/_posts/2013-01-24-octopress-setup-done-today.markdown",
 		"/Users/gursesl/dev/blog/.themes/classic/source/images/bird_32_gray.png",
 		"/Users/gursesl/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
-		"/Users/gursesl/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 		"/Users/gursesl/dev/blog/README.markdown"
 	],
 	"find":
@@ -75,6 +86,7 @@
 		"height": 0.0,
 		"where_history":
 		[
+			""
 		]
 	},
 	"find_state":
@@ -82,6 +94,14 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"\"one\"",
+			"wiz",
+			"one",
+			"success",
+			" ch-info-red",
+			"ch-info-lime-green",
+			"grid",
+			"Profitable",
 			"\"Amethysta\",serif",
 			".blog-index a[rel=\"full-article\"]",
 			".heading, body > header h2, article header p.meta, article > footer, #content .blog-index footer, html .gist .gist-file .gist-meta, #blog-archives a.category, #blog-archives time, aside.sidebar section, body, #content .blog-index a[rel=\"full-article\"]",
@@ -169,6 +189,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 229.0,
+	"side_bar_width": 247.0,
 	"status_bar_visible": true
 }
