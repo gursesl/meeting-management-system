@@ -51,16 +51,16 @@ Attendees.allow({
 
 Meteor.methods({
   createAppointment: function (options) {
-    if (Meteor.is_server) {
     options = options || {};
     if (! (typeof options.title === "string" && options.title.length &&
     		typeof options.location === "string" && options.location.length))
     throw new Meteor.Error(400, "Required parameter missing.");
+
     if (options.title.length > 200)
       throw new Meteor.Error(413, "Event title too long.");
     if (! this.userId)
       throw new Meteor.Error(403, "You must be logged in to create events.");
-    
+
     return Appointments.insert({
       owner: this.userId,
       title: options.title,
@@ -73,11 +73,9 @@ Meteor.methods({
       rsvps: [],
       timeproposals: []
     });
-  }
   },
   
   updateAppointment: function (options) {
-    if (Meteor.is_server) {
     options = options || {};
     if (! (typeof options.title === "string" && options.title.length &&
     		typeof options.location === "string" && options.location.length))
@@ -87,8 +85,7 @@ Meteor.methods({
     if (! this.userId)
       throw new Meteor.Error(403, "You must be logged in to create events.");
     
-      Appointments.update({"_id" : options.id}, {$set : {"title" : options.title, "location" : options.location, "description" : options.description, "proposalType" : options.proposalType}});
-    }
+    Appointments.update({"_id" : options.id}, {$set : {"title" : options.title, "location" : options.location, "description" : options.description, "proposalType" : options.proposalType}});
   },
   
   createAnonymousAppointment: function (options) {

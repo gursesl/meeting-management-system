@@ -124,11 +124,13 @@ Template.homewiztwo.events({
 
 Template.homewiztwo.rendered = function () {
   // Render datepicker
+  // TODO: Fix this shit
+  /*
   $('#txtDate').datepicker({
     format: 'mm/dd/yyyy',
     todayBtn: true,
     autoclose: true
-  });
+  }); */
   
   // Render timepicker
   $('#txtTime').timepicker({ 'scrollDefaultNow': true });
@@ -284,52 +286,3 @@ Template.homewizsix.events({
     transition ( "six", null );
   }
 });
-
-// Transition between two steps in homepage wizard
-var transition = function ( fromStep, toStep ) {
-
-  var fromstep = "#homewiz" + fromStep;
-  var tostep = "#homewiz" + toStep;
-  
-  var fromsession = "wiz" + fromStep;
-  var tosession = "wiz" + toStep;
-  
-  var frombutton = "#li" + fromStep;
-  var tobutton = "#li" + toStep;
-  
-  
-  Session.set(fromsession, null);
-  Session.set(tosession, true);
-  
-  $(fromstep).css({"height" : "0px"});
-  $(fromstep).css({"opacity" : "0"});
-
-  $(tostep).css({"height" : "400px"});
-  $(tostep).css({"opacity" : "1"});
-  
-  // Buttons
-  $(tobutton).addClass("selected");
-  $(tobutton + " .ca-icon").addClass("selected");
-  $(tobutton + " .ca-main").addClass("selected");
-  
-  $(frombutton).removeClass("selected");
-  $(frombutton + " .ca-icon").removeClass("selected");
-  $(frombutton + " .ca-main").removeClass("selected");
-}
-
-var resetWizard = function ( step ) {
-  console.log ("reset wizard");
-  _.each(["one", "two", "three", "four", "five", "six"], function (element) {
-    
-    // Reset session vars
-    Session.set("wiz" + element, null);
-    
-    // Reset div heights
-    transition( element, null );
-  });
-  
-  if ( step != null ) {
-    console.log("found keepview: " + step);
-    transition (null, step);
-  }
-}

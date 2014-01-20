@@ -6,7 +6,6 @@
 preserve-inputs
 less
 accounts-base
-underscore
 spiderable
 email
 jquery
@@ -15,9 +14,11 @@ coffeescript
 backbone
 router
 cookie
-bootstrap-datepicker
 foundation-icons-general
 page-js
-bootstrap
-accounts-ui-unstyled
-accounts-ui
+HTML5-History-API
+page-js-ie-support
+standard-app-packages
+accounts-ui-bootstrap-3
+bootstrap-3
+underscore

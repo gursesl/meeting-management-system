@@ -59,19 +59,17 @@ var trackVote = function (appointmentid, email) {
       }, function (error) {
 		    if (! error){
 		      console.log("Vote tracking updated successfully.");
-			    showNotification({
-              message: messages.voting.success,
-              autoClose: true,
-              type: "success",
-              duration: 10
+          $.pnotify({
+            title: 'Success',
+            text: messages.voting.success,
+            type: 'success'
           });
         } else {
           console.log(error.reason);
-			    showNotification({
-              message: messages.voting.error,
-              autoClose: true,
-              type: "error",
-              duration: 8
+          $.pnotify({
+            title: 'Error',
+            text: messages.voting.error,
+            type: 'error'
           });
         }
     });
@@ -117,38 +115,37 @@ Template.newappointment.events({
 	  'click #btnAddEvent': function (event, template) {
 		  var title = template.find("#title").value;
 		  var location = template.find("#location").value;
-		  if (title.length && location.length) {
+		  
+      if (title.length && location.length) {
 			  Meteor.call("createAppointment", {
 				title: title,
 				location: location,
 				description: ""
 		  }, function (error, appointment) {
 			  if (! error) {
-				  showNotification({
-              message: messages.eventcreate.success,
-              autoClose: true,
-              type: "success",
-              duration: 4
+          $.pnotify({
+            title: 'Success',
+            text: messages.eventcreate.success,
+            type: 'success'
           });
+
 				  Session.set("selected", appointment);
 				  openUpdateAppointmentDialog();
 			  } else {
-			    showNotification({
-              message: messages.eventcreate.error,
-              autoClose: true,
-              type: "error",
-              duration: 4
+          $.pnotify({
+            title: 'Error',
+            text: messages.eventcreate.error,
+            type: 'error'
           });
 			  }
 		  });
 		  Session.set("showCreateDialog", false);
 		  } else {
-			  showNotification({
-            message: messages.eventcreate.validation,
-            autoClose: true,
-            type: "error",
-            duration: 4
-        });
+          $.pnotify({
+            title: 'Validation Error',
+            text: messages.eventcreate.validation,
+            type: 'error'
+          });
 		  }
 	  }
   });
@@ -190,11 +187,10 @@ Template.dashboard.appointments = function () {
 Template.attendee.events({
     'click .linkDeleteAttendee' : function( event, template) {
       Attendees.remove(this._id);
-      showNotification({
-          message: messages.attendeedelete.success,
-          autoClose: true,
-          type: "success",
-          duration: 4
+      $.pnotify({
+        title: 'Success',
+        text: messages.attendeedelete.success,
+        type: 'success'
       });
     },
     'click .linkEditAttendee' : function (event, template) {
@@ -224,23 +220,21 @@ var saveAttendee = function (event, template) {
 			  email: email
 	  }, function (error, attendee) {
 		  if (! error) {
-			  showNotification({
-            message: messages.attendeesave.success,
-            autoClose: true,
-            type: "success",
-            duration: 4
+        $.pnotify({
+          title: 'Success',
+          text: messages.attendeesave.success,
+          type: 'success'
         });
 		  }
 	  });
 	  Session.set("editattendee", false);
     Session.set("selectedattendee", null);
   } else {
-    showNotification({
-        message: messages.attendeesave.error,
-        autoClose: true,
-        type: "error",
-        duration: 4
-    });
+      $.pnotify({
+        title: 'Error',
+        text: messages.attendeesave.error,
+        type: 'error'
+      });
   }
 }
 
@@ -268,11 +262,10 @@ Template.appointment.events({
   'click #linkDeleteEvent' : function (event, template) {
     	Appointments.remove(Session.get("selected"));
     	Session.set("selected", null);
-    	showNotification({
-          message: messages.eventdelete.success,
-          autoClose: true,
-          type: "success",
-          duration: 4
+    	$.pnotify({
+        title: 'Success',
+        text: messages.eventdelete.success,
+        type: 'success'
       });
     	return false;
   }
@@ -322,11 +315,10 @@ Template.appointmentdetail.events({
   'click .btnDeleteEvent' : function (event, template) {
     	Appointments.remove(Session.get("selected"));
     	Session.set("selected", null);
-    	showNotification({
-          message: messages.eventdelete.success,
-          autoClose: true,
-          type: "succeess",
-          duration: 4
+    	$.pnotify({
+        title: 'Success',
+        text: messages.eventdelete.success,
+        type: 'success'
       });
     	return false;
   },
@@ -338,23 +330,25 @@ Template.appointmentdetail.events({
     attendees.forEach (function (attendee) {
       sendOneInvite(attendee);
     });
-    
-    showNotification({
-      message: messages.inviteall.success,
-      autoClose: true,
-      type: "succeess",
-      duration: 4
+    $.pnotify({
+      title: 'Success',
+      text: messages.inviteall.success,
+      type: 'success'
     });
   }
 });
 
 Template.appointmentdetail.rendered = function() {
   // Build the chart
-  buildInvitedAttendeesPieChart();
-  buildEmailReadPieChart();
-  buildClicksPieChart();
-  buildVotesPieChart();
+  // TODO: Fix this shit
+  //buildInvitedAttendeesPieChart();
+  //buildEmailReadPieChart();
+  //buildClicksPieChart();
+  //buildVotesPieChart();
   console.log("appointment detail template rendered");
+  if (Session.get("showUpdateAppointmentDialog")) {
+    $('#myModal').modal();
+  }
 }
 
 var sendOneInvite = function (invitee) {
@@ -365,21 +359,19 @@ var sendOneInvite = function (invitee) {
 			  appointmentid: invitee.appointmentId
 	  }, function (error, appointment) {
 		  if (! error) {
-			  	showNotification({
-              message: messages.inviteone.success,
-              autoClose: true,
-              type: "success",
-              duration: 4
-          });
+        $.pnotify({
+          title: 'Success',
+          text: messages.inviteone.success,
+          type: 'success'
+        });
 		  }
 	  });
   } else {
-    showNotification({
-        message: messages.inviteone.error,
-        autoClose: true,
-        type: "error",
-        duration: 4
-    });
+      $.pnotify({
+        title: 'Error',
+        text: messages.inviteone.error,
+        type: 'error'
+      });
   }
 }
 
@@ -388,11 +380,10 @@ var sendOneInvite = function (invitee) {
 Template.timeproposal.events({
   'click #linkDeleteTimeProposal' : function (event, template) {
 		TimeProposals.remove(this._id);
-		showNotification({
-        message: messages.timeproposaldelete.success,
-        autoClose: true,
-        type: "success",
-        duration: 4
+		$.pnotify({
+      title: 'Success',
+      text: messages.timeproposaldelete.success,
+      type: 'success'
     });
   },
   'click #linkEditTimeProposal' : function (event, template) {
@@ -421,12 +412,13 @@ Template.timeproposal.rendered = function () {
   $(this.findAll('.rateit')).rateit({
     readonly: true
   });
-  
+  // TODO: Fix this shit
+  /*
   $('#txtNewPropsalDate').datepicker({
     format: 'mm/dd/yyyy',
     todayBtn: true,
     autoclose: true
-  });
+  }); */
 }
 
 Template.timeproposal.avgrating = function () {
@@ -461,23 +453,21 @@ var saveTimeProposal = function (event, template) {
 			  time: time
 	  }, function (error, appointment) {
 		  if (! error) {
-			  showNotification({
-            message: messages.timeproposalsave.success,
-            autoClose: true,
-            type: "success",
-            duration: 4
+        $.pnotify({
+          title: 'Success',
+          text: messages.timeproposalsave.success,
+          type: 'success'
         });
 		  }
 	  });
 	  Session.set("edittimeproposal", false);
     Session.set("selectedtimeproposal", null);
   } else {
-    showNotification({
-        message: messages.timeproposalsave.error,
-        autoClose: true,
-        type: "error",
-        duration: 4
-    });
+      $.pnotify({
+        title: 'Error',
+        text: messages.timeproposalsave.error,
+        type: 'error'
+      });
   }
 }
 
@@ -499,8 +489,9 @@ var openTimeProposalsDialog = function () {
 ///////////////////////////////////////////////////////////////////////////////
 //Update event dialog
 var openUpdateAppointmentDialog = function () {
-    Session.set("createError", null);
-    Session.set("showUpdateAppointmentDialog", true);
+  Session.set("createError", null);
+  Session.set("showUpdateAppointmentDialog", true);
+  $('#myModal').modal();
 }
 
 
@@ -639,7 +630,58 @@ Template.header.isuser = function() {
 
 Template.header.rendered = function (event, template) {
   console.log("header rendering");
-  resetWizard(Session.get("keepview"));
+  // TODO: Fix this shit
+  //resetWizard(Session.get("keepview"));
+  //resetWizard(Session.get("keepview"));
+}
+
+// Transition between two steps in homepage wizard
+var transition = function ( fromStep, toStep ) {
+  console.log ("inside transition");
+  var fromstep = "#homewiz" + fromStep;
+  var tostep = "#homewiz" + toStep;
+  
+  var fromsession = "wiz" + fromStep;
+  var tosession = "wiz" + toStep;
+  
+  var frombutton = "#li" + fromStep;
+  var tobutton = "#li" + toStep;
+  
+  
+  Session.set(fromsession, null);
+  Session.set(tosession, true);
+  
+  $(fromstep).css({"height" : "0px"});
+  $(fromstep).css({"opacity" : "0"});
+
+  $(tostep).css({"height" : "400px"});
+  $(tostep).css({"opacity" : "1"});
+  
+  // Buttons
+  $(tobutton).addClass("selected");
+  $(tobutton + " .ca-icon").addClass("selected");
+  $(tobutton + " .ca-main").addClass("selected");
+  
+  $(frombutton).removeClass("selected");
+  $(frombutton + " .ca-icon").removeClass("selected");
+  $(frombutton + " .ca-main").removeClass("selected");
+}
+
+var resetWizard = function ( step ) {
+  console.log ("reset wizard");
+  _.each(["one", "two", "three", "four", "five", "six"], function (element) {
+    console.log ("_.each: " + element);
+    // Reset session vars
+    Session.set("wiz" + element, null);
+    
+    // Reset div heights
+    transition( element, null );
+  });
+  
+  if ( step != null ) {
+    console.log("found keepview: " + step);
+    transition (null, step);
+  }
 }
 
 
@@ -676,6 +718,11 @@ Template.updateAppointmentDialog.events({
 	    return false;
 	  },
     'click #btnUpdateAppointment' : function (event, template) {
+      // Hide modal
+      $('#myModal').modal('hide');
+      // Hack to remove modal class from body
+      $('body').removeClass( "modal-open" );
+      
        var title = template.find("#txttitle").value;
        var location = template.find("#txtlocation").value;
        var description = template.find("#txtdescription").value;
@@ -689,11 +736,10 @@ Template.updateAppointmentDialog.events({
   				  proposalType: proposalType
   		  }, function (error, appointment) {
   			  if (! error) {
-  				  showNotification({
-                message: messages.eventsave.success,
-                autoClose: true,
-                type: "success",
-                duration: 4
+            $.pnotify({
+              title: 'Success',
+              text: messages.eventsave.success,
+              type: 'success'
             });
   			  }
   		  });
@@ -706,7 +752,8 @@ Template.updateAppointmentDialog.events({
 
 Template.updateAppointmentDialog.rendered = function () {
   console.log("rendered update appt");
-  $('#txtdescription').wysihtml5();
+  // TODO: Fix this shit
+  //$('#txtdescription').wysihtml5();
 };
 
 
@@ -804,27 +851,24 @@ Template.attendeesDialog.events({
 	    	  email: email
 	    }, function (error) {
 	    	if (! error) {
-				  showNotification({
-              message: messages.attendeecreate.success,
-              autoClose: true,
-              type: "success",
-              duration: 4
-          });
+          $.pnotify({
+              title: 'Success',
+              text: messages.attendeecreate.success,
+              type: 'success'
+            });
 			  } else {
-			    showNotification({
-              message: error.reason,
-              autoClose: true,
-              type: "error",
-              duration: 8
-          });
+          $.pnotify({
+              title: 'Error',
+              text: error.reason,
+              type: 'error'
+            });
 			  }
 	    });
 	  } else {
-		  showNotification({
-          message: messages.attendeecreate.error,
-          autoClose: true,
-          type: "error",
-          duration: 4
+      $.pnotify({
+        title: 'Error',
+        text: messages.attendeecreate.error,
+        type: 'error'
       });
 	  }
 	},
@@ -850,28 +894,25 @@ Template.timeProposalsDialog.events({
 			  ptime: propTime
 	  }, function (error) {
 		  if (! error) {
-			  showNotification({
-            message: messages.timeproposalcreate.success,
-            autoClose: true,
-            type: "success",
-            duration: 4
+        $.pnotify({
+          title: 'Success',
+          text: messages.timeproposalcreate.success,
+          type: 'success'
         });
 		  } else {
-		    showNotification({
-            message: error.reason,
-            autoClose: true,
-            type: "error",
-            duration: 8
+        $.pnotify({
+          title: 'Error',
+          text: error.reason,
+          type: 'error'
         });
 		  }
 	  });
     } else {
-		   showNotification({
-            message: messages.timeproposalcreate.validation,
-            autoClose: true,
-            type: "error",
-            duration: 8
-        });
+      $.pnotify({
+        title: 'Validation Error',
+        text: messages.timeproposalcreate.validation,
+        type: 'error'
+      });
 	  }
   },
   'click .done': function (event, template) {
@@ -885,11 +926,14 @@ Template.timeProposalsDialog.error = function() {
 };
 
 Template.timeProposalsDialog.rendered=function() {
+  // TODO: Fix this shit
+  /*
     $('#proposalDate').datepicker({
       format: 'mm/dd/yyyy',
       todayBtn: true,
       autoclose: true
     });
+  */
 }
 
 ///////////////////////////////////////////////////////////////////////////////

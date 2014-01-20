@@ -147,14 +147,28 @@ i {
     width: 110px;
 }
 
+.navbar-brand {
+    float: left;
+    font-size: 18px;
+    line-height: 20px;
+    padding: 25px 0px 25px 60px;
+}
+
 .toplogo {
-  background: url("/img/maria-logo-grey.svg") no-repeat;
+  background: url("/img/maria-logo-grey.svg") 10px 20px no-repeat;
   background-size: 38px 28px;
 }
 
 .toplogo:hover {
-  background: url("/img/maria-logo-white.svg") no-repeat;
+  background: url("/img/maria-logo-white.svg") 10px 20px no-repeat;
   background-size: 38px 28px;
+}
+
+.navbar-nav {
+    float: left;
+    margin: 0;
+    line-height: 20px;
+    padding: 12px 0px 0px 40px;
 }
 
 .bottomlogo {
@@ -191,7 +205,7 @@ input#location {
     cursor: pointer;
     padding: 16px;
     margin: 10px 0px;
-    height: 60px;
+    height: 80px;
     border-radius: 4px 4px 4px 4px;
     border: solid 1px #ccc;
 }
@@ -209,12 +223,15 @@ input#location {
 
 .aptlist .title {
 	  float: left;
+    width:100%;
+    clear: both;
     font-weight: bold;
-    font-size: 1.0em;
+    font-size: 1.2em;
 }
 
 .aptlist .location {
 	  float: left;
+    width:100%;
     display: block;
     font-size: 0.8em;
     color: #777;
@@ -412,6 +429,11 @@ input#location {
 .topdrop {
   padding-top: 70px;
 }
+
+.topdrop-dashboard {
+  padding-top: 90px;
+}
+
 
 .lovegrid .item {
   color: #000;

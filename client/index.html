@@ -23,6 +23,7 @@
 	{{/if}}
 
   {{#if showUpdateAppointmentDialog }}
+    <h3>Showing Update Appointment Dialog</h3>
     {{> updateAppointmentDialog }}
 	{{/if}}
 
@@ -53,43 +54,36 @@
   
   <div id="background-blue">
     
-  		<div class="container clearfix" id="header">
+  		<div class="container" id="header">
   	    <div class="row">
-          <div class="navbar navbar-inverse">
-            <div class="container" style="width: auto;">
-              <div class="row">
-                <div class="span12">
-                  <a class="toplogo brand" href="/">Maria</a>
-                  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-          	          <span class="icon-bar"></span>
-          	          <span class="icon-bar"></span>
-          	          <span class="icon-bar"></span>
-          	        </a>
-          	        <div class="nav-collapse">
-          	          <ul class="nav">
-          	            <li><a href="/">Home</a></li>
-          	            <li><a href="/why">Why Maria?</a></li>
-          	            <li><a href="/tour">Tour</a></li>
-          	            <li><a href="/pricing">Pricing</a></li>
-          	            <li><a href="/signup">Sign Up Free</a></li>
-          	          </ul>
+          <div class="col-md-12">
+            <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+              <div class="navbar-header">
+                <a class="navbar-brand toplogo" href="/">Maria</a>
+              </div>
+              <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                  <li><a href="/">Home</a></li>
+                  <li><a href="/why">Why Maria?</a></li>
+                  <li><a href="/tour">Tour</a></li>
+                  <li><a href="/pricing">Pricing</a></li>
+                  <li><a href="/signup">Sign Up Free</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  {{ loginButtons }}
+                </ul>
+              </div>
+            </div> 
 
-          	          <ul class="nav pull-right right-fix">
-          	            <li><a href="#">{{loginButtons}}</a></li>
-          	          </ul>
-          	        </div>
-        	        </div><!-- /.nav-collapse -->
-        	      </div>
-        	    </div><!-- /navbar-inner -->
-        	  </div><!-- /navbar -->
+            </div>
         	</div>
-       </div><!-- /header -->
+       </div>
        
        {{#unless isuser}}
         {{>homenavigation }}
        {{/unless }}
      
-  	</div><!-- /background-blue -->
+  	</div>
   
     <div class="wizardPane">
       <div class="row">
@@ -193,7 +187,7 @@
 </template>
 
 <template name="dashboard">
-  <div class="topdrop">
+  <div class="topdrop-dashboard">
   {{#unless anyAppointments }}
     <div class="row">
       <div class="span12">
@@ -209,7 +203,7 @@
   
   {{#if anyAppointments }}
   <div class="row">
-    <div class="span3 eventlist">
+    <div class="col-md-3 eventlist">
       <h2>List of Events</h2>
 		  <form class="navbar-search pull-left" action="">
         <input type="text" class="search-query event_search_box input-large" placeholder="Search your events..." name="find_event" >
@@ -220,7 +214,7 @@
 		  {{/each}}
     </div>
     
-    <div class="span9">
+    <div class="col-md-9">
       {{> appointmentdetail }}
     </div>
   </div>
@@ -238,8 +232,8 @@
 
 <template name="appointment">
 	<div class="aptlist {{selected}}">
-  	<div class="title">{{title}}</div><br/>
-  	<div class="location">{{location}}</div><br/>
+  	<div class="title">{{title}}</div>
+  	<div class="location">{{location}}</div><br>
 		<small><a href="#" id="linkTimeProposals">Time Proposals</a> | <a href="#" id="linkAttendees">Attendees</a> | <a href="#" id="linkUpdateEvent">Edit</a> | <a href="#" id="linkDeleteEvent">Delete</a>
   </div>
 </template>
@@ -485,11 +479,66 @@
 </template>
 
 <template name="updateAppointmentDialog">
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel">Edit Event</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal well">
+            <fieldset>
+              {{#if error}}
+                <div class="alert alert-error">{{error}}</div>
+              {{/if}}
+              <legend>General Information</legend>
+              
+                <label class="control-label" for="title">Event title</label>
+                <div class="controls">
+                  <input type="text" class="input-xlarge" id="txttitle" value="{{selected.title}}" required>
+                </div>
+              
+                <label class="control-label" for="location">Location</label>
+                <div class="controls">
+                  <textarea rows="3" id="txtlocation" class="input-xlarge">{{selected.location}}</textarea>
+                </div>
+
+                <label class="control-label" for="input01">Description</label>
+                <div class="controls">
+                  <textarea rows="5" id="txtdescription" class="input-xlarge">{{selected.description}}</textarea>
+                </div>
+          
+                <label class="control-label" for="input01">Time proposal type</label>
+                <div class="controls">
+            <select id="proposalType" class="input-medium">
+              <option value="1">Yes/No</option>
+              <option value="2" selected>Star rating</option>
+            </select>
+          </div>
+
+            </fieldset>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="btnUpdateAppointment">Save changes</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+
+  <!--
+
   <div class="mask"></div>
+  
   <div class="modal">
     <div class="modal-header">
       <button type="button" class="close done">&times;</button>
-      <h3>Edit Event</h3>
+      <h3></h3>
     </div>
 
     <div class="modal-body">
@@ -523,7 +572,7 @@
 				</select>
 			</div>
 
-		</fieldset>
+		    </fieldset>
       </form>
     </div>
 
@@ -532,7 +581,11 @@
 		<a  value="Add Proposal" class="btn btn-primary" id="btnUpdateAppointment">Save</a>
     </div>
   </div>
+
+  -->
+
 </template>
+
 
 <template name="timeProposalsDialog">
   <div class="mask"> </div>
