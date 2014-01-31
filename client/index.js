@@ -341,13 +341,13 @@ Template.appointmentdetail.events({
 Template.appointmentdetail.rendered = function() {
   // Build the chart
   // TODO: Fix this shit
-  //buildInvitedAttendeesPieChart();
-  //buildEmailReadPieChart();
-  //buildClicksPieChart();
-  //buildVotesPieChart();
-  console.log("appointment detail template rendered");
+  buildInvitedAttendeesPieChart();
+  buildEmailReadPieChart();
+  buildClicksPieChart();
+  buildVotesPieChart();
+  
   if (Session.get("showUpdateAppointmentDialog")) {
-    $('#myModal').modal();
+    $('#updateAppointmentModal').modal();
   }
 }
 
@@ -477,6 +477,7 @@ var saveTimeProposal = function (event, template) {
 var openAttendeesDialog = function () {
   Session.set("createError", null);	
   Session.set("showAttendeesDialog", true);
+  $('#attendeesModal').modal();
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -484,6 +485,7 @@ var openAttendeesDialog = function () {
 var openTimeProposalsDialog = function () {
   Session.set("createError", null);
   Session.set("showTimeProposalsDialog", true);
+  $('#timeProposalsModal').modal();
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -491,7 +493,7 @@ var openTimeProposalsDialog = function () {
 var openUpdateAppointmentDialog = function () {
   Session.set("createError", null);
   Session.set("showUpdateAppointmentDialog", true);
-  $('#myModal').modal();
+  $('#updateAppointmentModal').modal();
 }
 
 
@@ -719,7 +721,7 @@ Template.updateAppointmentDialog.events({
 	  },
     'click #btnUpdateAppointment' : function (event, template) {
       // Hide modal
-      $('#myModal').modal('hide');
+      $('#updateAppointmentModal').modal('hide');
       // Hack to remove modal class from body
       $('body').removeClass( "modal-open" );
       
@@ -938,6 +940,7 @@ Template.timeProposalsDialog.rendered=function() {
 
 ///////////////////////////////////////////////////////////////////////////////
 //Utility functions: Analytics
+///////////////////////////////////////////////////////////////////////////////
 var getAttendeesForAnEvent = function(appintmentId, isInvited) {
   return Attendees.find({"appointmentId" : appintmentId, "invited" : isInvited}).count();
 }
@@ -952,4 +955,209 @@ var getClicks = function(appintmentId, hasClicked) {
 
 var getVotes = function(appintmentId, hasVoted) {
   return Attendees.find({"appointmentId" : appintmentId, "voted" : hasVoted}).count();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Charts TODO: Fix this shit (move to another file)
+///////////////////////////////////////////////////////////////////////////////
+var buildInvitedAttendeesPieChart = function() {
+  var chart;
+  chart = new Highcharts.Chart({
+      chart: {
+        renderTo: 'pieinvited' 
+      },
+      title: {
+          text: 'Sent Invite'
+      },
+      tooltip: {
+          pointFormat: '{series.name}: <b>{point.y}</b>',
+          percentageDecimals: 1
+      },
+      legend: {
+        enabled: true,
+        layout: 'vertical',
+        backgroundColor: '#FFFFFF',
+        align: 'left',
+        verticalAlign: 'top',
+        floating: true,
+        x: 0,
+        y: 230
+      },
+      plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            showInLegend: true,
+            dataLabels: {
+                  enabled: true,
+                  crop: false,
+                  distance: -42,
+                  color: '#fff',
+                  connectorColor: '#000000',
+                  formatter: function() {
+                      return '<b>'+ this.point.name +'</b>: '+ this.point.y;
+                  }
+             }
+          }
+      },
+      series: [{
+          type: 'pie',
+          name: 'Number of attendees',
+          data: [
+              {name:'Invited', y: getAttendeesForAnEvent(Session.get("selected"), true), color: '#51A351', selected:true, sliced:false}, {name: 'Not Invited', y:getAttendeesForAnEvent(Session.get("selected"), false), color:'#0088CC'}
+          ]
+      }]
+  });
+}
+
+
+
+var buildEmailReadPieChart = function() {
+  var chart;
+  chart = new Highcharts.Chart({
+      chart: {
+        renderTo: 'pieemailread' 
+      },
+      title: {
+          text: 'Read Invite'
+      },
+      tooltip: {
+          pointFormat: '{series.name}: <b>{point.y}</b>',
+          percentageDecimals: 1
+      },
+      legend: {
+        enabled: true,
+        layout: 'vertical',
+        backgroundColor: '#FFFFFF',
+        align: 'left',
+        verticalAlign: 'top',
+        floating: true,
+        x: 0,
+        y: 230
+      },
+      plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            showInLegend: true,
+            dataLabels: {
+                  enabled: true,
+                  crop: false,
+                  distance: -42,
+                  color: '#fff',
+                  connectorColor: '#000000',
+                  formatter: function() {
+                      return '<b>'+ this.point.name +'</b>: '+ this.point.y;
+                  }
+             }
+          }
+      },
+      series: [{
+          type: 'pie',
+          name: 'Number of attendees',
+          data: [
+              {name:'Read', y: getReadEmails(Session.get("selected"), true), color: '#51A351', selected:true, sliced:false}, {name: 'Not Read', y:getReadEmails(Session.get("selected"), false), color:'#0088CC'}
+          ]
+      }]
+  });
+}
+
+var buildClicksPieChart = function() {
+  var chart;
+  chart = new Highcharts.Chart({
+      chart: {
+        renderTo: 'pieclicks' 
+      },
+      title: {
+          text: 'Clicked Invite Link'
+      },
+      tooltip: {
+          pointFormat: '{series.name}: <b>{point.y}</b>',
+          percentageDecimals: 1
+      },
+      legend: {
+        enabled: true,
+        layout: 'vertical',
+        backgroundColor: '#FFFFFF',
+        align: 'left',
+        verticalAlign: 'top',
+        floating: true,
+        x: 0,
+        y: 230
+      },
+      plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            showInLegend: true,
+            dataLabels: {
+                  enabled: true,
+                  crop: false,
+                  distance: -42,
+                  color: '#fff',
+                  connectorColor: '#000000',
+                  formatter: function() {
+                      return '<b>'+ this.point.name +'</b>: '+ this.point.y;
+                  }
+             }
+          }
+      },
+      series: [{
+          type: 'pie',
+          name: 'Number of attendees',
+          data: [
+              {name:'Clicked', y: getClicks(Session.get("selected"), true), color: '#51A351', selected:true, sliced:false}, {name: 'Not Clicked', y:getClicks(Session.get("selected"), false), color:'#0088CC'}
+          ]
+      }]
+  });
+}
+
+var buildVotesPieChart = function() {
+  var chart;
+  chart = new Highcharts.Chart({
+      chart: {
+        renderTo: 'pievotes' 
+      },
+      title: {
+          text: 'Voted'
+      },
+      tooltip: {
+          pointFormat: '{series.name}: <b>{point.y}</b>',
+          percentageDecimals: 1
+      },
+      legend: {
+        enabled: true,
+        layout: 'vertical',
+        backgroundColor: '#FFFFFF',
+        align: 'left',
+        verticalAlign: 'top',
+        floating: true,
+        x: 0,
+        y: 230
+      },
+      plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            showInLegend: true,
+            dataLabels: {
+                  enabled: true,
+                  crop: false,
+                  distance: -42,
+                  color: '#fff',
+                  connectorColor: '#000000',
+                  formatter: function() {
+                      return '<b>'+ this.point.name +'</b>: '+ this.point.y;
+                  }
+             }
+          }
+      },
+      series: [{
+          type: 'pie',
+          name: 'Number of attendees',
+          data: [
+              {name:'Voted', y: getVotes(Session.get("selected"), true), color: '#51A351', selected:true, sliced:false}, {name: 'Not Voted', y:getVotes(Session.get("selected"), false), color:'#0088CC'}
+          ]
+      }]
+  });
 }

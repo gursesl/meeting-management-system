@@ -197,10 +197,6 @@ small {
   font-size: 80%;
 }
 
-input#location {
-	width: 540px;
-}
-
 .aptlist {
     cursor: pointer;
     padding: 16px;

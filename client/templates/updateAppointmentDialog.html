@@ -1,0 +1,45 @@
+<template name="updateAppointmentDialog">
+  <div class="modal fade" id="updateAppointmentModal" tabindex="-1" role="dialog" aria-labelledby="updateAppointmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="updateAppointmentModalLabel">Edit Event</h4>
+        </div>
+        <div class="modal-body">
+
+          {{#if error}}
+            <div class="alert alert-danger">{{error}}</div>
+          {{/if}}
+
+          <form role="form">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Event title</label>
+              <input type="text" class="form-control" placeholder="Enter event title (e.g. My son's 5th b-day)" id="txttitle" value="{{selected.title}}" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Event location</label>
+              <textarea rows="3" class="form-control" id="txtlocation">{{selected.location}}</textarea>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputFile">Description</label>
+              <textarea rows="5" class="form-control" id="txtdescription">{{selected.description}}</textarea>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputFile">Time proposal type</label>
+              <select id="proposalType" class="form-control">
+                <option value="1">Yes/No</option>
+                <option value="2" selected>Star rating</option>
+            </select>
+            </div>
+            
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="btnUpdateAppointment">Save changes</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+</template>
