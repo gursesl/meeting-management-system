@@ -52,38 +52,32 @@
 
 <template name="header">
   
-  <div id="background-blue">
-    
-  		<div class="container" id="header">
-  	    <div class="row">
-          <div class="col-md-12">
-            <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-              <div class="navbar-header">
-                <a class="navbar-brand toplogo" href="/">Maria</a>
-              </div>
-              <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                  <li><a href="/">Home</a></li>
-                  <li><a href="/why">Why Maria?</a></li>
-                  <li><a href="/tour">Tour</a></li>
-                  <li><a href="/pricing">Pricing</a></li>
-                  <li><a href="/signup">Sign Up Free</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                  {{ loginButtons }}
-                </ul>
-              </div>
-            </div> 
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand toplogo" href="/">Maria</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/why">Why Maria?</a></li>
+          <li><a href="/tour">Tour</a></li>
+          <li><a href="/pricing">Pricing</a></li>
+          <li><a href="/signup">Sign Up Free</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          {{ loginButtons }}
+        </ul>
+      </div>
+    </div> 
+  </div>
 
-            </div>
-        	</div>
-       </div>
-       
-       {{#unless isuser}}
-        {{>homenavigation }}
-       {{/unless }}
-     
-  	</div>
+
+  <div id="background-blue">       
+    {{#unless isuser}}
+      {{>homenavigation }}
+    {{/unless }}
+  </div>
   
     <div class="wizardPane">
       <div class="row">
@@ -200,36 +194,6 @@
       </div>
     </div>
   </form>	
-</template>
-
-<template name="appointment">
-	<div class="aptlist {{selected}}">
-  	<div class="title">{{title}}</div>
-  	<div class="location">{{location}}</div><br>
-		<small><a href="#" id="linkTimeProposals">Time Proposals</a> | <a href="#" id="linkAttendees">Attendees</a> | <a href="#" id="linkUpdateEvent">Edit</a> | <a href="#" id="linkDeleteEvent">Delete</a>
-  </div>
-</template>
-
-<!-- Template: Attendee -->
-<template name="attendee">
-	<div class="col-md-3">
-		<div class="well">
-		{{#unless editattendee}}
-  		<strong>{{name}}</strong><br/>
-			<small><a href="#">{{email}}</a><br/>
-			Invited: <strong>{{invited}}</strong> Read email: <strong>{{emailread}}</strong><br>
-			Link clicked: <strong>{{linkclicked}}</strong>  Voted: <strong>{{voted}}</strong><br/>
-			<a href="#" class="linkDeleteAttendee">Delete</a> | <a href="#" class="linkEditAttendee">Edit</a> | <a href="#" class="linkSendOneInvite">Send Invite</a></small>
-
-		{{/unless }}
-		
-		{{#if editattendee}}
-			<input type="text" class="input-large" id="txtNewAttendeeName" value="{{name}}"><br/>
-			<input type="text" class="input-large" id="txtNewAttendeeEmail" value="{{email}}"><br/>
-			<small><a href="#" class="linkCancelSave">Cancel</a> | <a href="#" class="linkSave">Save</a></small>
-		{{/if }}
-		</div>
-	</div>
 </template>
 
 <!-- Template: Time Proposal Box -->

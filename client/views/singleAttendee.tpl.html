@@ -1,0 +1,23 @@
+<!-- Template: Attendee -->
+<template name="attendee">
+	<div class="col-md-3">
+		<div class="well">
+		{{#unless editattendee}}
+  		<strong>{{name}}</strong><br/>
+			<small><a href="#">{{email}}</a><br/>
+			Invited: <strong>{{invited}}</strong> Read email: <strong>{{emailread}}</strong><br>
+			Link clicked: <strong>{{linkclicked}}</strong>  Voted: <strong>{{voted}}</strong><br/>
+			<a href="#" class="linkDeleteAttendee">Delete</a> | <a href="#" class="linkEditAttendee">Edit</a> | <a href="#" class="linkSendOneInvite">Send Invite</a></small>
+
+		{{/unless }}
+		
+		{{#if editattendee}}
+			<label for="txtNewAttendeeName">Full name</label>
+			<input type="text" class="form-control" id="txtNewAttendeeName" value="{{name}}"><br/>
+			<label for="txtNewAttendeeEmail">Email</label>
+			<input type="text" class="form-control" id="txtNewAttendeeEmail" value="{{email}}"><br/>
+			<a href="#" class="linkCancelSave">Cancel</a> | <a href="#" class="linkSave">Save</a>
+		{{/if }}
+		</div>
+	</div>
+</template>

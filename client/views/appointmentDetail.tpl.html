@@ -37,21 +37,22 @@
 			  	<div class="tab-pane" id="tabAttendees">
 			  		<!-- Attendees -->
 					{{#if anyAttendee }}
-					    <h3 class="apttitle">Attendees  <small>| <a href="#" class="btnAttendees" value="Attendees">Add Attendee</a> | <a href="#" class="linkSendInvites" value="Send Invites">Send Invites</a></small></h3>
+					    <h3 class="apttitle">Attendees <small>| <a href="#" class="btnAttendees" value="Attendees">Add Attendee</a> | <a href="#" class="linkSendInvites" value="Send Invites">Send Invites</a></small></h3>
 						<div class="row">
 					    {{#each attendees}}
 					       {{> attendee }}
 					    {{/each}}
 						</div>
-					  {{/if}}
+					{{/if}}
 					  
-					  <hr>
-					  {{#unless anyAttendee }}
+					<hr>
+					{{#unless anyAttendee }}
+						<h3 class="apttitle">Attendees <small>| <a href="#" class="btnAttendees" value="Attendees">Add Attendee</a></small></h3>
 				        <div class="alert alert-info">
 				          <strong>Attendees</strong><br/> You have not added any attendees yet. 
-				          Use the "Attendees" button below to get started.
+				          Use the "Add Attendees" button below to get started.
 				        </div>
-					  {{/unless }}
+					{{/unless }}
 			  	</div>
 
 			  	<div class="tab-pane" id="tabTimeProposals">
@@ -66,8 +67,9 @@
 					  {{/if}}
 					  
 					{{#unless anyTimeProposal }}
+						<h3 class="apttitle">Time Proposals <small>| <a href="#" class="btnTimeProposals">Add Time Proposal</a></small></h3>
 				   		<div class="alert alert-info">
-				       		<strong>Time Proposals</strong><br/> You have not added any time proposals yet. Use the "Time Proposals" button below to get started.
+				       		<strong>Time Proposals</strong><br/> You have not added any time proposals yet. Use the "Add Time Proposals" button below to get started.
 				        </div>
 					{{/unless }}
 			  	</div>

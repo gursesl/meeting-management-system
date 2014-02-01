@@ -146,63 +146,6 @@ Template.newappointment.events({
     }
   }); */
 
-///////////////////////////////////////////////////////////////////////////////
-//Template: Attendee
-  
-Template.attendee.events({
-    'click .linkDeleteAttendee' : function( event, template) {
-      Attendees.remove(this._id);
-      $.pnotify({
-        title: 'Success',
-        text: messages.attendeedelete.success,
-        type: 'success'
-      });
-    },
-    'click .linkEditAttendee' : function (event, template) {
-      Session.set("editattendee", true);
-      Session.set("selectedattendee", this._id);
-    },
-    'click .linkSave' : function (event, template) {
-      saveAttendee(event, template);
-    },
-    'click .linkCancelSave' : function (event, template) {
-      Session.set("editattendee", false);
-      Session.set("selectedattendee", null);
-    }
-});
-
-Template.attendee.editattendee = function () {
-  return Session.get("editattendee") && (Session.get("selectedattendee") == this._id);
-}
-
-var saveAttendee = function (event, template) {
-  var name = template.find("#txtNewAttendeeName").value;
-  var email = template.find("#txtNewAttendeeEmail").value;
-  if (name.length && email.length) {
-		  Meteor.call("updateAttendee", {
-		    id: template.data._id,
-			  name: name,
-			  email: email
-	  }, function (error, attendee) {
-		  if (! error) {
-        $.pnotify({
-          title: 'Success',
-          text: messages.attendeesave.success,
-          type: 'success'
-        });
-		  }
-	  });
-	  Session.set("editattendee", false);
-    Session.set("selectedattendee", null);
-  } else {
-      $.pnotify({
-        title: 'Error',
-        text: messages.attendeesave.error,
-        type: 'error'
-      });
-  }
-}
-
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Appointment
@@ -225,6 +168,7 @@ Template.appointment.events({
     openUpdateAppointmentDialog();  
   },
   'click #linkDeleteEvent' : function (event, template) {
+    if(confirm('Are you sure you want to delete this event?')) {    
     	Appointments.remove(Session.get("selected"));
     	Session.set("selected", null);
     	$.pnotify({
@@ -233,32 +177,9 @@ Template.appointment.events({
         type: 'success'
       });
     	return false;
+    }
   }
 });
-
-var sendOneInvite = function (invitee) {
-  if (invitee.email.length && invitee.name.length && invitee.appointmentId.length) {
-		  Meteor.call("sendOneInvite", {
-		    toemail: invitee.email,
-		    toname: invitee.name,
-			  appointmentid: invitee.appointmentId
-	  }, function (error, appointment) {
-		  if (! error) {
-        $.pnotify({
-          title: 'Success',
-          text: messages.inviteone.success,
-          type: 'success'
-        });
-		  }
-	  });
-  } else {
-      $.pnotify({
-        title: 'Error',
-        text: messages.inviteone.error,
-        type: 'error'
-      });
-  }
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Time proposal
@@ -546,7 +467,7 @@ Template.footer.revision = function (event, template) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-//Template: Update event page
+//Template: Update appointment
 Template.updateAppointmentDialog.selected = function () {
   return Appointments.findOne(Session.get("selected"));
 };
@@ -600,6 +521,7 @@ Template.updateAppointmentDialog.rendered = function () {
   //console.log("rendered update appt");
   // TODO: Fix this shit
   //$('#txtdescription').wysihtml5();
+  //$('#updateAppointmentModal').modal('show');
 };
 
 
@@ -727,61 +649,3 @@ Template.attendeesDialog.events({
 Template.attendeesDialog.error = function() {
   return Session.get("createError");	
 };
-
-///////////////////////////////////////////////////////////////////////////////
-//Template: Time proposals dialog
-Template.timeProposalsDialog.events({
-  'click #btnAddTimeProposals': function (event, template) {
-    var propDate = template.find("#proposalDate").value;
-	  var propTime = template.find("#proposalTime").value;
-    if (propDate.length && propTime.length) {
-		  Meteor.call("addTimeProposal", Session.get("selected"), {
-		    pdate: propDate,
-			  ptime: propTime
-	  }, function (error) {
-		  if (! error) {
-        $.pnotify({
-          title: 'Success',
-          text: messages.timeproposalcreate.success,
-          type: 'success'
-        });
-		  } else {
-        $.pnotify({
-          title: 'Error',
-          text: error.reason,
-          type: 'error'
-        });
-		  }
-	  });
-    } else {
-      $.pnotify({
-        title: 'Validation Error',
-        text: messages.timeproposalcreate.validation,
-        type: 'error'
-      });
-	  }
-  },
-  'click .done': function (event, template) {
-    Session.set("showTimeProposalsDialog", false);
-    // Hide modal
-    $('#timeProposalsModal').modal('hide');
-    // Hack to remove modal class from body
-    $('body').removeClass( "modal-open" );
-    return false;
-  }
-});
-
-Template.timeProposalsDialog.error = function() {
-  return Session.get("createError");	
-};
-
-Template.timeProposalsDialog.rendered=function() {
-  // TODO: Fix this shit
-  /*
-    $('#proposalDate').datepicker({
-      format: 'mm/dd/yyyy',
-      todayBtn: true,
-      autoclose: true
-    });
-  */
-}

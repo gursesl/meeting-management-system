@@ -11,8 +11,7 @@ Template.appointmentdetail.timeproposals = function() {
 };
 
 Template.appointmentdetail.anyAttendee = function() {
-  var found = Attendees.find({"appointmentId": Session.get("selected")}).count() > 0;
-	return true;
+	return Attendees.find({"appointmentId": Session.get("selected")}).count() > 0;
 };
 
 Template.appointmentdetail.attendees = function() {
@@ -42,6 +41,7 @@ Template.appointmentdetail.events({
     openUpdateAppointmentDialog();  
   },
   'click .btnDeleteEvent' : function (event, template) {
+    if(confirm('Are you sure you want to delete this event?')) {
     	Appointments.remove(Session.get("selected"));
     	Session.set("selected", null);
     	$.pnotify({
@@ -50,6 +50,7 @@ Template.appointmentdetail.events({
         type: 'success'
       });
     	return false;
+    }
   },
   'click .linkSendOneInvite' : function (event, template) {
     sendOneInvite(this);
@@ -78,7 +79,18 @@ Template.appointmentdetail.rendered = function() {
   /*
   if (Session.get("showUpdateAppointmentDialog")) {
     $('#updateAppointmentModal').modal();
+  } 
+
+  if (Session.get("showTimeProposalsDialog")) {
+    $('#timeProposalsModal').modal();
   } */
+  //$('#updateAppointmentModal').modal('show');
+
+  if (location.hash !== '') $('a[href="' + location.hash + '"]').tab('show');
+    return $('a[data-toggle="tab"]').on('shown', function(e) {
+      return location.hash = $(e.target).attr('href').substr(1);
+    });
+  
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -88,5 +100,29 @@ Template.appointmentdetail.rendered = function() {
 openUpdateAppointmentDialog = function () {
   Session.set("createError", null);
   Session.set("showUpdateAppointmentDialog", true);
-  $('#updateAppointmentModal').modal();
+  $('#updateAppointmentModal').modal('show');
+}
+
+sendOneInvite = function (invitee) {
+  if (invitee.email.length && invitee.name.length && invitee.appointmentId.length) {
+      Meteor.call("sendOneInvite", {
+        toemail: invitee.email,
+        toname: invitee.name,
+        appointmentid: invitee.appointmentId
+    }, function (error, appointment) {
+      if (! error) {
+        $.pnotify({
+          title: 'Success',
+          text: messages.inviteone.success,
+          type: 'success'
+        });
+      }
+    });
+  } else {
+      $.pnotify({
+        title: 'Error',
+        text: messages.inviteone.error,
+        type: 'error'
+      });
+  }
 }
