@@ -1,0 +1,22 @@
+<template name="timeproposal">
+	<div class="col-md-3">
+		<div class="well">
+		{{#unless edittimepropsal}}
+			<div class="timepropitem">Date: <strong>{{date}}</strong></div>
+			<div class="timepropitem">Time: <strong>{{time}}</strong></div>
+			Votes:
+			<div class="rateit" data-rateit-value="{{avgrating}}" id="{{_id}}"></div><br/>
+			<small>({{votes}} votes, avg rating: {{avgrating}})</small><br/>
+			<small><a href="#" id="linkDeleteTimeProposal">Delete</a> | <a href="#" id="linkEditTimeProposal">Edit</a>
+		{{/unless}}
+		
+		{{#if edittimepropsal}}
+			<input type="text" class="input-small" id="txtNewPropsalDate" value="{{date}}"><br/>
+			<input type="text" class="input-small" id="txtNewPropsalTime" value="{{time}}"><br/>
+			Votes: <div class="rateit" data-rateit-value="{{avgrating}}" id="{{_id}}"></div><br/>
+			<small>({{votes}} votes, avg rating: {{avgrating}})</small><br/>
+			<small><a href="#" class="linkCancelSave">Cancel</a> | <a href="#" class="linkSave">Save</a></small>
+		{{/if}}
+		</div>
+	</div>
+</template>

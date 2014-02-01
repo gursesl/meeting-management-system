@@ -1,0 +1,90 @@
+<template name="invitepage">
+  {{> header }}
+
+  <div class="container topdrop">
+    <div class="jumbotron">
+      {{#if selected }}
+
+
+  		{{#if showVotedThankYou }}
+		    {{> thankyou }}
+		{{/if}}
+
+		{{#unless showVotedThankYou}}
+	      	<h1>{{selected.title}}</h1>
+	      	<h2>Event Location: {{selected.location}}</h2>
+	      	<p class="lead">Your ogranizer has requested your vote the time proposals that work best for you.</p>
+
+	      	{{#if anyTimeProposal }}
+		      	<div class="row">
+			   		{{#each timeproposals }}
+			        	{{> invitetimeproposal }}
+			      	{{/each}}
+			    </div>
+
+			    <div class="alert alert-info">
+		            <strong>Tip: Voting for Events</strong><br/> Each box on the right displays one of the time proposals created by the event
+		              organizer. Cast your vote of date and time by pressing the star ratings widget inside the box. Your vote will be registered as soon as you click the stars and you can change it anytime by clicking the stars one more time. You can vote for multiple time proposals. 
+		       	</div>
+			{{/if}}
+
+	       	{{#unless anyTimeProposal }}
+	          	<div class="alert alert-danger">
+	            	<strong>Time Proposals</strong><br/> No time proposals found for this event. 
+	          	</div>
+	        {{/unless }}
+        
+        	<hr>
+        
+        	<a class="btn btn-large btn-success linkhome" href="#" id="btnFinished">
+        		<i class="icon-ok icon-white"></i> Done!</a>
+		{{/unless }}
+         
+	{{/if }}
+	
+	{{#unless selected }}
+        <div class="alert alert-error">
+          <strong>Event cannot be found.</strong><br/> We apologize, but the event you're looking for cannot be found. Please contact the person who sent the invitation and request a new link. 
+        </div>
+	{{/unless }}
+	</div>
+	</div>
+	{{> footer }}
+  </div>
+</template>
+
+<template name="invitetimeproposal">
+  <div class="col-md-3">
+    <div class="well">
+		Date: <strong>{{date}}</strong><br/>
+		Time: <strong>{{time}}</strong><br/>
+		Votes:
+		<div class="rateit" data-rateit-value="{{avgrating}}" id="{{_id}}"></div><br/>
+		<small>({{votes}} votes, avg rating: {{avgrating}})</small>
+    </div>
+  </div>
+</template>
+
+<template name="thankyou">
+	<h1>You're done!</h1>
+		<div class="alert alert-success">
+			<strong>Thank you for casting your vote!</strong><br/> The event organizer will appreciate your time. You can use the form below to forward this event to invite others to vote.
+        </div>
+
+		<h2>Invite more people</h2>
+
+
+		<form class="well form-search">
+		    <div class="row">
+		      <div class="col-md-5">
+		        <input type="text" id="name" class="form-control" placeholder="Full name (e.g. Monica Jonhson)">
+		      </div>
+		      <div class="col-md-5">
+		        <input type="text" id="email" class="form-control" placeholder="Email address (e.g. monica@email.com)">
+		      </div>
+		      <div class="col-md-2">
+		        <button id="btnAddAttendee" type="button" class="btn btn-primary btn-sm">Send Invitation</button>
+		      </div>
+		    </div>
+	  	</form>
+</template>

@@ -12,14 +12,14 @@ function Attendee ( name, email ) {
   this.id = Meteor.uuid();
 }
 
-var getInviteUrl = function ( eventId, email ) {
+getInviteUrl = function ( eventId, email ) {
   return Meteor.absoluteUrl("invite/" + eventId + "/" + email);
 }
 
-var getEventUrl = function ( eventId, email ) {
+getEventUrl = function ( eventId, email ) {
   return Meteor.absoluteUrl("event/" + eventId + "/" + email);
 }
 
-var getPixelTrackingUrl = function ( eventId, email ) {
+getPixelTrackingUrl = function ( eventId, email ) {
   return Meteor.absoluteUrl("tracking/" + eventId + "/" + email);
 }
