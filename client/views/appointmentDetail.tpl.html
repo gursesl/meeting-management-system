@@ -1,0 +1,104 @@
+<template name="appointmentdetail">
+  {{#if selected}}
+
+  	<div class="panel panel-primary">
+  		<div class="panel-heading"><h4>{{selected.title}}</h4></div>
+	  	
+	  	<div class="panel-body">
+	    	<!-- Nav tabs -->
+			<ul class="nav nav-tabs">
+			  <li class="active"><a href="#tabOverview" data-toggle="tab">Overview</a></li>
+			  <li><a href="#tabAttendees" data-toggle="tab">Attendees</a></li>
+			  <li><a href="#tabTimeProposals" data-toggle="tab">Time Proposals</a></li>
+			  <li><a href="#tabAnalytics" data-toggle="tab">Analytics</a></li>
+			</ul>
+
+			<!-- Tab panes -->
+			<div class="tab-content">
+			  	<div class="tab-pane active" id="tabOverview">
+			  		<h3 class="apttitle">{{selected.title}} <small>| <a href="#" class="btnUpdateEvent" value="Edit">Edit</a> | <a href="#" class="btnDeleteEvent">Delete Event</a></small></h3>
+
+				    <div class="appointmentdetail">
+						<p>{{selected.description}}</p>
+				      <address>
+				        <strong>Location</strong><br>
+				        {{selected.location}}<br>
+				      </address>
+					
+					    <strong>Event Link</strong><br>
+					    <a href="{{path}}" id="linkEvent">{{path}}</a>
+					    <br><br>
+					    <strong>Tracking Link</strong><br>
+					    <a href="{{tracking}}" id="linkEvent">{{tracking}}</a>
+
+			  		</div>
+			  	</div>
+			  	
+			  	<div class="tab-pane" id="tabAttendees">
+			  		<!-- Attendees -->
+					{{#if anyAttendee }}
+					    <h3 class="apttitle">Attendees  <small>| <a href="#" class="btnAttendees" value="Attendees">Add Attendee</a> | <a href="#" class="linkSendInvites" value="Send Invites">Send Invites</a></small></h3>
+						<div class="row">
+					    {{#each attendees}}
+					       {{> attendee }}
+					    {{/each}}
+						</div>
+					  {{/if}}
+					  
+					  <hr>
+					  {{#unless anyAttendee }}
+				        <div class="alert alert-info">
+				          <strong>Attendees</strong><br/> You have not added any attendees yet. 
+				          Use the "Attendees" button below to get started.
+				        </div>
+					  {{/unless }}
+			  	</div>
+
+			  	<div class="tab-pane" id="tabTimeProposals">
+			  		<!-- Time Proposals -->
+					{{#if anyTimeProposal }}
+					    <h3 class="apttitle">Time Proposals <small>| <a href="#" class="btnTimeProposals">Add Time Proposal</a></small></h3>
+						<div class="row">
+					    {{#each timeproposals}}
+					       {{> timeproposal }}
+					    {{/each}}
+						</div>
+					  {{/if}}
+					  
+					{{#unless anyTimeProposal }}
+				   		<div class="alert alert-info">
+				       		<strong>Time Proposals</strong><br/> You have not added any time proposals yet. Use the "Time Proposals" button below to get started.
+				        </div>
+					{{/unless }}
+			  	</div>
+
+			  	<div class="tab-pane" id="tabAnalytics">
+			  		<h3 class="apttitle">Analytics</h3>
+			  		<div class="row">
+					    <div class="col-md-6"><div id="pieinvited" class="piechart"/></div>
+		      			<div class="col-md-6"><div id="pieemailread" class="piechart"/></div>
+		      		</div> <!-- /row -->
+		        	<br>
+		        
+					<div class="row">
+						<div class="col-md-6"><div id="pieclicks" class="piechart"/></div>
+		      			<div class="col-md-6"><div id="pievotes" class="piechart"/></div>
+		      		</div> <!-- /row -->
+			  	</div>
+			</div>
+	  	</div>
+	  	
+	  	<div class="panel-footer">
+	  		<button type="button" class="btn btn-success btnTimeProposals">Add Time Proposal</button>
+	  		<button type="button" class="btn btn-success btnAttendees">Add Attendees</button>
+	  		<button type="button" class="btn btn-primary btnUpdateEvent">Edit Event</button>
+	  		<button type="button" class="btn btn-danger btnDeleteEvent">Delete Event</button>
+	  	</div>
+	</div>
+	
+  {{/if}}
+
+  {{#unless selected}}
+    <div>Click an event to view details</div>
+  {{/unless}}
+</template>

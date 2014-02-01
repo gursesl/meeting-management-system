@@ -89,7 +89,7 @@ Meteor.methods({
   },
   
   createAnonymousAppointment: function (options) {
-    if (Meteor.is_server) {
+    //if (Meteor.is_server) {
     options = options || {};
     if (! (typeof options.title === "string" && options.title.length &&
     		typeof options.location === "string" && options.location.length))
@@ -108,11 +108,11 @@ Meteor.methods({
       rsvps: [],
       timeproposals: []
     });
-  }
+    //}
   },
   
   sendOneInvite: function (options) {
-    if (Meteor.is_server) {
+    //if (Meteor.is_server) {
       var appointment = Appointments.findOne(options.appointmentid);
       if (! appointment || appointment.owner !== this.userId)
         throw new Meteor.Error(404, "No such event.");
@@ -144,11 +144,11 @@ Meteor.methods({
   	      Attendees.update({"email" : to, "appointmentId" : appointment._id}, {$set : {"invited" : true, "emailread" : false}});
 	      }
       }
-    }
+    //}
   },
   
   addTimeProposal: function (appointment, options) {
-    if (Meteor.is_server) {
+    //if (Meteor.is_server) {
 	    options = options || {};
 	    if (! (typeof options.pdate === "string" && options.pdate.length &&
 	    		typeof options.ptime === "string" && options.ptime.length))
@@ -175,11 +175,11 @@ Meteor.methods({
   			    console.log(error);
 			    }
       });
-    }
+    //}
   },
   
   updateTimeProposal: function (options) {
-    if (Meteor.is_server) {
+    //if (Meteor.is_server) {
 	  options = options || {};
     if (! (typeof options.date === "string" && options.date.length &&
 	    typeof options.time === "string" && options.time.length))
@@ -188,11 +188,11 @@ Meteor.methods({
       throw new Meteor.Error(403, "You must be logged in to add time proposals.");
 	   
 	    TimeProposals.update({"_id" : options.id}, {$set : {"date" : options.date, "time" : options.time}});
-    }
+    //}
   },
   
   addAttendee: function(appointment, options) {
-    if (Meteor.is_server) {
+    //if (Meteor.is_server) {
 	    options = options || {};
 	    if (! (typeof options.name === "string" && options.name.length &&
 	      typeof options.email === "string" && options.email.length))
@@ -221,11 +221,11 @@ Meteor.methods({
     			    console.log(error);
   			    }
         });
-      }
+    //}
   },
   
   updateAttendee: function (options) {
-    if (Meteor.is_server) {
+    //if (Meteor.is_server) {
  	    options = options || {};
       if (! (typeof options.name === "string" && options.name.length &&
  	      typeof options.email === "string" && options.email.length))
@@ -234,12 +234,12 @@ Meteor.methods({
         throw new Meteor.Error(403, "You must be logged in to add time proposals.");
 
  	    Attendees.update({"_id" : options.id}, {$set : {"name" : options.name, "email" : options.email}});
-    }
+    //}
   },
 
   //TODO: Code Duplication -- Refactor THIS!!!
   updateAttendeeEmailReceipt: function (options) {
-    if (Meteor.is_server) {
+    //if (Meteor.is_server) {
       options = options || {};
       if (! (typeof options.appointmentId === "string" && options.appointmentId.length &&
   	    typeof options.email === "string" && options.email.length))
@@ -251,12 +251,12 @@ Meteor.methods({
         } else {
   	      Attendees.update({"email" : options.email, "appointmentId" : options.appointmentId}, {$set : {"emailread" : true}});
 	      }
-      }
+    //}
    },
 
   //TODO: Code Duplication -- Refactor THIS!!!   
    updateAttendeeClickInviteLink: function (options) {
-     if (Meteor.is_server) {
+     //if (Meteor.is_server) {
        options = options || {};
        if (! (typeof options.appointmentId === "string" && options.appointmentId.length &&
    	    typeof options.email === "string" && options.email.length))
@@ -268,12 +268,12 @@ Meteor.methods({
          } else {
    	      Attendees.update({"email" : options.email, "appointmentId" : options.appointmentId}, {$set : {"linkclicked" : true}});
  	      }
-       }
+      //}
     },
     
     //TODO: Code Duplication -- Refactor THIS!!!
     updateAttendeeVoteTracking: function (options) {
-       if (Meteor.is_server) {
+       //if (Meteor.is_server) {
          options = options || {};
          if (! (typeof options.appointmentId === "string" && options.appointmentId.length &&
      	    typeof options.email === "string" && options.email.length))
@@ -286,8 +286,8 @@ Meteor.methods({
      	       Attendees.update({"email" : options.email, "appointmentId" : options.appointmentId}, {$set : {"voted" : true}});
    	      }
          }
-      }
-});
+      //}
+    });
 
 ///////////////////////////////////////////////////////////////////////////////
 // Users

@@ -21,7 +21,7 @@ Meteor.Router.add({
   '/privacy'		    : 'privacy',
   '/signup'		      : 'signup',
   '/invite/:id/:email'	: function (id, email) {
-    console.log("invite router on the client");
+    //console.log("invite router on the client");
 	  var appt = Appointments.findOne(id);
 	  if (appt) {
   		Session.set("selected", appt._id);
@@ -79,10 +79,10 @@ var trackVote = function (appointmentid, email) {
 ///////////////////////////////////////////////////////////////////////////////
 //Start-up
 Meteor.startup(function () {
-  console.log("client startup");
+  //console.log("client startup");
     
   Meteor.autorun(function () {
-    console.log("client autorun");
+    //console.log("client autorun");
     
 	  if (Meteor.userId()) {
       if (! Session.get("selected")) {
@@ -94,22 +94,6 @@ Meteor.startup(function () {
 	  }
   });
 });
-
-///////////////////////////////////////////////////////////////////////////////
-//Template: Homepage 
-Template.homepage.events({
-    'input input.event_search_box' : function () {
-	   if (document.getElementsByName('find_event')[0].value != null | document.getElementsByName('find_event')[0].value != "") {
-	     Session.set("eventname", document.getElementsByName('find_event')[0].value);
-	   } else {
-		  Session.set("eventname", null);
-	   }
-	}
-});
-
-Template.homepage.isuser = function() {
-  return Meteor.user();
-}
 
 Template.newappointment.events({
 	  'click #btnAddEvent': function (event, template) {
@@ -161,25 +145,6 @@ Template.newappointment.events({
       }
     }
   }); */
-
-///////////////////////////////////////////////////////////////////////////////
-//Template: Dashboard
-Template.dashboard.anyAppointments = function() {
-  if (Meteor.user()) {
-    return Appointments.find({"owner": Meteor.userId()}).count() > 0;
-  } else {
-	  return null;
-  }
-};
-	
-Template.dashboard.appointments = function () {
-  if (Session.get("eventname") != null && Session.get("eventname") != "") {
-    var regex = new RegExp(Session.get("eventname"), "i");
-    return Appointments.find({"owner": this.userId, title: regex}, { sort: {time: -1}});
-  } else {
-    return Appointments.find({"owner": Meteor.user()._id}, {sort: {time: -1}});
-  }
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Attendee
@@ -270,86 +235,6 @@ Template.appointment.events({
     	return false;
   }
 });
-
-
-///////////////////////////////////////////////////////////////////////////////
-// Template: Appointment Detail
-Template.appointmentdetail.anyTimeProposal = function() {
-	return TimeProposals.find({"appointmentId": Session.get("selected")}).count() > 0;
-};
-
-Template.appointmentdetail.timeproposals = function() {
-	return TimeProposals.find({"appointmentId": Session.get("selected")});
-};
-
-Template.appointmentdetail.anyAttendee = function() {
-	return Attendees.find({"appointmentId": Session.get("selected")}).count() > 0;
-};
-
-Template.appointmentdetail.attendees = function() {
-	return Attendees.find({"appointmentId": Session.get("selected")});
-};
-
-Template.appointmentdetail.selected = function () {
-  return Appointments.findOne(Session.get("selected"));
-};
-
-Template.appointmentdetail.path = function () {
-  return Meteor.absoluteUrl("invite/" + Session.get("selected") + "/anon");
-};
-
-Template.appointmentdetail.tracking = function () {
-  return Meteor.absoluteUrl("tracking/" + Session.get("selected") + "/anon");
-};
-  
-Template.appointmentdetail.events({
-  'click .btnTimeProposals' : function( event, template) {
-    openTimeProposalsDialog();
-  },
-  'click .btnAttendees' : function (event, template) {
-    openAttendeesDialog();
-  },
-  'click .btnUpdateEvent' : function (event, template) {
-    openUpdateAppointmentDialog();  
-  },
-  'click .btnDeleteEvent' : function (event, template) {
-    	Appointments.remove(Session.get("selected"));
-    	Session.set("selected", null);
-    	$.pnotify({
-        title: 'Success',
-        text: messages.eventdelete.success,
-        type: 'success'
-      });
-    	return false;
-  },
-  'click .linkSendOneInvite' : function (event, template) {
-    sendOneInvite(this);
-  },
-  'click .linkSendInvites' : function (event, template) {
-    var attendees = Attendees.find({"appointmentId": Session.get("selected")});
-    attendees.forEach (function (attendee) {
-      sendOneInvite(attendee);
-    });
-    $.pnotify({
-      title: 'Success',
-      text: messages.inviteall.success,
-      type: 'success'
-    });
-  }
-});
-
-Template.appointmentdetail.rendered = function() {
-  // Build the chart
-  // TODO: Fix this shit
-  buildInvitedAttendeesPieChart();
-  buildEmailReadPieChart();
-  buildClicksPieChart();
-  buildVotesPieChart();
-  
-  if (Session.get("showUpdateAppointmentDialog")) {
-    $('#updateAppointmentModal').modal();
-  }
-}
 
 var sendOneInvite = function (invitee) {
   if (invitee.email.length && invitee.name.length && invitee.appointmentId.length) {
@@ -471,47 +356,6 @@ var saveTimeProposal = function (event, template) {
   }
 }
 
-  
-///////////////////////////////////////////////////////////////////////////////
-//Attendees dialog
-var openAttendeesDialog = function () {
-  Session.set("createError", null);	
-  Session.set("showAttendeesDialog", true);
-  $('#attendeesModal').modal();
-};
-
-///////////////////////////////////////////////////////////////////////////////
-//Time proposals dialog 
-var openTimeProposalsDialog = function () {
-  Session.set("createError", null);
-  Session.set("showTimeProposalsDialog", true);
-  $('#timeProposalsModal').modal();
-};
-
-///////////////////////////////////////////////////////////////////////////////
-//Update event dialog
-var openUpdateAppointmentDialog = function () {
-  Session.set("createError", null);
-  Session.set("showUpdateAppointmentDialog", true);
-  $('#updateAppointmentModal').modal();
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-//Template: Homepage
-Template.homepage.showUpdateAppointmentDialog = function () {
-  return Session.get("showUpdateAppointmentDialog");
-};
-
-Template.homepage.showTimeProposalsDialog = function () {
-  return Session.get("showTimeProposalsDialog");
-};
-
-Template.homepage.showAttendeesDialog = function () {
-  return Session.get("showAttendeesDialog");
-};
-
-
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Landing slider
 Template.landing.events({
@@ -631,7 +475,7 @@ Template.header.isuser = function() {
 }
 
 Template.header.rendered = function (event, template) {
-  console.log("header rendering");
+  //console.log("header rendering");
   // TODO: Fix this shit
   //resetWizard(Session.get("keepview"));
   //resetWizard(Session.get("keepview"));
@@ -639,7 +483,7 @@ Template.header.rendered = function (event, template) {
 
 // Transition between two steps in homepage wizard
 var transition = function ( fromStep, toStep ) {
-  console.log ("inside transition");
+  //console.log ("inside transition");
   var fromstep = "#homewiz" + fromStep;
   var tostep = "#homewiz" + toStep;
   
@@ -670,9 +514,9 @@ var transition = function ( fromStep, toStep ) {
 }
 
 var resetWizard = function ( step ) {
-  console.log ("reset wizard");
+  //console.log ("reset wizard");
   _.each(["one", "two", "three", "four", "five", "six"], function (element) {
-    console.log ("_.each: " + element);
+    //console.log ("_.each: " + element);
     // Reset session vars
     Session.set("wiz" + element, null);
     
@@ -681,7 +525,7 @@ var resetWizard = function ( step ) {
   });
   
   if ( step != null ) {
-    console.log("found keepview: " + step);
+    //console.log("found keepview: " + step);
     transition (null, step);
   }
 }
@@ -753,7 +597,7 @@ Template.updateAppointmentDialog.events({
 });
 
 Template.updateAppointmentDialog.rendered = function () {
-  console.log("rendered update appt");
+  //console.log("rendered update appt");
   // TODO: Fix this shit
   //$('#txtdescription').wysihtml5();
 };
@@ -919,6 +763,10 @@ Template.timeProposalsDialog.events({
   },
   'click .done': function (event, template) {
     Session.set("showTimeProposalsDialog", false);
+    // Hide modal
+    $('#timeProposalsModal').modal('hide');
+    // Hack to remove modal class from body
+    $('body').removeClass( "modal-open" );
     return false;
   }
 });
@@ -936,228 +784,4 @@ Template.timeProposalsDialog.rendered=function() {
       autoclose: true
     });
   */
-}
-
-///////////////////////////////////////////////////////////////////////////////
-//Utility functions: Analytics
-///////////////////////////////////////////////////////////////////////////////
-var getAttendeesForAnEvent = function(appintmentId, isInvited) {
-  return Attendees.find({"appointmentId" : appintmentId, "invited" : isInvited}).count();
-}
-
-var getReadEmails = function(appintmentId, isRead) {
-  return Attendees.find({"appointmentId" : appintmentId, "emailread" : isRead}).count();
-}
-
-var getClicks = function(appintmentId, hasClicked) {
-  return Attendees.find({"appointmentId" : appintmentId, "linkclicked" : hasClicked}).count();
-}
-
-var getVotes = function(appintmentId, hasVoted) {
-  return Attendees.find({"appointmentId" : appintmentId, "voted" : hasVoted}).count();
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// Charts TODO: Fix this shit (move to another file)
-///////////////////////////////////////////////////////////////////////////////
-var buildInvitedAttendeesPieChart = function() {
-  var chart;
-  chart = new Highcharts.Chart({
-      chart: {
-        renderTo: 'pieinvited' 
-      },
-      title: {
-          text: 'Sent Invite'
-      },
-      tooltip: {
-          pointFormat: '{series.name}: <b>{point.y}</b>',
-          percentageDecimals: 1
-      },
-      legend: {
-        enabled: true,
-        layout: 'vertical',
-        backgroundColor: '#FFFFFF',
-        align: 'left',
-        verticalAlign: 'top',
-        floating: true,
-        x: 0,
-        y: 230
-      },
-      plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            showInLegend: true,
-            dataLabels: {
-                  enabled: true,
-                  crop: false,
-                  distance: -42,
-                  color: '#fff',
-                  connectorColor: '#000000',
-                  formatter: function() {
-                      return '<b>'+ this.point.name +'</b>: '+ this.point.y;
-                  }
-             }
-          }
-      },
-      series: [{
-          type: 'pie',
-          name: 'Number of attendees',
-          data: [
-              {name:'Invited', y: getAttendeesForAnEvent(Session.get("selected"), true), color: '#51A351', selected:true, sliced:false}, {name: 'Not Invited', y:getAttendeesForAnEvent(Session.get("selected"), false), color:'#0088CC'}
-          ]
-      }]
-  });
-}
-
-
-
-var buildEmailReadPieChart = function() {
-  var chart;
-  chart = new Highcharts.Chart({
-      chart: {
-        renderTo: 'pieemailread' 
-      },
-      title: {
-          text: 'Read Invite'
-      },
-      tooltip: {
-          pointFormat: '{series.name}: <b>{point.y}</b>',
-          percentageDecimals: 1
-      },
-      legend: {
-        enabled: true,
-        layout: 'vertical',
-        backgroundColor: '#FFFFFF',
-        align: 'left',
-        verticalAlign: 'top',
-        floating: true,
-        x: 0,
-        y: 230
-      },
-      plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            showInLegend: true,
-            dataLabels: {
-                  enabled: true,
-                  crop: false,
-                  distance: -42,
-                  color: '#fff',
-                  connectorColor: '#000000',
-                  formatter: function() {
-                      return '<b>'+ this.point.name +'</b>: '+ this.point.y;
-                  }
-             }
-          }
-      },
-      series: [{
-          type: 'pie',
-          name: 'Number of attendees',
-          data: [
-              {name:'Read', y: getReadEmails(Session.get("selected"), true), color: '#51A351', selected:true, sliced:false}, {name: 'Not Read', y:getReadEmails(Session.get("selected"), false), color:'#0088CC'}
-          ]
-      }]
-  });
-}
-
-var buildClicksPieChart = function() {
-  var chart;
-  chart = new Highcharts.Chart({
-      chart: {
-        renderTo: 'pieclicks' 
-      },
-      title: {
-          text: 'Clicked Invite Link'
-      },
-      tooltip: {
-          pointFormat: '{series.name}: <b>{point.y}</b>',
-          percentageDecimals: 1
-      },
-      legend: {
-        enabled: true,
-        layout: 'vertical',
-        backgroundColor: '#FFFFFF',
-        align: 'left',
-        verticalAlign: 'top',
-        floating: true,
-        x: 0,
-        y: 230
-      },
-      plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            showInLegend: true,
-            dataLabels: {
-                  enabled: true,
-                  crop: false,
-                  distance: -42,
-                  color: '#fff',
-                  connectorColor: '#000000',
-                  formatter: function() {
-                      return '<b>'+ this.point.name +'</b>: '+ this.point.y;
-                  }
-             }
-          }
-      },
-      series: [{
-          type: 'pie',
-          name: 'Number of attendees',
-          data: [
-              {name:'Clicked', y: getClicks(Session.get("selected"), true), color: '#51A351', selected:true, sliced:false}, {name: 'Not Clicked', y:getClicks(Session.get("selected"), false), color:'#0088CC'}
-          ]
-      }]
-  });
-}
-
-var buildVotesPieChart = function() {
-  var chart;
-  chart = new Highcharts.Chart({
-      chart: {
-        renderTo: 'pievotes' 
-      },
-      title: {
-          text: 'Voted'
-      },
-      tooltip: {
-          pointFormat: '{series.name}: <b>{point.y}</b>',
-          percentageDecimals: 1
-      },
-      legend: {
-        enabled: true,
-        layout: 'vertical',
-        backgroundColor: '#FFFFFF',
-        align: 'left',
-        verticalAlign: 'top',
-        floating: true,
-        x: 0,
-        y: 230
-      },
-      plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            showInLegend: true,
-            dataLabels: {
-                  enabled: true,
-                  crop: false,
-                  distance: -42,
-                  color: '#fff',
-                  connectorColor: '#000000',
-                  formatter: function() {
-                      return '<b>'+ this.point.name +'</b>: '+ this.point.y;
-                  }
-             }
-          }
-      },
-      series: [{
-          type: 'pie',
-          name: 'Number of attendees',
-          data: [
-              {name:'Voted', y: getVotes(Session.get("selected"), true), color: '#51A351', selected:true, sliced:false}, {name: 'Not Voted', y:getVotes(Session.get("selected"), false), color:'#0088CC'}
-          ]
-      }]
-  });
 }

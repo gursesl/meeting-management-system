@@ -1,0 +1,34 @@
+<template name="dashboard">
+  
+  <div class="topdrop-dashboard">
+  {{#unless anyAppointments }}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="alert alert-info">
+          <strong>Add Events</strong><br/> You have not created any events yet. 
+          Use the "Add Event" bar below to get started.
+        </div>
+      </div>
+    </div>
+  {{/unless }}
+  
+  {{> newappointment }}
+  
+  {{#if anyAppointments }}
+  <div class="row">
+    <div class="col-md-3 eventlist">
+      <h2>List of Events</h2>
+      <input type="text" value="{{eventname}}" id="event_search_box" class="form-control" placeholder="Search your events...">
+		  <br/>
+		  {{#each appointments}}
+		    {{> appointment }}
+		  {{/each}}
+    </div>
+    
+    <div class="col-md-9">
+      {{> appointmentdetail }}
+    </div>
+  </div>
+  {{/if }}
+  </div>
+</template>
