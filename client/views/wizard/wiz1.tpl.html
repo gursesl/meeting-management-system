@@ -1,0 +1,34 @@
+<!-- Wizard: Step One -->
+<template name="homewizone">
+  <div id="homewizone">
+
+  <div class="panel panel-primary">
+
+    <div class="panel-heading">
+      <h4>Step 1: Create an Event</h4>
+    </div>
+
+    <div class="panel-body">
+      <form role="form" name="homewizone" class="styledform">
+        <div class="form-group">
+          <label for="txtTitle">Title</label>
+          <input type="text" class="form-control" id="txtTitle" placeholder="Company Restructuring Meeting" required autofocus tabindex="100" value="{{wiztitle}}">
+        </div>
+        <div class="form-group">
+          <label for="txtLocation">Location</label>
+          <input class="form-control" id="txtLocation" placeholder="Initech Headquarters, Palo Alto, CA" required tabindex="105" value="{{wizlocation}}">
+        </div>
+        <div class="form-group">
+          <label for="txtDescription">Description</label>
+          <textarea id="txtDescription" rows="3" class="form-control" placeholder="Is this good for the company?" tabindex="110">{{wizdecription}}</textarea>
+        </div>
+      </form>
+    </div>
+
+    <div class="panel-footer">
+      <a href="#" class="btn btn-danger" id="cancel" tabindex="120">Cancel</a>
+      <a href="#" class="btn btn-primary" id="next" tabindex="115">Next</a>
+    </div>
+  </div>
+  </div>
+</template>

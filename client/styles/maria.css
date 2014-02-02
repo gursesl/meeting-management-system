@@ -23,6 +23,11 @@ i {
   color: #d45252;
 }
 
+.icon-black {
+  color: #000;
+  padding: 3px;
+}
+
 .icon-green {
   color: #52d452;
 }

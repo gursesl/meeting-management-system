@@ -1,8 +1,16 @@
 // Class TimePropsal
-// TODO: Remove code duplication
+// TODO: Refactor this shit to remove code duplication
 function TimeProposal (date, time) {
   this.date = date;
   this.time = time;
+  this.id = Meteor.uuid();
+}
+
+//Class Attendee
+// TODO: Refactor this shit to remove code duplication
+function Attendee (name, email) {
+  this.name = name;
+  this.email = email;
   this.id = Meteor.uuid();
 }
 
@@ -203,8 +211,7 @@ Template.homewiztwo.events({
      
       propArray.push(timeproposal);
       Session.set("homewiztimeproposals", propArray);
-      //Session.set("keepview", "two");
-      transition ( "one", "two" );
+
       $.pnotify({
         title: 'Success',
         text: messages.timeproposalcreate.success,
@@ -290,7 +297,13 @@ Template.homewizthree.events({
      
       atArray.push(attendee);
       Session.set("homewizattendees", atArray);
-      Session.set("keepview", "three");
+
+      $.pnotify({
+        title: 'Success',
+        text: messages.attendeecreate.success,
+        type: 'success'
+      });
+
     } else {
       $.pnotify({
         title: 'Validation Error',
@@ -320,6 +333,8 @@ Template.homewizthree.rendered = function () {
   // Add HTML5 input patterns
   $('#txtName').attr("pattern", patterns.fullname);
   $('#txtEmail').attr("pattern", patterns.email);
+  Session.set("keepview", "three");
+  transition("two", "three");
 }
 
 

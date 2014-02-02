@@ -1,0 +1,45 @@
+<!-- Wizard: Step Three -->
+<template name="homewizthree">
+  <div id="homewizthree">
+
+    <div class="panel panel-primary">
+
+      <div class="panel-heading">
+        <h4>Step 3: Add Attendees</h4>
+      </div>
+
+      <div class="panel-body">
+        <form role="form" name="homewizthree" class="styledform">
+
+          {{#each homewizattendees}}
+            <div class="row">
+              <div class="col-md-6">
+                <a href="#" id="{{id}}" class="del" title="Delete attendee">
+                  <i class="icon-minus-sign icon-red"></i><i class="icon-user icon-white"/></a><strong>{{name}}</strong> <a href="mailto:{{email}}">{{email}}</a>
+              </div>
+            </div>
+          {{/each}}
+            
+          <div class="row">
+            <div class="col-md-5">
+              <input class="form-control" id="txtName" placeholder="Full name (e.g. Monica Johnson)" required autofocus tabindex="300">
+            </div>
+            <div class="col-md-5">
+              <input class="form-control" id="txtEmail" placeholder="Email (e.g monica@email.com)" required tabindex="305">
+            </div>
+
+            <div class="col-md-2">
+              <a href="#" class="btn btn-primary" id="add" tabindex="310"><i class="icon-plus-sign icon-white" title="Add attendee"></i> Add</a>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="panel-footer">
+        <a href="#" class="btn btn-danger" id="cancel" tabindex="320">Cancel</a>
+        <a href="#" class="btn btn-primary" id="prev" tabindex="315">Previous</a>
+        <a href="#" class="btn btn-primary" id="next" tabindex="305">Next</a>
+      </div>
+    </div>
+  </div>
+</template>

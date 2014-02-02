@@ -1,0 +1,29 @@
+<!-- TBD What to do with this template -->
+<template name="homewizlogin">
+  <form id="homewizlogin" name="homewizlogin" class="styledform">
+    <ul>
+      <li>
+        <h2>Login/Register</h2>
+        <span class="required_notification">* Denotes Required Field</span>
+      </li>
+      
+      <li>
+        <label for="name">Email:</label>
+        <input id="login-email" type="email" placeholder="E.g. maria@gmail.com" required pattern="^([0-9a-zA-Z]([-\.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$">
+        <span class="form_hint">Valid email format "name@emailprovider.com"</span>
+      </li>
+
+      <li>
+        <label for="name">Password:</label>
+        <input id="login-password" type="password" placeholder="Your password" pattern=".{6,}" required>
+        <span class="form_hint">Minimum six characters</span>
+      </li>        
+    </ul>
+    
+    <div class="login-button login-button-form-submit btn-success btn-large" id="login-buttons-password">
+      Sign in
+    </div>
+    
+  </form>
+    {{loginButtons}}
+</template>

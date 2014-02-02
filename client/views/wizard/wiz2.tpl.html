@@ -1,0 +1,47 @@
+<!-- Wizard: Step Two -->
+<template name="homewiztwo">
+  <div id="homewiztwo">
+    <div class="panel panel-primary">
+
+    <div class="panel-heading">
+      <h4>Step 2: Add Time Proposals</h4>
+    </div>
+
+    <div class="panel-body">
+      <form role="form" name="homewiztwo" class="styledform">
+        
+        
+        {{#each homewiztimeproposals}}
+          <div class="row">
+            <div class="col-md-6">
+              <a href="#" id="{{id}}" class="del" title="Delete time proposal">
+                <i class="icon-minus-sign icon-red" /><i class="icon-time icon-white"/></a><strong>{{date}}</strong> {{time}}
+            </div>
+          </div>
+        {{/each}}
+          
+        <div class="row">
+          <div class="col-md-3">
+            <input class="form-control" id="txtDate" placeholder="9/14/2014" required autofocus tabindex="200">
+          </div>
+
+          <div class="col-md-3">
+            <input class="form-control" id="txtTime" placeholder="2:30pm" required tabindex="205">
+          </div>
+
+          <div class="col-md-2">
+            <a href="#" class="btn btn-primary" id="add" tabindex="210"><i class="icon-plus-sign icon-white" title="Add time proposal"></i> Add</a>
+          </div>
+        </div>  
+        
+      </form>
+      </div>
+
+    <div class="panel-footer">
+      <a href="#" class="btn btn-danger" id="cancel" tabindex="225">Cancel</a>
+      <a href="#" class="btn btn-primary" id="prev" tabindex="220">Previous</a>
+      <a href="#" class="btn btn-primary" id="next" tabindex="215">Next</a>
+    </div>
+  </div>
+  </div>
+</template>

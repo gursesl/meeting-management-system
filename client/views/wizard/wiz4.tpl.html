@@ -1,0 +1,73 @@
+<!-- Wizard: Step Four -->
+<template name="homewizfour">
+  <div id="homewizfour">
+
+    <div class="panel panel-primary">
+
+      <div class="panel-heading">
+        <h4>Step 4: Preview & Send Invitations</h4>
+      </div>
+
+      <div class="panel-body">
+        <form role="form" name="homewizfour" class="styledform">
+
+
+          <div class="row">
+            <div class="col-md-3">
+              <h5>
+                <a href="#" title="Add event details" class="addevent">
+                <i class="icon-plus-sign icon-green"/><i class="icon-map-marker icon-white"/> Event Details</a>
+              </h5>
+              <div class="title"><i class="icon-pushpin icon-black"/><small>{{wiztitle}}</small></div><br/>
+              <div class="location"><i class="icon-map-marker icon-black"/><small>{{wizlocation}}</small></div><br/>
+              <div class="description"><i class="icon-info-sign icon-black"/><small>{{wizdecription}}</small></div>
+            </div>
+            
+            <div class="col-md-3">
+              <h5>
+                <a href="#" title="Add time proposals" class="addtp">
+                <i class="icon-plus-sign icon-green"/><i class="icon-time icon-white"/> Time Proposals</a>
+              </h5>
+              
+              {{#each homewiztimeproposals}}
+                <i class="icon-time icon-white"/><small>{{date}} {{time}}</strong><br/>
+              {{/each}}
+              
+            </div>
+            
+            <div class="col-md-6">
+              <h5>
+                <a href="#" title="Add attendees" class="addattendees">
+                <i class="icon-plus-sign icon-green"/><i class="icon-user icon-white"/> Attendees</a>
+              </h5>
+              {{#each homewizattendees}}
+                <i class="icon-user icon-black"/><small><strong>{{name}}</strong> ({{email}})</small><br/>
+              {{/each}}
+            </div>
+          </div><!-- /row -->
+          
+          <br/>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="centerbutton">
+                <!-- <p>Event link: {{eventlink}}</p> -->
+                <a class="btn btn-small btn-info" href="#" id="preview">
+                  <i class="icon-edit"></i> Preview Invitation</a>
+                <a class="btn btn-small btn-success" href="#" id="send">
+                  <i class="icon-envelope"></i> Send</a>
+              </div>
+            </div>
+          </div>
+        </form>
+
+      </div>
+
+      <div class="panel-footer">
+        <a href="#" class="btn btn-danger" id="cancel" tabindex="420">Cancel</a>
+        <a href="#" class="btn btn-primary" id="prev" tabindex="415">Previous</a>
+        <a href="#" class="btn btn-primary" id="next" tabindex="410">Next</a>
+      </div>
+    </div>
+  </div>
+</template>

@@ -29,7 +29,7 @@ patterns = {
 
 ///////////////////////////////////////////////////////////////////////////////
 // Validation functions
-validateHomeWizOne = function ( title, location ) {
+validateHomeWizOne = function (title, location) {
   if (title && location) {
     if (title.match(patterns.title) && location.match(patterns.location))
       return true;
@@ -43,7 +43,7 @@ validateDateTime = function (date, time) {
   }
 }
 
-function validateNameAndEmail ( name, email ) {
+validateNameAndEmail = function (name, email) {
   if (name && email) {
     if (name.match(patterns.fullname) && email.match(patterns.email))
       return true;
