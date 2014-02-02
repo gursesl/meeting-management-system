@@ -2,6 +2,7 @@
 
 <!-- Wizard: Step Zero -->
 <template name="homewizzero">
+  <!--
   <div id="homewizzero">
     
     <form name="homewizzero" class="styledform">
@@ -33,19 +34,21 @@
     
     <a href="#" class="btn" id="cancel" tabindex="120">Cancel</a>
     <a href="#" class="btn btn-primary" id="next" tabindex="115">Next</a>
-  </div>
+  </div> -->
 </template>
 
 <!-- Wizard: Step One -->
 <template name="homewizone">
-  <div class="panel panel-primary" id="homewizone">
+  <div id="homewizone">
+
+  <div class="panel panel-primary">
 
     <div class="panel-heading">
       <h4>Step 1: Create an Event</h4>
     </div>
 
     <div class="panel-body">
-      <form role="form" name="homewizone">
+      <form role="form" name="homewizone" class="styledform">
         <div class="form-group">
           <label for="txtTitle">Title</label>
           <input type="text" class="form-control" id="txtTitle" placeholder="Company Restructuring Meeting" required autofocus tabindex="100" value="{{wiztitle}}">
@@ -66,39 +69,53 @@
       <a href="#" class="btn btn-primary" id="next" tabindex="115">Next</a>
     </div>
   </div>
-
+  </div>
 </template>
 
 <!-- Wizard: Step Two -->
 <template name="homewiztwo">
   <div id="homewiztwo">
-    <form name="homewiztwo" class="styledform">
-      <ul>
-        <li>
-          <h2>Step 2: Add Time Proposals</h2>
-          <span class="required_notification">* Denotes Required Field</span>
-        </li>
+    <div class="panel panel-primary">
+
+    <div class="panel-heading">
+      <h4>Step 2: Add Time Proposals</h4>
+    </div>
+
+    <div class="panel-body">
+      <form role="form" name="homewiztwo" class="styledform">
         
-        <li>
-          <div class="row">
-            {{#each homewiztimeproposals}}
-              <div class="span3">
-                <a href="#" id="{{id}}" class="del" title="Delete time proposal">
-                  <i class="icon-minus-sign icon-red" /><i class="icon-time icon-white"/></a><strong>{{date}}</strong> {{time}}
-              </div>
-            {{/each}}
+        <div class="row">
+          {{#each homewiztimeproposals}}
+            <div class="span3">
+              <a href="#" id="{{id}}" class="del" title="Delete time proposal">
+                <i class="icon-minus-sign icon-red" /><i class="icon-time icon-white"/></a><strong>{{date}}</strong> {{time}}
+            </div>
+          {{/each}}
+        </div>
+          
+        <div class="row">
+          <div class="col-md-3">
+            <input class="form-control" id="txtDate" placeholder="9/14/2014" required autofocus tabindex="200">
           </div>
-        </li>
+
+          <div class="col-md-3">
+            <input class="form-control" id="txtTime" placeholder="2:30pm" required tabindex="205">
+          </div>
+
+          <div class="col-md-2">
+            <a href="#" class="btn btn-primary" id="add" tabindex="210"><i class="icon-plus-sign icon-white" title="Add time proposal"></i> Add</a>
+          </div>
+        </div>  
         
-        <li><input class="input-small" id="txtDate" placeholder="9/14/2013" required autofocus tabindex="200">&nbsp;<input class="input-small" id="txtTime" placeholder="2:30pm" required tabindex="205">
-          <a href="#" class="btn btn-primary" id="add" tabindex="210"><i class="icon-plus-sign icon-white" title="Add time proposal"></i> Add</a>
-        </li>
-      </ul>
-    </form>
-    
-    <a href="#" class="btn" id="cancel" tabindex="225">Cancel</a>
-    <a href="#" class="btn btn-primary" id="prev" tabindex="220">Previous</a>
-    <a href="#" class="btn btn-primary" id="next" tabindex="215">Next</a>
+      </form>
+      </div>
+
+    <div class="panel-footer">
+      <a href="#" class="btn btn-danger" id="cancel" tabindex="225">Cancel</a>
+      <a href="#" class="btn btn-primary" id="prev" tabindex="220">Previous</a>
+      <a href="#" class="btn btn-primary" id="next" tabindex="215">Next</a>
+    </div>
+  </div>
   </div>
 </template>
 

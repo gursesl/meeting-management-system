@@ -1,3 +1,11 @@
+// Class TimePropsal
+// TODO: Remove code duplication
+function TimeProposal (date, time) {
+  this.date = date;
+  this.time = time;
+  this.id = Meteor.uuid();
+}
+
 slideHomePageWizard = function (event, template, step) {
   
   var stepFound = false;
@@ -22,7 +30,7 @@ slideHomePageWizard = function (event, template, step) {
       $(".wizardPane").css({"padding-top" : "0px"});
       $(".wizardPaneStep").css({"opacity" : "0"});
     } else {
-      $(".wizardPane").css({"height" : "550px"});
+      $(".wizardPane").css({"height" : "600px"});
       $(".wizardPane").css({"padding-top" : "80px"});
       $(".wizardPaneStep").css({"opacity" : "1"});
       $("html, body").animate({ scrollTop: 0 }, "slow");
@@ -35,7 +43,7 @@ slideHomePageWizard = function (event, template, step) {
     $("#li" + step + " .ca-main").removeClass("selected");
     
   } else {
-    $(".wizardPane").css({"height" : "550px"});
+    $(".wizardPane").css({"height" : "600px"});
     $(".wizardPane").css({"padding-top" : "80px"});
     $(".wizardPaneStep").css({"opacity" : "1"});
     $("html, body").animate({ scrollTop: 0 }, "slow");
@@ -50,7 +58,7 @@ slideHomePageWizard = function (event, template, step) {
   }
 }
 
-resetWizard = function ( step ) {
+resetWizard = function (step) {
   //console.log ("reset wizard");
   _.each(["one", "two", "three", "four", "five", "six"], function (element) {
     //console.log ("_.each: " + element);
@@ -69,7 +77,7 @@ resetWizard = function ( step ) {
 
 
 // Transition between two steps in homepage wizard
-transition = function ( fromStep, toStep ) {
+transition = function (fromStep, toStep) {
   //console.log ("inside transition");
   var fromstep = "#homewiz" + fromStep;
   var tostep = "#homewiz" + toStep;
@@ -87,7 +95,7 @@ transition = function ( fromStep, toStep ) {
   $(fromstep).css({"height" : "0px"});
   $(fromstep).css({"opacity" : "0"});
 
-  $(tostep).css({"height" : "400px"});
+  $(tostep).css({"height" : "450px"});
   $(tostep).css({"opacity" : "1"});
   
   // Buttons
@@ -119,7 +127,6 @@ Template.homewizlogin.events({
 });
 
 
-
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Home Page Wizard: Step One
 Template.homewizone.events({
@@ -128,7 +135,7 @@ Template.homewizone.events({
     slideHomePageWizard(event, template);
   },
   
-  'click #next' : function ( event, template ) {
+  'click #next' : function (event, template) {
     // Read form variables
     var title = template.find("#txtTitle").value;
     var location = template.find("#txtLocation").value;
@@ -147,11 +154,10 @@ Template.homewizone.events({
       // Transition
       transition("one", "two");
     } else {
-      showNotification({
-          message: messages.eventcreate.validation,
-          autoClose: true,
-          type: "error",
-          duration: 4
+      $.pnotify({
+        title: 'Validation Error',
+        text: messages.eventcreate.validation,
+        type: 'error'
       });
     }
   }
@@ -162,6 +168,7 @@ Template.homewizone.rendered = function () {
   $('#txtTitle').attr("pattern", patterns.title);
   $('#txtLocation').attr("pattern", patterns.location);
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Home Page Wizard: Step Two (Add Time Proposals)
@@ -196,13 +203,19 @@ Template.homewiztwo.events({
      
       propArray.push(timeproposal);
       Session.set("homewiztimeproposals", propArray);
-      Session.set("keepview", "two");
+      //Session.set("keepview", "two");
+      transition ( "one", "two" );
+      $.pnotify({
+        title: 'Success',
+        text: messages.timeproposalcreate.success,
+        type: 'success'
+      });
+
     } else {
-      showNotification({
-          message: messages.timeproposalcreate.validation,
-          autoClose: true,
-          type: "error",
-          duration: 4
+      $.pnotify({
+        title: 'Validation Error',
+        text: messages.timeproposalcreate.validation,
+        type: 'error'
       });
     }
   },
@@ -234,6 +247,7 @@ Template.homewiztwo.rendered = function () {
   }); */
   
   // Render timepicker
+
   $('#txtTime').timepicker({ 'scrollDefaultNow': true });
   
   // Add HTML5 input patterns
@@ -276,11 +290,10 @@ Template.homewizthree.events({
       Session.set("homewizattendees", atArray);
       Session.set("keepview", "three");
     } else {
-      showNotification({
-          message: messages.attendeecreate.validation,
-          autoClose: true,
-          type: "error",
-          duration: 4
+      $.pnotify({
+        title: 'Validation Error',
+        text: messages.attendeecreate.validation,
+        type: 'error'
       });
     }
   },

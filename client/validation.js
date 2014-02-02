@@ -36,7 +36,7 @@ validateHomeWizOne = function ( title, location ) {
   }
 }
 
-validateDateTime = function ( date, time ) {
+validateDateTime = function (date, time) {
   if (date && time) {
     if (date.match(patterns.date) && time.match(patterns.time))
       return true;

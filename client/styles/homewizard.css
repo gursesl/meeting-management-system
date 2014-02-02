@@ -1,89 +1,9 @@
 .styledform {
-  overflow: hidden;
-  height: 320px;
-  border-bottom: 1px solid #777;
-}
-
-.styledform label {
-  font-size: 1em;
-}
-
-.styledform .centerbutton {
-  text-align: center;
-}
-
-.form_hint {
-  font-size: 11px;
-}
-
-.styledform ul {
-  list-style-type: none;
-  list-style-position: outside;
-  margin: 0px;
-  padding: 0px;
-}
-
-.styledform li {
-  padding: 12px;
-  border-bottom: 0px dotted #999;
-  position: relative;
-}
-
-.styledform li:first-child {
-  border-bottom: 1px solid #777;
-}
-
-.styledform li:last-child {
-  
-}
-
-.styledform h2 {
-  font-size: 2em;
-  margin:0;
-  display: inline;
-  letter-spacing: 1px;
-}
-
-.required_notification {
-  font-size: 1em;
-  color: #d45252;
-  margin: 10px 0 0 0;
-  display:inline;
-  float:right;
-}
-
-.styledform label {
-  width: 100px;
-  margin-top: 3px;
-  display:inline-block;
-  float:left;
-  padding:3px 20px;
-  text-align: right;
-}
-
-.styledform input {
-  height:20px;
-  padding: 5px 10px 8px;
-}
-
-.styledform textarea {
-  padding: 8px 10px 8px;
+  min-height: 290px;
 }
 
 input:required, textarea:required {
   background: #fff url(/img/red_asterisk.png) no-repeat 98% center;
-}
-
-.styledform input:focus:invalid, .styledform textarea:focus:invalid { /* when a field is considered invalid by the browser */
-  background: #fff url(/img/invalid.png) no-repeat 98% center;
-  box-shadow: 0 0 5px #d45252;
-  border-color: #b03535
-}
-
-.styledform input:required:valid, .styledform textarea:required:valid { /* when a field is considered valid by the browser */
-  background: #fff url(/img/valid.png) no-repeat 98% center;
-  box-shadow: 0 0 5px #5cd053;
-  border-color: #28921f;
 }
 
 .form_hint {
@@ -105,35 +25,33 @@ input:required, textarea:required {
   left:-6px;
 }
 
-.styledform input:focus + .form_hint {display: inline;}
-.styledform input:required:valid + .form_hint {background: #28921f;} /* change form hint color when valid */
-.styledform input:required:valid + .form_hint::before {color:#28921f;} /* change form hint arrow color when valid */
-
-.styledform input, .styledform textarea {
-  border:1px solid #aaa;
-  box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
-  border-radius: 2px;
+.wizardPane {
+  height: 0px;
+  background: url("/img/page_bg_blue.jpg") no-repeat 0 -20px #103352;
+  position: relative;
+  display: block;
+  z-index: 0;
+  display: block;
+  clear:both;
+  overflow: hidden;
+  -webkit-transition: height 1000ms ease-in-out, padding 1000ms ease-in-out;
+  -moz-transition: height 1000ms ease-in-out, padding 1000ms ease-in-out;
+  -o-transition: height 1000ms ease-in-out, padding 1000ms ease-in-out;
+  -ms-transition: height 1000ms ease-in-out, padding 1000ms ease-in-out;
+  transition: height 1000ms ease-in-out, padding 1000ms ease-in-out;
 }
 
-.styledform input:focus, .styledform textarea:focus {
-  background: #fff;
-  border:1px solid #555;
-  box-shadow: 0 0 3px #aaa;
-}
-
-.styledform input:focus, .styledform textarea:focus { /* add this to the already existing style */
-  /* padding-right: 40px; */
-}
-
-.styledform input, .styledform textarea { /* add this to the already existing style */
-  -moz-transition: padding .25s ease-out;
-  -webkit-transition: padding .25s ease-out;
-  -o-transition: padding .25s ease-out;
-  transition: padding .25s ease-out;
-}
-
-*:focus {
-  outline: none;
+.wizardPaneStep {
+  padding: 3%;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  #color:#fff;
+  -webkit-transition: opacity 1000ms ease-in-out;
+  -moz-transition: opacity 1000ms ease-in-out;
+  -o-transition: opacity 1000ms ease-in-out;
+  -ms-transition: opacity 1000ms ease-in-out;
+  transition: opacity 1000ms ease-in-out;
 }
 
 #homewizzero, #homewizone, #homewiztwo, #homewizthree, #homewizfour, #homewizfive, #homewizsix  {
@@ -145,14 +63,6 @@ input:required, textarea:required {
    -o-transition: height 500ms ease-in-out, opacity 500ms ease-in-out;
    -ms-transition: height 500ms ease-in-out, opacity 500ms ease-in-out;
    transition: height 500ms ease-in-out, opacity 500ms ease-in-out;
-}
-
-.styledform strong {
-  font-size: 1.1em;
-  font-weight: bold;
-  padding: 3px;
-  margin: 3px 10px 0px 4px;
-  letter-spacing: 0.08em;
 }
 
 #homewiztwo .row, #homewiztwo .span3, #homewizthree .row, #homewizthree .span3 {

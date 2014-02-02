@@ -297,35 +297,6 @@ small {
 	        border-radius:5px;
 }
 
-.wizardPane {
-  height: 0px;
-  background: url("/img/page_bg_blue.jpg") no-repeat 0 -20px #103352;
-  position: relative;
-  display: block;
-  z-index: 0;
-  display: block;
-  clear:both;
-  overflow: hidden;
-  -webkit-transition: height 1000ms ease-in-out, padding 1000ms ease-in-out;
-  -moz-transition: height 1000ms ease-in-out, padding 1000ms ease-in-out;
-  -o-transition: height 1000ms ease-in-out, padding 1000ms ease-in-out;
-  -ms-transition: height 1000ms ease-in-out, padding 1000ms ease-in-out;
-  transition: height 1000ms ease-in-out, padding 1000ms ease-in-out;
-}
-
-.wizardPaneStep {
-  padding: 3%;
-  -moz-border-radius: 20px;
-  border-radius: 20px;
-  background: rgba(0, 0, 0, 0.5);
-  #color:#fff;
-  -webkit-transition: opacity 1000ms ease-in-out;
-  -moz-transition: opacity 1000ms ease-in-out;
-  -o-transition: opacity 1000ms ease-in-out;
-  -ms-transition: opacity 1000ms ease-in-out;
-  transition: opacity 1000ms ease-in-out;
-}
-
 .topdrop {
   padding-top: 70px;
 }
