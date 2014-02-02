@@ -318,7 +318,7 @@ small {
   -moz-border-radius: 20px;
   border-radius: 20px;
   background: rgba(0, 0, 0, 0.5);
-  color:#fff;
+  #color:#fff;
   -webkit-transition: opacity 1000ms ease-in-out;
   -moz-transition: opacity 1000ms ease-in-out;
   -o-transition: opacity 1000ms ease-in-out;

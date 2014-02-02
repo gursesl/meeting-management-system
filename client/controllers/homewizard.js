@@ -1,4 +1,105 @@
-"use strict";
+slideHomePageWizard = function (event, template, step) {
+  
+  var stepFound = false;
+  _.each(["zero", "one", "two", "three", "four", "five", "six"], function (element) {
+        
+    if (element == step)
+      stepFound = true;
+  });
+  
+  //If step not found, set to "zero"
+  if (!stepFound) {
+    step = "zero";
+  }
+  
+  
+  if (Session.get("wizzero") || Session.get("wizone") || Session.get("wiztwo") || Session.get("wizthree") || Session.get("wizfour") || Session.get("wizfive") || Session.get("wizsix")) {
+    resetWizard( Session.get("keepview") );
+   
+    // Animate panes
+    if ( !Session.get("keepview") ) {
+      $(".wizardPane").css({"height" : "0px"});
+      $(".wizardPane").css({"padding-top" : "0px"});
+      $(".wizardPaneStep").css({"opacity" : "0"});
+    } else {
+      $(".wizardPane").css({"height" : "550px"});
+      $(".wizardPane").css({"padding-top" : "80px"});
+      $(".wizardPaneStep").css({"opacity" : "1"});
+      $("html, body").animate({ scrollTop: 0 }, "slow");
+      
+    }
+        
+    // Deselect button
+    $("#li" + step).removeClass("selected");
+    $("#li" + step + " .ca-icon").removeClass("selected");
+    $("#li" + step + " .ca-main").removeClass("selected");
+    
+  } else {
+    $(".wizardPane").css({"height" : "550px"});
+    $(".wizardPane").css({"padding-top" : "80px"});
+    $(".wizardPaneStep").css({"opacity" : "1"});
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+
+    // Animate panes
+    transition(null, step);
+    
+    // Keep button selected
+    $("#li" + step).addClass("selected");
+    $("#li" + step + " .ca-icon").addClass("selected");
+    $("#li" + step + " .ca-main").addClass("selected");
+  }
+}
+
+resetWizard = function ( step ) {
+  //console.log ("reset wizard");
+  _.each(["one", "two", "three", "four", "five", "six"], function (element) {
+    //console.log ("_.each: " + element);
+    // Reset session vars
+    Session.set("wiz" + element, null);
+    
+    // Reset div heights
+    transition( element, null );
+  });
+  
+  if ( step != null ) {
+    //console.log("found keepview: " + step);
+    transition (null, step);
+  }
+}
+
+
+// Transition between two steps in homepage wizard
+transition = function ( fromStep, toStep ) {
+  //console.log ("inside transition");
+  var fromstep = "#homewiz" + fromStep;
+  var tostep = "#homewiz" + toStep;
+  
+  var fromsession = "wiz" + fromStep;
+  var tosession = "wiz" + toStep;
+  
+  var frombutton = "#li" + fromStep;
+  var tobutton = "#li" + toStep;
+  
+  
+  Session.set(fromsession, null);
+  Session.set(tosession, true);
+  
+  $(fromstep).css({"height" : "0px"});
+  $(fromstep).css({"opacity" : "0"});
+
+  $(tostep).css({"height" : "400px"});
+  $(tostep).css({"opacity" : "1"});
+  
+  // Buttons
+  $(tobutton).addClass("selected");
+  $(tobutton + " .ca-icon").addClass("selected");
+  $(tobutton + " .ca-main").addClass("selected");
+  
+  $(frombutton).removeClass("selected");
+  $(frombutton + " .ca-icon").removeClass("selected");
+  $(frombutton + " .ca-main").removeClass("selected");
+}
+
     
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Home Page Wizard: Login
