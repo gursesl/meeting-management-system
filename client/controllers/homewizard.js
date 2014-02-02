@@ -253,6 +253,8 @@ Template.homewiztwo.rendered = function () {
   // Add HTML5 input patterns
   $('#txtDate').attr("pattern", patterns.date);
   $('#txtTime').attr("pattern", patterns.time);
+  Session.set("keepview", "two");
+  transition("one", "two");
 }
 
 

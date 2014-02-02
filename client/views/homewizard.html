@@ -84,14 +84,15 @@
     <div class="panel-body">
       <form role="form" name="homewiztwo" class="styledform">
         
-        <div class="row">
-          {{#each homewiztimeproposals}}
-            <div class="span3">
+        
+        {{#each homewiztimeproposals}}
+          <div class="row">
+            <div class="col-md-6">
               <a href="#" id="{{id}}" class="del" title="Delete time proposal">
                 <i class="icon-minus-sign icon-red" /><i class="icon-time icon-white"/></a><strong>{{date}}</strong> {{time}}
             </div>
-          {{/each}}
-        </div>
+          </div>
+        {{/each}}
           
         <div class="row">
           <div class="col-md-3">
