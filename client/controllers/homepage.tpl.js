@@ -9,7 +9,7 @@ Template.homepage.events({
 });
 
 Template.homepage.isuser = function() {
-  return Meteor.user();
+  return Meteor.user() && !Session.get("wizardInProgress");
 }
 
 Template.homepage.showUpdateAppointmentDialog = function () {

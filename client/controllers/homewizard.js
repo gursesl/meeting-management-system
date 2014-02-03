@@ -383,6 +383,11 @@ Template.homewizfour.eventlink = function () {
   //return generateShortHash();
 }
 
+Template.homewizfour.rendered = function () {
+  Session.set("keepview", "four");
+  transition("three", "four");
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Home Page Wizard: Step Five
@@ -401,6 +406,12 @@ Template.homewizfive.events({
   }
 });
 
+Template.homewizfive.rendered = function () {
+  Session.set("keepview", "five");
+  transition("four", "five");
+}
+
+
 ///////////////////////////////////////////////////////////////////////////////
 //Template: Home Page Wizard: Step Six
 Template.homewizsix.events({
@@ -417,3 +428,8 @@ Template.homewizsix.events({
     transition ( "six", null );
   }
 });
+
+Template.homewizsix.rendered = function () {
+  Session.set("keepview", "six");
+  transition("five", "six");
+}

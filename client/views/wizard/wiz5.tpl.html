@@ -5,12 +5,12 @@
     <div class="panel panel-primary">
 
       <div class="panel-heading">
-        <h4>Step 5: Track Progress</h4>
+        <h4>Step 5: Sign In</h4>
       </div>
 
       <div class="panel-body">
         <form role="form" name="homewizfive" class="styledform">
-
+          {{> homewizauth}}
         </form>
       </div>
 
@@ -21,4 +21,95 @@
       </div>
     </div>
   </div>
+</template>
+
+
+<template name="homewizauth">
+  {{> alert}}
+  {{#unless resetPassword}}
+      {{#unless currentUser}}
+          {{#unless showForgotPassword}}
+            <div class="row">
+              <div class="col-md-6">
+                {{> signIn}}
+              </div>
+
+              <div class="col-md-6">
+                {{> signUp}}
+              </div>
+            </div>
+          {{else}}
+              {{> forgotPassword}}
+          {{/unless}}
+      {{else}}
+          {{> signOut}}
+      {{/unless}}
+  {{else}}
+      {{> resetPassword}}
+  {{/unless}}
+</template>
+
+<template name="alert">
+  <div class="alert alert-info">
+    {{alert}}
+  </div>
+</template>
+
+
+<template name="signIn">
+  <h3>Sign In (Existing members)</h3>
+  <div class="sign-in" id="signIn">
+    
+    <form class="sign-in-form" id="signInForm">
+      <input type="email" id="signInEmail" class="form-control" placeholder="Email">
+      <input type="password" id="signInPassword" class="form-control" placeholder="Password">
+      <a class="show-forgot-password" href="javascript:void(0);" id="showForgotPassword">Forgot Password</a><br>
+      <button type="submit" id="login-buttons-password" class="btn btn-primary">Sign in</button>
+    </form>
+  </div>
+</template>
+
+<template name="signUp">
+  <h3>Sign Up (New members)</h3>
+  <div class="sign-up">
+    <form action="/sign-up" class="sign-up-form" id="signUpForm" method="post">
+      <input type="email" id="signUpEmail" class="form-control" placeholder="Email">
+      <input type="password" id="signUpPassword" class="form-control" placeholder="Password">
+      <input type="password" id="signUpPasswordConfirm" class="form-control" placeholder="Confirm"><br>
+      <button type="submit" class="btn btn-primary">Sign up</button>
+    </form>
+  </div>
+</template>
+
+
+<template name="signOut">
+    <div class="connected">
+        <span class="welcome">Welcome to Maria</span>
+        <a class="sign-out" href="/" id="signOut">Sign Out</a>
+    </div>
+    <!-- end .connected -->
+</template>
+
+
+<template name="forgotPassword">
+    <div class="forgot-password" id="forgotPassword">
+        <a class="return-to-sign-in" href="javascript:void(0);" id="returnToSignIn">Return</a>
+        <form action="/forgot" class="forgot-password-form" id="forgotPasswordForm" method="post">
+            <input class="email" id="forgotPasswordEmail" type="text" name="email" placeholder="Email Address">
+            <input class="btn-submit" type="submit" value="Send">
+        </form>
+    </div>
+</template>
+
+
+<template name="resetPassword">
+    <div class="reset-password">
+        <h2 class="headline">You're now saved, <span class="bold">follow the light!</span></h2>
+        <h3 class="details">You just have to type and confirm  your new password to regain access to your dashboard.</h3>
+        <form action="/reset-password" class="reset-password-form" id="resetPasswordForm" method="post">
+            <input class="password" id="resetPasswordPassword" name="password" placeholder="Your New Password" type="password" >
+            <input class="password-confirm" id="resetPasswordPasswordConfirm" name="password-confirm" placeholder="Confirm New Password" type="password" >
+            <input class="btn-submit" type="submit" value="Reset">
+        </form>
+    </div>
 </template>
