@@ -65,7 +65,9 @@ Template.signIn.events({
                     Session.set("wizardInProgress", true);
                     Session.set("keepview", "five");
                     transition(null, "five");
-                    //Sesson.set('alert', 'Welcome to Maria');
+                    Sesson.set('alert', 'Welcome to Maria');
+                    Sesson.set('wizardinprogress', null);
+                    Session.set("keepview", null);
                 }
             });
         }

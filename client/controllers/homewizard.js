@@ -86,7 +86,12 @@ resetWizard = function (step) {
 
 // Transition between two steps in homepage wizard
 transition = function (fromStep, toStep) {
-  //console.log ("inside transition");
+  
+  if (!Session.get("wizardinprogress")) {
+    fromStep = null;
+    toStep = "one";
+  }
+
   var fromstep = "#homewiz" + fromStep;
   var tostep = "#homewiz" + toStep;
   
@@ -158,6 +163,7 @@ Template.homewizone.events({
       
       // Keep next view open
       Session.set("keepview", "two");
+      Session.set("wizardinprogress", true);
       
       // Transition
       transition("one", "two");
